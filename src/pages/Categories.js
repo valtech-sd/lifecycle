@@ -27,9 +27,14 @@ const Categories = () => {
         <Layout>
           <Sider width="340px" theme="light" style={{ padding: "25px" }}>
             <div style={{ display: "flex", flexDirection: "column" }}>
-            <Rating rating={rating} setRating={setRating} />
-            <PriceRanges priceMin={priceMin} setPriceMin={setPriceMin} priceMax={priceMax} setPriceMax={setPriceMax}/>
-            <Button className="login">Apply Filters</Button>
+              <Rating rating={rating} setRating={setRating} />
+              <PriceRanges
+                priceMin={priceMin}
+                setPriceMin={setPriceMin}
+                priceMax={priceMax}
+                setPriceMax={setPriceMax}
+              />
+              <Button className="login">Apply Filters</Button>
             </div>
           </Sider>
 
@@ -37,12 +42,15 @@ const Categories = () => {
             theme="light"
             style={{ padding: "35px", backgroundColor: "white" }}
           >
-            <h1 style={{fontSize:"30px"}}>RESULTS</h1>
-            <Results category={category} rating={rating} priceMin={priceMin} priceMax={priceMax}/>
+            <h1 style={{ fontSize: "30px" }}>RESULTS</h1>
+            <Results
+              category={category}
+              rating={rating}
+              priceMin={priceMin}
+              priceMax={priceMax}
+            />
           </Content>
         </Layout>
-
-        
       </div>
     </>
   );

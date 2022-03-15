@@ -1,13 +1,12 @@
 .link {
   font-size: 18px;
-  margin:5%;
+  margin: 5%;
 }
 
 .link:hover {
-  color: #FF9900;
+  color: #ff9900;
   text-decoration: underline;
 }
-
 
 .carousel {
   position: absolute;
@@ -22,8 +21,12 @@
 }
 
 .card {
-  width:450px;
-  height:530px;
+  width: 450px;
+  height: 530px;
+}
+
+.section {
+  padding: 4rem;
 }
 
 .card-content {
@@ -43,14 +46,14 @@
   display: flex;
   justify-content: start;
   flex-wrap: wrap;
-  position: absolute;
+  /* position: absolute;
   left: 0;
-  top: 450px;
+  top: 450px; */
   padding-left: 20px;
   padding-right: 20px;
+  padding-top: 4rem;
   width: 100vw;
-  gap: 15px; 
-
+  gap: 15px;
 }
 
 .results-header {
@@ -63,6 +66,6 @@
 }
 
 .category {
-  color: #FF9900;
+  color: #ff9900;
   font-weight: bold;
 }
