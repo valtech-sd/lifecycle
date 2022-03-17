@@ -2,5 +2,6 @@ node_modules
 .DS_Store
 dist/
 build
+nft-app/secrets.json
 # Local Netlify folder
 .netlify
