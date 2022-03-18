@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Space, Typography } from "antd";
+import { useMoralis, useNFTBalances } from "react-moralis";
 import Header from "../components/Header";
 import WalletConnect from "@walletconnect/client";
 import QRCodeModal from "@walletconnect/qrcode-modal";
@@ -8,6 +9,7 @@ import "./Home.css";
 
 const Home = () => {
   const [account, setAccount] = useState("");
+  const { authenticate, isAuthenticated, user, logout } = useMoralis();
 
   const clearWalletConnectConnection = () => {
     if (account) {
@@ -60,6 +62,24 @@ const Home = () => {
     });
   };
 
+  const login = async () => {
+    if (!isAuthenticated) {
+      await authenticate({ provider: "walletconnect" })
+        .then(function (user) {
+          console.log("logged in user:", user);
+          console.log(user.get("ethAddress"));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  };
+
+  const logOut = async () => {
+    await logout();
+    console.log("Logged Out");
+  };
+
   return (
     <>
       <div className="container">
@@ -69,17 +89,18 @@ const Home = () => {
           <Typography>{account}</Typography>
 
           <Space size="large">
-            <Button
-              type="primary"
-              className="button"
-              onClick={handleConnectToWallet}
-            >
+            <Button type="primary" className="button" onClick={login}>
               Connect Wallet
             </Button>
 
-            <Button type="primary" onClick={clearWalletConnectConnection}>
+            <Button type="primary" onClick={logOut}>
               Disconnect Wallet
             </Button>
+          </Space>
+          <Space size="large">
+            {/* {NFTBalances.result.map((nft) => {
+              <div>{nft}</div>;
+            })} */}
           </Space>
         </div>
       </div>
