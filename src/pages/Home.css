@@ -14,6 +14,10 @@
   top: 0;
 }
 
+.button {
+  cursor: pointer;
+}
+
 .carousel-img {
   min-width: 100vw;
   height: 750px;
@@ -27,6 +31,8 @@
 
 .section {
   padding: 4rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-content {

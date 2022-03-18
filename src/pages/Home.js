@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Typography } from "antd";
+import { Button, Space, Typography } from "antd";
 import Header from "../components/Header";
 import WalletConnect from "@walletconnect/client";
 import QRCodeModal from "@walletconnect/qrcode-modal";
 import "./Home.css";
 
-const { Paragraph } = Typography;
-
 const Home = () => {
   const [account, setAccount] = useState("");
+
+  const clearWalletConnectConnection = () => {
+    if (account) {
+      setAccount("");
+    }
+    window.localStorage.removeItem("walletconnect");
+  };
 
   const handleConnectToWallet = () => {
     // Create a connector
@@ -17,7 +22,6 @@ const Home = () => {
       bridge: "https://bridge.walletconnect.org", // Required
       qrcodeModal: QRCodeModal,
     });
-
     // Check if connection is already established
     if (!connector.connected) {
       // create new session
@@ -30,7 +34,7 @@ const Home = () => {
         throw error;
       }
 
-      console.log("PAYLOAD", payload);
+      console.log("CONNECTING", payload.params[0].accounts);
       setAccount(payload.params[0].accounts[0]);
 
       // Get provided accounts and chainId
@@ -48,10 +52,11 @@ const Home = () => {
 
     connector.on("disconnect", (error, payload) => {
       if (error) {
+        console.log("DISCONNECTING YOO");
         throw error;
       }
 
-      // Delete connector
+      setAccount("");
     });
   };
 
@@ -63,9 +68,19 @@ const Home = () => {
           <h1>Welcome !</h1>
           <Typography>{account}</Typography>
 
-          <Button type="primary" onClick={() => handleConnectToWallet()}>
-            Connect Wallet
-          </Button>
+          <Space size="large">
+            <Button
+              type="primary"
+              className="button"
+              onClick={handleConnectToWallet}
+            >
+              Connect Wallet
+            </Button>
+
+            <Button type="primary" onClick={clearWalletConnectConnection}>
+              Disconnect Wallet
+            </Button>
+          </Space>
         </div>
       </div>
     </>

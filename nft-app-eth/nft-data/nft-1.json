@@ -1,0 +1,25 @@
+{
+  "name": "Valtech Black Handbag First Release",
+  "external_url": "https://cranky-bell-1896a6.netlify.app/",
+  "description": "Only the best luxury handbags. This is the first of our handbag collection. Ready to take on your next night out with the gals!",
+  "image": "https://gateway.pinata.cloud/ipfs/QmaVkPp3b3zLrzsKNenL1Kjy488vEHhZRprpzuZCiz4hN3",
+  "attributes": [
+    {
+      "display_type": "date",
+      "trait_type": "Original Sale Date",
+      "value": 1647570893
+    },
+    {
+      "trait_type": "Design by",
+      "value": "Alyssa Ferrante"
+    },
+    {
+      "trait_type": "Manufactured",
+      "value": "Taiwan"
+    },
+    {
+      "trait_type": "Collection",
+      "value": "Valtech Hangbags First Release"
+    }
+  ]
+}
