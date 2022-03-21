@@ -35,7 +35,7 @@ const Home = () => {
     NFTBalances.result.find((nft) => {
       return (
         nft.token_address == contractAddress.toLowerCase() &&
-        nft.token_id == "1"
+        nft.token_id == "5"
       );
     });
   console.log(nftOfInterest);
@@ -52,12 +52,8 @@ const Home = () => {
     // 6. Customer views item in app as an NFT
 
     nftContract.methods
-      .safeTransferFrom(
-        "0x062BcE1640F79bFa7B0B79dAb0e413C54299c556",
-        brandAccount,
-        2
-      )
-      .send({ from: account })
+      .transferFrom(brandAccount, account, 5)
+      .send({ from: brandAccount })
       .then((res) => {
         console.log("Transferred NFT to buyer", res);
       })
@@ -99,6 +95,23 @@ const Home = () => {
       });
   };
 
+  const mintNFT = async () => {
+    console.log("Minting NFT:", brandAccount);
+
+    nftContract.methods
+      .mintNFT(
+        brandAccount,
+        "https://gateway.pinata.cloud/ipfs/QmUuykidbcxAyQXnoAQAojupaABfz1sXjgRLhfLezhhjYp/nft-1.json"
+      )
+      .send({ from: brandAccount })
+      .then((res) => {
+        console.log("Finished minting an NFT", res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const checkOwner = async () => {
     console.log("Logged in:", account);
     nftContract.methods
@@ -131,28 +144,7 @@ const Home = () => {
     <>
       <div className="container">
         <Header />
-        {nftOfInterest && (
-          <div className="section">
-            <Typography>{nftOfInterest.metadata.name}</Typography>
-            <Typography>{nftOfInterest.metadata.description}</Typography>
-            <Typography>
-              {nftOfInterest.metadata.attributes.map((attribute) => {
-                const value =
-                  attribute.display_type == "date"
-                    ? new Date(attribute.value).toLocaleDateString("en-US")
-                    : attribute.value;
-                return (
-                  <div>
-                    {`${attribute.trait_type}: ${value}`}
-                    <br />
-                  </div>
-                );
-              })}
-            </Typography>
-            <Image width={200} src={nftOfInterest.metadata.image} />
-            <pre>{JSON.stringify(NFTBalances, null, 2)}</pre>
-          </div>
-        )}
+
         <div className="section">
           <Row gutter={[24, 24]}>
             <Col span="24" align="middle">
@@ -193,6 +185,12 @@ const Home = () => {
             </Col>
 
             <Col span="24" align="middle">
+              <Button type="primary" onClick={() => mintNFT()}>
+                Mint a new NFT
+              </Button>
+            </Col>
+
+            <Col span="24" align="middle">
               <Button type="primary" onClick={() => sendNFT()}>
                 Transfer NFT
               </Button>
@@ -205,6 +203,28 @@ const Home = () => {
             </Col>
           </Row>
         </div>
+        {nftOfInterest && (
+          <div className="section">
+            <Typography>{nftOfInterest.metadata.name}</Typography>
+            <Typography>{nftOfInterest.metadata.description}</Typography>
+            <Typography>
+              {nftOfInterest.metadata.attributes.map((attribute) => {
+                const value =
+                  attribute.display_type == "date"
+                    ? new Date(attribute.value).toLocaleDateString("en-US")
+                    : attribute.value;
+                return (
+                  <div>
+                    {`${attribute.trait_type}: ${value}`}
+                    <br />
+                  </div>
+                );
+              })}
+            </Typography>
+            <Image width={200} src={nftOfInterest.metadata.image} />
+            <pre>{JSON.stringify(NFTBalances, null, 2)}</pre>
+          </div>
+        )}
       </div>
     </>
   );
