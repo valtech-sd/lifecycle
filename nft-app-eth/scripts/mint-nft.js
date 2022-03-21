@@ -6,7 +6,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(API_URL);
 
-const contract = require("../artifacts/contracts/NFT-1.sol/V_Auth_NFT.json");
+const contract = require("../artifacts/contracts/NFT-2.sol/V_Auth_NFT1.json");
 const contractAddress = "0xdFad5CDC3Bdef5EEf621C87847d61CC738320891";
 // https://rinkeby.etherscan.io/address/0xdFad5CDC3Bdef5EEf621C87847d61CC738320891
 const nftContract = new web3.eth.Contract(contract.abi, contractAddress);
@@ -20,6 +20,7 @@ async function mintNFT(tokenURI) {
     to: contractAddress,
     nonce: nonce,
     gas: 500000,
+
     data: nftContract.methods.mintNFT(PUBLIC_KEY, tokenURI).encodeABI(),
   };
 

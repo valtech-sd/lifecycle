@@ -30,9 +30,8 @@
 }
 
 .section {
-  padding: 4rem;
-  display: flex;
-  flex-direction: column;
+  margin: 4rem;
+  background: lightgreen;
 }
 
 .card-content {
