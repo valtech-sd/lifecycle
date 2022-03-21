@@ -1,15 +1,21 @@
-import React from 'react';
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Product from './pages/Product';
-import Categories from './pages/Categories';
-import './App.css';
+import Admin from "./pages/Admin";
+import NFT from "./pages/NFT";
+import "./App.css";
+import PinInput from "./pages/PinInput";
+import AuthenticateMenu from "./pages/AuthenticateMenu";
+import ClaimOwnership from "./pages/ClaimOwnership";
 
 const App = () => (
   <Routes>
     <Route path="/" element={<Home />} />
-    <Route path="product" element={<Product />} />
-    <Route path="categories" element={<Categories />} />
+    <Route path="admin" element={<Admin />} />
+    <Route path="nft" element={<NFT />} />
+    <Route path="input-pin" element={<PinInput />} />
+    <Route path="authenticate-menu" element={<AuthenticateMenu />} />
+    <Route path="claim-ownership" element={<ClaimOwnership />} />
   </Routes>
 );
 

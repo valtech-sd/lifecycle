@@ -42,26 +42,6 @@ const Home = () => {
 
   // console.log(nftContract.methods);
 
-  const sendNFT = () => {
-    // Steps:
-    // 1. NFT is minted by brand
-    // 2. NFT is purchased
-    // 3. Customer accesses app, logs in to Wallet
-    // 4. Customer is 'approved'
-    // 5. Customer scans item, 'safeTransfer' to Customer
-    // 6. Customer views item in app as an NFT
-
-    nftContract.methods
-      .transferFrom(brandAccount, account, 5)
-      .send({ from: brandAccount })
-      .then((res) => {
-        console.log("Transferred NFT to buyer", res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const login = async () => {
     console.log(isAuthenticated, account);
     if (!isAuthenticated || !account) {
@@ -149,24 +129,34 @@ const Home = () => {
           <Row gutter={[24, 24]}>
             <Col span="24" align="middle">
               <h1>Welcome to V_AUTH !!</h1>
-              <Typography>NFT #2</Typography>
               <Typography>{account}</Typography>
             </Col>
           </Row>
           <Row gutter={[24, 24]}>
             <Col span="24" align="middle">
-              <Button type="primary" className="button" onClick={login}>
-                Connect Wallet
-              </Button>
+              <Link to="/input-pin" className="categories">
+                <Button type="primary" className="button">
+                  New User
+                </Button>
+              </Link>
             </Col>
 
             <Col span="24" align="middle">
               <Button type="primary" onClick={logOut}>
-                Disconnect Wallet
+                Existing User
               </Button>
             </Col>
+          </Row>
+        </div>
+      </div>
+    </>
+  );
+};
 
-            <Col span="24" align="middle">
+export default Home;
+
+{
+  /* <Col span="24" align="middle">
               <Button type="primary" onClick={() => checkOwner()}>
                 Who is Owner?
               </Button>
@@ -191,46 +181,11 @@ const Home = () => {
             </Col>
 
             <Col span="24" align="middle">
-              <Button type="primary" onClick={() => sendNFT()}>
-                Transfer NFT
-              </Button>
-            </Col>
-
-            <Col span="24" align="middle">
               <Button type="primary" onClick={() => addApprovedAccount()}>
                 Set Approved Account
               </Button>
-            </Col>
-          </Row>
-        </div>
-        {nftOfInterest && (
-          <div className="section">
-            <Typography>{nftOfInterest.metadata.name}</Typography>
-            <Typography>{nftOfInterest.metadata.description}</Typography>
-            <Typography>
-              {nftOfInterest.metadata.attributes.map((attribute) => {
-                const value =
-                  attribute.display_type == "date"
-                    ? new Date(attribute.value).toLocaleDateString("en-US")
-                    : attribute.value;
-                return (
-                  <div>
-                    {`${attribute.trait_type}: ${value}`}
-                    <br />
-                  </div>
-                );
-              })}
-            </Typography>
-            <Image width={200} src={nftOfInterest.metadata.image} />
-            <pre>{JSON.stringify(NFTBalances, null, 2)}</pre>
-          </div>
-        )}
-      </div>
-    </>
-  );
-};
-
-export default Home;
+            </Col> */
+}
 
 // const clearWalletConnectConnection = () => {
 //   if (account) {
