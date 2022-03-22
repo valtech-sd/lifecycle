@@ -1,53 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { QrReader } from "react-qr-reader";
-import { Link } from "react-router-dom";
 import { useMoralis } from "react-moralis";
-import { Row, Col, Button, Typography } from "antd";
+import { Row, Col, Button } from "antd";
+import Web3 from "web3";
 import Header from "../components/Header";
-import { useMoralisWeb3Api } from "react-moralis";
 
-const ClaimOwnership = async () => {
+const ClaimOwnership = () => {
   const [data, setData] = useState("No result");
-
+  const { account, provider } = useMoralis();
   const brandAccount = "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c";
 
-  // const web3 = createAlchemyWeb3(
-  //   "https://eth-rinkeby.alchemyapi.io/v2/zCr9eFAjZ5vhp8RTZRLO-6LnJz2axXTv"
-  // );
+  // Enable web3 and get the initialized web3 instance from Web3.js
+  const web3Js = new Web3(provider);
 
   const contract = require("../contractABIs/V_Auth_NFT.json");
   const contractAddress = "0xdFad5CDC3Bdef5EEf621C87847d61CC738320891";
-  // https://rinkeby.etherscan.io/address/0xdFad5CDC3Bdef5EEf621C87847d61CC738320891
-  // const nftContract = new web3.eth.Contract(contract.abi, contractAddress, {
-  //   from: "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c", // default from address
-  // });
+  const nftContract = new web3Js.eth.Contract(contract.abi, contractAddress, {
+    from: "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c", // default from address
+  });
 
   const sendNFT = () => {
-    // Steps:
-    // 1. NFT is minted by brand
-    // 2. NFT is purchased
-    // 3. Customer accesses app, logs in to Wallet
-    // 4. Customer is 'approved'
-    // 5. Customer scans item, 'safeTransfer' to Customer
-    // 6. Customer views item in app as an NFT
-    // Mechanism to authorize and transfer NFT to yourself.
-    // You have to enter a passphrase we provide in an email.
-    // when you enter the passphrase, and successfully authenticate, we remove the passphrase from the list of approved passphrases
-    // You are transferred the NFT and can view
-    // If you want to transfer to someone else, you can enter an email address of the person you are transferring to
-    // That person opens the email, and has access to a new passphrase.... that passphrase allows them to transfer the NFT to themself.
-    // Once they enter the new passphrase, the previous owner's passphrase is deleted so they cannot reclaim
-    // console.log("BRAND ACCT", brandAccount);
-    // console.log("THIS ACCT", account);
-    // nftContract.methods
-    //   .transferFrom(brandAccount, account, 7)
-    //   .send({ from: brandAccount })
-    //   .then((res) => {
-    //     console.log("Transferred NFT to buyer", res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    console.log("THIS ACCT", account);
+    nftContract.methods
+      .transferFrom(brandAccount, account, 11)
+      .send({ from: brandAccount })
+      .then((res) => {
+        console.log("Transferred NFT to buyer", res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    window.location =
+      "https://metamask.app.link/wc?uri=wc%3A88ce919b-56ff-48f6-b7b4-7a57ff93f07c%401%3Fbridge%3Dhttps%253A%252F%252Fh.bridge.walletconnect.org%26key%3Df16b671a41cdb637ca440e2593860081319b4a79ac8a9391f827244e63eab965";
   };
 
   const onClick = () => {

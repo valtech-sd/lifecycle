@@ -27,7 +27,6 @@ const Admin = () => {
   }, [isWeb3Enabled, isAuthenticated, enableWeb3]);
 
   const mintNFT = async () => {
-    console.log("PROVIDER", provider);
     nftContract.methods
       .mintNFT(
         brandAccount,
