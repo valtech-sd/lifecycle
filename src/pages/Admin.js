@@ -27,6 +27,7 @@ const Admin = () => {
   }, [isWeb3Enabled, isAuthenticated, enableWeb3]);
 
   const mintNFT = async () => {
+    console.log("PROVIDER", provider);
     nftContract.methods
       .mintNFT(
         brandAccount,
@@ -39,6 +40,8 @@ const Admin = () => {
       .catch((err) => {
         console.log(err);
       });
+    window.location =
+      "https://metamask.app.link/wc?uri=wc%3A88ce919b-56ff-48f6-b7b4-7a57ff93f07c%401%3Fbridge%3Dhttps%253A%252F%252Fh.bridge.walletconnect.org%26key%3Df16b671a41cdb637ca440e2593860081319b4a79ac8a9391f827244e63eab965";
   };
 
   return (
