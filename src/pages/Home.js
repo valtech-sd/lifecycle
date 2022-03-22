@@ -4,7 +4,6 @@ import { Button, Space, Typography, Row, Col, Image } from "antd";
 import { useMoralis, useNFTBalances } from "react-moralis";
 import Header from "../components/Header";
 import WalletConnect from "@walletconnect/client";
-import QRCodeModal from "@walletconnect/qrcode-modal";
 import "./Home.css";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 import { mnemonicToSeed } from "ethers/lib/utils";
