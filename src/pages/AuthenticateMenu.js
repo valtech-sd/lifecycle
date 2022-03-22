@@ -33,10 +33,10 @@ const AuthenticateMenu = () => {
     console.log("Logged Out");
   };
 
-  const clearWalletConnectConnection = () => {
-    if (account) {
-    }
+  const clearWalletConnectConnection = () => {    
     window.localStorage.removeItem("walletconnect");
+    window.localStorage.removeItem('WALLETCONNECT_DEEPLINK_CHOICE'); 
+
   };
 
   const handleConnectToWallet2 = async () => {
