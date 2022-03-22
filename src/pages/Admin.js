@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Typography, Row, Col } from "antd";
-import { useMoralis, useNFTBalances } from "react-moralis";
 import Header from "../components/Header";
 import "./Admin.css";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
+import { useMoralis } from "react-moralis";
 
 const Admin = () => {
   const { account } = useMoralis();
+
+  const contract = require("../contractABIs/V_Auth_NFT.json");
+
+  console.log("ACCOUNT", account);
 
   const brandAccount = "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c";
 
@@ -15,7 +19,6 @@ const Admin = () => {
     "https://eth-rinkeby.alchemyapi.io/v2/zCr9eFAjZ5vhp8RTZRLO-6LnJz2axXTv"
   );
 
-  const contract = require("../contractABIs/V_Auth_NFT.json");
   const contractAddress = "0xdFad5CDC3Bdef5EEf621C87847d61CC738320891";
   const nftContract = new web3.eth.Contract(contract.abi, contractAddress, {
     from: "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c", // default from address
