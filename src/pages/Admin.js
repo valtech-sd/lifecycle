@@ -1,32 +1,32 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import { Button, Typography, Row, Col } from "antd";
 import Header from "../components/Header";
 import "./Admin.css";
-import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 import { useMoralis } from "react-moralis";
+import Web3 from "web3"; // Only when using npm/yarn
 
 const Admin = () => {
-  const { account } = useMoralis();
+  const { isWeb3Enabled, isAuthenticated, enableWeb3, account, provider } =
+    useMoralis();
 
-  const contract = require("../contractABIs/V_Auth_NFT.json");
-
-  console.log("ACCOUNT", account);
+  // Enable web3 and get the initialized web3 instance from Web3.js
+  const web3Js = new Web3(provider);
 
   const brandAccount = "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c";
-
-  const web3 = createAlchemyWeb3(
-    "https://eth-rinkeby.alchemyapi.io/v2/zCr9eFAjZ5vhp8RTZRLO-6LnJz2axXTv"
-  );
-
+  const contract = require("../contractABIs/V_Auth_NFT.json");
   const contractAddress = "0xdFad5CDC3Bdef5EEf621C87847d61CC738320891";
-  const nftContract = new web3.eth.Contract(contract.abi, contractAddress, {
+  const nftContract = new web3Js.eth.Contract(contract.abi, contractAddress, {
     from: "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c", // default from address
   });
 
-  const mintNFT = async () => {
-    console.log("Minting NFT:", brandAccount);
+  useEffect(() => {
+    if (!isWeb3Enabled && isAuthenticated) {
+      enableWeb3({ provider: "walletconnect", chainId: 4 });
+      console.log("web3 activated");
+    }
+  }, [isWeb3Enabled, isAuthenticated, enableWeb3]);
 
+  const mintNFT = async () => {
     nftContract.methods
       .mintNFT(
         brandAccount,
