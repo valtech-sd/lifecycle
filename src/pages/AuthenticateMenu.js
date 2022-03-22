@@ -4,76 +4,58 @@ import { Button, Typography, Row, Col } from "antd";
 import { useMoralis } from "react-moralis";
 import Header from "../components/Header";
 import WalletConnect from "@walletconnect/client";
-// import QRCodeModal from "@walletconnect/qrcode-modal";
+import QRCodeModal from "@walletconnect/qrcode-modal";
 
 import WalletConnectClient, { CLIENT_EVENTS } from "@walletconnect/client";
 import EthereumProvider from "@walletconnect/ethereum-provider";
 import { PairingTypes, SessionTypes } from "@walletconnect/types";
-import QRCodeModal from "@walletconnect/qrcode-modal";
+
+import WalletConnectProvider from "@walletconnect/web3-provider";
 
 const AuthenticateMenu = () => {
-  const { authenticate, isAuthenticated, logout, account } = useMoralis();
+  // const { authenticate, isAuthenticated, logout, account } = useMoralis();
 
-  const login = async () => {
-    console.log(isAuthenticated, account);
-    if (!isAuthenticated || !account) {
-      await authenticate({ provider: "walletconnect" })
-        .then(function (user) {
-          console.log("logged in user:", user);
-          console.log(user.get("ethAddress"));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  };
+  // const login = async () => {
+  //   console.log(isAuthenticated, account);
+  //   if (!isAuthenticated || !account) {
+  //     await authenticate({ provider: "walletconnect" })
+  //       .then(function (user) {
+  //         console.log("logged in user:", user);
+  //         console.log(user.get("ethAddress"));
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
 
-  const logOut = async () => {
-    await logout();
-    console.log("Logged Out");
-  };
+  // const logOut = async () => {
+  //   await logout();
+  //   console.log("Logged Out");
+  // };
 
-  const clearWalletConnectConnection = () => {    
+  const clearWalletConnectConnection = () => {
     window.localStorage.removeItem("walletconnect");
-    window.localStorage.removeItem('WALLETCONNECT_DEEPLINK_CHOICE'); 
-
+    window.localStorage.removeItem("WALLETCONNECT_DEEPLINK_CHOICE");
   };
 
   const handleConnectToWallet2 = async () => {
-    // 1. Create a WalletConnect Client
-    const client = await WalletConnectClient.init({
-      projectId: "6fa38957f6fdd7e4324b5002dceeca3f",
-      relayUrl: "wss://relay.walletconnect.com",
+    //  Create WalletConnect Provider
+    const provider = new WalletConnectProvider({
+      infuraId: "7037ffa8d58e4057b98827b5a66ec722",
+      qrcodeModalOptions: {
+        mobileLinks: [
+          "rainbow",
+          "metamask",
+          "argent",
+          "trust",
+          "imtoken",
+          "pillar",
+        ],
+      },
     });
 
-    // 2. Subscribe to client events
-
-    client.on(
-      CLIENT_EVENTS.pairing.proposal,
-      async (proposal: PairingTypes.Proposal) => {
-        // Display the QRCode modal on a new pairing request.
-        const { uri } = proposal.signal.params;
-        console.log("EVENT", "QR Code Modal opened");
-        QRCodeModal.open(uri, () => {
-          console.log("EVENT", "QR Code Modal closed");
-        });
-      }
-    );
-
-    client.on(
-      CLIENT_EVENTS.session.deleted,
-      (deletedSession: SessionTypes.Settled) => {
-        // Perform some cleanup after session was deleted (e.g. via `provider.disconnect()`)
-      }
-    );
-
-    // 3. Create EthereumProvider (with default RPC configuration) by passing in the `client` instance.
-    const provider = new EthereumProvider({
-      chainId: 4,
-      client,
-    });
-
-    // 4. Enable session (triggers `CLIENT_EVENTS.pairing.proposal` event).
+    //  Enable session (triggers QR Code modal)
     await provider.enable();
   };
 
@@ -130,19 +112,17 @@ const AuthenticateMenu = () => {
           <Row gutter={[24, 24]}>
             <Col span="24" align="middle">
               <h1>Welcome to V_AUTH !!</h1>
-              <Typography>{account}</Typography>
+              {/* <Typography>{account}</Typography> */}
             </Col>
           </Row>
 
           <Row gutter={[24, 24]}>
             <Col span="24" align="middle">
-              {account && (
-                <Link to="/claim-ownership" className="categories">
-                  <Button type="primary" className="button">
-                    Claim Ownership
-                  </Button>
-                </Link>
-              )}
+              <Link to="/claim-ownership" className="categories">
+                <Button type="primary" className="button">
+                  Claim Ownership
+                </Button>
+              </Link>
             </Col>
             <Col span="24" align="middle">
               <Button
