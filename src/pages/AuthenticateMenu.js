@@ -4,6 +4,11 @@ import { Button, Typography, Row, Col } from "antd";
 import { useMoralis } from "react-moralis";
 import Header from "../components/Header";
 import WalletConnect from "@walletconnect/client";
+// import QRCodeModal from "@walletconnect/qrcode-modal";
+
+import WalletConnectClient, { CLIENT_EVENTS } from "@walletconnect/client";
+import EthereumProvider from "@walletconnect/ethereum-provider";
+import { PairingTypes, SessionTypes } from "@walletconnect/types";
 import QRCodeModal from "@walletconnect/qrcode-modal";
 
 const AuthenticateMenu = () => {
@@ -32,6 +37,44 @@ const AuthenticateMenu = () => {
     if (account) {
     }
     window.localStorage.removeItem("walletconnect");
+  };
+
+  const handleConnectToWallet2 = async () => {
+    // 1. Create a WalletConnect Client
+    const client = await WalletConnectClient.init({
+      projectId: "6fa38957f6fdd7e4324b5002dceeca3f",
+      relayUrl: "wss://relay.walletconnect.com",
+    });
+
+    // 2. Subscribe to client events
+
+    client.on(
+      CLIENT_EVENTS.pairing.proposal,
+      async (proposal: PairingTypes.Proposal) => {
+        // Display the QRCode modal on a new pairing request.
+        const { uri } = proposal.signal.params;
+        console.log("EVENT", "QR Code Modal opened");
+        QRCodeModal.open(uri, () => {
+          console.log("EVENT", "QR Code Modal closed");
+        });
+      }
+    );
+
+    client.on(
+      CLIENT_EVENTS.session.deleted,
+      (deletedSession: SessionTypes.Settled) => {
+        // Perform some cleanup after session was deleted (e.g. via `provider.disconnect()`)
+      }
+    );
+
+    // 3. Create EthereumProvider (with default RPC configuration) by passing in the `client` instance.
+    const provider = new EthereumProvider({
+      chainId: 4,
+      client,
+    });
+
+    // 4. Enable session (triggers `CLIENT_EVENTS.pairing.proposal` event).
+    await provider.enable();
   };
 
   const handleConnectToWallet = () => {
@@ -105,7 +148,7 @@ const AuthenticateMenu = () => {
               <Button
                 type="primary"
                 className="button"
-                onClick={handleConnectToWallet}
+                onClick={handleConnectToWallet2}
               >
                 Connect Your Wallet
               </Button>
