@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Button, Typography, Row, Col } from "antd";
 import { useMoralis } from "react-moralis";
 import Header from "../components/Header";
+import WalletConnect from "@walletconnect/client";
+import QRCodeModal from "@walletconnect/qrcode-modal";
 
 const AuthenticateMenu = () => {
   const { authenticate, isAuthenticated, logout, account } = useMoralis();
@@ -24,6 +26,56 @@ const AuthenticateMenu = () => {
   const logOut = async () => {
     await logout();
     console.log("Logged Out");
+  };
+
+  const clearWalletConnectConnection = () => {
+    if (account) {
+    }
+    window.localStorage.removeItem("walletconnect");
+  };
+
+  const handleConnectToWallet = () => {
+    // Create a connector
+    const connector = new WalletConnect({
+      bridge: "https://bridge.walletconnect.org", // Required
+      qrcodeModal: QRCodeModal,
+    });
+    // Check if connection is already established
+    if (!connector.connected) {
+      // create new session
+      connector.createSession();
+    }
+
+    // Subscribe to connection events
+    connector.on("connect", (error, payload) => {
+      if (error) {
+        throw error;
+      }
+
+      console.log("CONNECTING", payload.params[0].accounts);
+      // setAccount(payload.params[0].accounts[0]);
+
+      // Get provided accounts and chainId
+      const { accounts, chainId } = payload.params[0];
+    });
+
+    connector.on("session_update", (error, payload) => {
+      if (error) {
+        throw error;
+      }
+
+      // Get updated accounts and chainId
+      const { accounts, chainId } = payload.params[0];
+    });
+
+    connector.on("disconnect", (error, payload) => {
+      if (error) {
+        console.log("DISCONNECTING YOO");
+        throw error;
+      }
+
+      // setAccount("");
+    });
   };
 
   return (
@@ -50,13 +102,17 @@ const AuthenticateMenu = () => {
               )}
             </Col>
             <Col span="24" align="middle">
-              <Button type="primary" className="button" onClick={login}>
+              <Button
+                type="primary"
+                className="button"
+                onClick={handleConnectToWallet}
+              >
                 Connect Your Wallet
               </Button>
             </Col>
 
             <Col span="24" align="middle">
-              <Button type="primary" onClick={logOut}>
+              <Button type="primary" onClick={clearWalletConnectConnection}>
                 Disconnect Your Wallet
               </Button>
             </Col>

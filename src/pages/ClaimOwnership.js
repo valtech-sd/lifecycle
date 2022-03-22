@@ -56,9 +56,9 @@ const ClaimOwnership = () => {
   };
 
   const onClick = () => {
-    const dataQR = JSON.parse(data);
-    console.log(dataQR.id);
-    console.log(dataQR.c_id);
+    // const dataQR = JSON.parse(data);
+    // console.log(dataQR.id);
+    // console.log(dataQR.c_id);
     // Authenticate here
     sendNFT();
   };

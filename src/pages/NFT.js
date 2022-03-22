@@ -28,7 +28,7 @@ const NFT = () => {
     NFTBalances.result.find((nft) => {
       return (
         nft.token_address == contractAddress.toLowerCase() &&
-        nft.token_id == "5"
+        nft.token_id == "7"
       );
     });
   console.log(nftOfInterest);
