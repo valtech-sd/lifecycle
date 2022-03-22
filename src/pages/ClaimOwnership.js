@@ -45,7 +45,7 @@ const ClaimOwnership = () => {
     console.log("THIS ACCT", account);
 
     nftContract.methods
-      .transferFrom(brandAccount, account, 6)
+      .transferFrom(brandAccount, account, 7)
       .send({ from: brandAccount })
       .then((res) => {
         console.log("Transferred NFT to buyer", res);
