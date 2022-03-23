@@ -3,7 +3,7 @@ import { Button, Typography, Row, Col } from "antd";
 import Header from "../components/Header";
 import "./Admin.css";
 import { useMoralis } from "react-moralis";
-import Web3 from "web3"; // Only when using npm/yarn
+import Web3 from "web3";
 
 const Admin = () => {
   const { isWeb3Enabled, isAuthenticated, enableWeb3, account, provider } =

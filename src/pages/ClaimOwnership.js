@@ -57,6 +57,7 @@ const ClaimOwnership = () => {
           <Row gutter={[24, 24]}>
             <Col span="24" align="middle">
               <QrReader
+                constraints={{ facingMode: { exact: "environment" } }}
                 onResult={(result, error) => {
                   if (!!result) {
                     setData(result?.text);
