@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Button, Typography, Row, Col } from "antd";
 import Header from "../components/Header";
 import "./Admin.css";
 import { useMoralis } from "react-moralis";
+import { AppContext } from "../App.js";
 import Web3 from "web3";
 
 const Admin = () => {
   const { isWeb3Enabled, isAuthenticated, enableWeb3, account, provider } =
     useMoralis();
+  const { nft, setNft } = useContext(AppContext);
 
   // Enable web3 and get the initialized web3 instance from Web3.js
   const web3Js = new Web3(provider);
@@ -19,6 +21,7 @@ const Admin = () => {
     from: "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c", // default from address
   });
 
+  console.log("in admin", nft);
   useEffect(() => {
     if (!isWeb3Enabled && isAuthenticated) {
       enableWeb3({ provider: "walletconnect", chainId: 4 });

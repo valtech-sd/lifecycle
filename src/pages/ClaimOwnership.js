@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { QrReader } from "react-qr-reader";
 import { useMoralis } from "react-moralis";
 import { Row, Col, Button } from "antd";
 import Web3 from "web3";
 import Header from "../components/Header";
+import { AppContext } from "../App.js";
 
 const ClaimOwnership = () => {
   const [data, setData] = useState("No result");
   const { account, provider } = useMoralis();
+  const { nft, setNft } = useContext(AppContext);
+
+  console.log(nft);
+
   const brandAccount = "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c";
 
   // Enable web3 and get the initialized web3 instance from Web3.js
@@ -21,17 +26,24 @@ const ClaimOwnership = () => {
 
   const sendNFT = () => {
     console.log("THIS ACCT", account);
-    nftContract.methods
-      .transferFrom(brandAccount, account, 11)
-      .send({ from: brandAccount })
-      .then((res) => {
-        console.log("Transferred NFT to buyer", res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    window.location =
-      "https://metamask.app.link/wc?uri=wc%3A88ce919b-56ff-48f6-b7b4-7a57ff93f07c%401%3Fbridge%3Dhttps%253A%252F%252Fh.bridge.walletconnect.org%26key%3Df16b671a41cdb637ca440e2593860081319b4a79ac8a9391f827244e63eab965";
+    // nftContract.methods
+    //   .transferFrom(brandAccount, account, 11)
+    //   .send({ from: brandAccount })
+    //   .then((res) => {
+    //     console.log("Transferred NFT to buyer", res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    // window.location =
+    //   "https://metamask.app.link/wc?uri=wc%3A88ce919b-56ff-48f6-b7b4-7a57ff93f07c%401%3Fbridge%3Dhttps%253A%252F%252Fh.bridge.walletconnect.org%26key%3Df16b671a41cdb637ca440e2593860081319b4a79ac8a9391f827244e63eab965";
+    // add NFT info to global state
+    setNft({
+      nft: {
+        id: 3,
+        owner: "123",
+      },
+    });
   };
 
   const onClick = () => {

@@ -16,8 +16,8 @@ const Header = () => {
             <Link to="/admin" className="categories">
               Admin
             </Link>
-            <Link to="/nft" className="categories">
-              NFT
+            <Link to="/nfts" className="categories">
+              All NFTs
             </Link>
             <Link to="#" className="categories">
               ID #
