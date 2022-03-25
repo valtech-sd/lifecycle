@@ -1,70 +1,52 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Typography, Row, Col, Image, Menu } from "antd";
-import { useMoralis, useNFTBalances } from "react-moralis";
+import { useMoralis, useMoralisQuery } from "react-moralis";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { AppContext } from "../App.js";
-import Web3 from "web3";
+import metadata from "./nftmeta";
 
 const NFT = () => {
-  const [transfers, setTransfers] = useState([]);
-  const { account, provider } = useMoralis();
-
+  const { account } = useMoralis();
+  // https://github.com/MoralisWeb3/react-moralis#usemoralisquery
+  const { data: transferEventData } = useMoralisQuery("TransferEvents");
   const [current, setCurrent] = useState("details");
   const [nft, setNft] = useState(null);
+  const [nftTransactionsFiltered, setNftTransactionsFiltered] = useState(null);
 
   const { allVAuthNfts } = useContext(AppContext);
   let params = useParams();
-
-  const web3Js = new Web3(provider);
-
-  const contract = require("../contractABIs/V_Auth_NFT.json");
-  const contractAddress = "0xdFad5CDC3Bdef5EEf621C87847d61CC738320891";
-
-  useEffect(() => {
-    const nftContract = new web3Js.eth.Contract(contract.abi, contractAddress);
-
-    nft &&
-      nftContract
-        .getPastEvents(
-          "Transfer",
-          {
-            filter: { tokenId: nft.token_id },
-            fromBlock: 0,
-            toBlock: "latest",
-          },
-          function (error, events) {}
-        )
-        .then(async function (events) {
-          const response = new Promise((resolve, reject) => {
-            events.forEach(async (event, index, array) => {
-              web3Js.eth.getBlock(event.blockNumber).then((block) => {
-                console.log("ADDING TIMESTAMP");
-                event.timestamp = new Date(
-                  block.timestamp * 1000
-                ).toLocaleString();
-              });
-              if (index === array.length - 1) resolve();
-            });
-          });
-          response.then(() => {
-            console.log("DONE", events);
-          });
-
-          setTransfers(events);
-        });
-  }, [nft]);
 
   useEffect(() => {
     setNft(allVAuthNfts.find((nft) => nft.token_id == params.nftId));
   }, [allVAuthNfts, params.nftId, nft]);
 
+  useEffect(() => {
+    const filteredNFTTransactions = transferEventData.filter((event) => {
+      console.log(event);
+      return (
+        event.attributes.tokenId == params.nftId ||
+        (event.attributes.tokenId == params.nftId &&
+          event.attributes.from.includes("0x000"))
+      );
+    });
+    setNftTransactionsFiltered(filteredNFTTransactions);
+  }, [transferEventData, params.nftId]);
+
+  // useEffect(() => {
+  //   console.log("pastContractEventData", pastContractEventData);
+  //   if (pastContractEventData) {
+  //     const nftEvents = pastContractEventData.filter((pastEvent) => {
+  //       return pastEvent.returnValues.tokenId == params.nftId;
+  //     });
+  //     setNFTHistory(nftEvents);
+  //   }
+  // }, [pastContractEventData, params.nftId]);
+
   const handleMenuClick = (e) => {
     console.log("click ", e);
     setCurrent(e.key);
   };
-
-  console.log("tttt", transfers);
 
   return (
     <>
@@ -90,10 +72,10 @@ const NFT = () => {
             <Col span="24" align="middle">
               {nft && current === "details" && (
                 <div className="section">
-                  <Typography>{nft.metadata.name}</Typography>
-                  <Typography>{nft.metadata.description}</Typography>
+                  <Typography>{metadata.name}</Typography>
+                  <Typography>{metadata.description}</Typography>
                   <Typography>
-                    {nft.metadata.attributes.map((attribute) => {
+                    {metadata.attributes.map((attribute) => {
                       const value =
                         attribute.display_type == "date"
                           ? new Date(attribute.value).toLocaleDateString(
@@ -108,25 +90,30 @@ const NFT = () => {
                       );
                     })}
                   </Typography>
-                  <Image width={200} src={nft.metadata.image} />
-                  {/* <pre>{JSON.stringify(NFTBalances, null, 2)}</pre> */}
+                  <Image width={200} src={metadata.image} />
                 </div>
               )}
             </Col>
             <Col span="24" align="middle">
               {current === "journey"
-                ? transfers
-                  ? transfers.map((transfer) => {
+                ? nftTransactionsFiltered
+                  ? nftTransactionsFiltered.map((transfer) => {
                       return (
                         <div className="section">
-                          <Typography>Date: {transfer.timestamp}</Typography>
-                          <Typography>Event: {transfer.event}</Typography>
                           <Typography>
-                            From: {transfer.returnValues.from}
+                            Date:{" "}
+                            {transfer?.attributes.block_timestamp.toString()}
                           </Typography>
                           <Typography>
-                            To: {transfer.returnValues.to}
+                            Event:{" "}
+                            {transfer.attributes.from.includes("0x000")
+                              ? "Mint"
+                              : "Transfer"}
                           </Typography>
+                          <Typography>
+                            From: {transfer.attributes.from}
+                          </Typography>
+                          <Typography>To: {transfer.attributes.to}</Typography>
                         </div>
                       );
                     })

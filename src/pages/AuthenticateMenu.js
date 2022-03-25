@@ -1,38 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Row, Col } from "antd";
+import { Button, Row, Col, Typography } from "antd";
 import Header from "../components/Header";
 import { useMoralis } from "react-moralis";
-import Web3 from "web3";
-
-import WalletConnectProvider from "@walletconnect/web3-provider";
 
 const AuthenticateMenu = () => {
-  const {
-    authenticate,
-    isWeb3Enabled,
-    isAuthenticated,
-    user,
-    enableWeb3,
-    Moralis,
-  } = useMoralis();
+  const { authenticate, account } = useMoralis();
 
   async function authWalletConnect() {
-    const user = authenticate({
+    console.log("Authenticating user");
+    authenticate({
       provider: "walletconnect",
       chainId: 4,
       mobileLinks: ["metamask", "trust", "rainbow"],
-      signingMessage: "Welcome!",
+      signingMessage: "Welcome to V_Auth, please confirm your account.",
     });
-    console.log(user);
   }
-
-  useEffect(() => {
-    if (!isWeb3Enabled && isAuthenticated) {
-      enableWeb3({ provider: "walletconnect", chainId: 4 });
-      console.log("web3 activated");
-    }
-  }, [isWeb3Enabled, isAuthenticated, enableWeb3]);
 
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") {
@@ -43,34 +26,7 @@ const AuthenticateMenu = () => {
   const clearWalletConnectConnection = () => {
     window.localStorage.removeItem("walletconnect");
     window.localStorage.removeItem("WALLETCONNECT_DEEPLINK_CHOICE");
-  };
-
-  const handleConnectToWallet2 = async () => {
-    const user = await Moralis.authenticate({
-      provider: "walletconnect",
-      chainId: 4,
-      mobileLinks: ["rainbow", "metamask", "argent", "trust"],
-    });
-
-    // //  Create WalletConnect Provider
-    // provider = new WalletConnectProvider({
-    //   infuraId: "7037ffa8d58e4057b98827b5a66ec722",
-    //   qrcodeModalOptions: {
-    //     mobileLinks: [
-    //       "rainbow",
-    //       "metamask",
-    //       "argent",
-    //       "trust",
-    //       "imtoken",
-    //       "pillar",
-    //     ],
-    //   },
-    // });
-
-    // //  Enable session (triggers QR Code modal)
-    // await provider.enable();
-
-    // const web3 = new Web3(provider);
+    console.log("Wallet Disconnected");
   };
 
   return (
@@ -82,6 +38,7 @@ const AuthenticateMenu = () => {
           <Row gutter={[24, 24]}>
             <Col span="24" align="middle">
               <h1>Welcome to V_AUTH !!</h1>
+              {account && <Typography>You are logged in, {account}</Typography>}
             </Col>
           </Row>
 

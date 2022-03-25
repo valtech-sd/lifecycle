@@ -1,32 +1,28 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Typography, Row, Col, Image, Menu, List } from "antd";
+import React, { useContext, useEffect } from "react";
+import { Typography, Row, Col, List, Image } from "antd";
 import { useMoralis, useNFTBalances } from "react-moralis";
 import Header from "../components/Header";
-import { BrowserRouter, Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AppContext } from "../App.js";
+import metadata from "./nftmeta";
 
 const NFTList = () => {
   const { account } = useMoralis();
-
-  const { data: NFTBalances, error } = useNFTBalances();
+  const { data: NFTBalances } = useNFTBalances();
   const { allVAuthNfts, setAllVAuthNfts, contractAddress } =
     useContext(AppContext);
 
-  console.log("CONTRACT ADDRESS", contractAddress);
-
+  // Grabs all of this user's V_AUTH NFTs, sets to global state
   useEffect(() => {
+    console.log(contractAddress);
     const vAuthNfts =
       NFTBalances &&
       NFTBalances.result.filter((nft) => {
         return nft.token_address == contractAddress.toLowerCase();
       });
-    // Runs ONCE after initial rendering
     setAllVAuthNfts(vAuthNfts);
-    console.log("RAN NFT UPDATE");
   }, [NFTBalances, setAllVAuthNfts, contractAddress]);
-
-  console.log("allVAuthNfts", allVAuthNfts);
-
+  console.log(allVAuthNfts);
   return (
     <>
       <div className="container">
@@ -47,7 +43,9 @@ const NFTList = () => {
                   renderItem={(nft) => (
                     <Link to={nft.token_id}>
                       <List.Item>
-                        <Typography>{nft.metadata.name}</Typography>
+                        <pre>{JSON.stringify(nft)}</pre>
+                        <Typography>{metadata.name}</Typography>
+                        <Image width={600} src={metadata.image} />
                         <Typography>{nft.token_id}</Typography>
                       </List.Item>
                     </Link>
@@ -57,7 +55,6 @@ const NFTList = () => {
             </Col>
           </Row>
         </div>
-        <Outlet />
       </div>
     </>
   );

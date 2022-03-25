@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "react-app-rewired": "^2.2.1"
   }
 }

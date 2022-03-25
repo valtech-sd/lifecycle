@@ -1,33 +1,24 @@
-import React, { useEffect, useContext } from "react";
+import React from "react";
 import { Button, Typography, Row, Col } from "antd";
 import Header from "../components/Header";
 import "./Admin.css";
 import { useMoralis } from "react-moralis";
-import { AppContext } from "../App.js";
+
 import Web3 from "web3";
 
 const Admin = () => {
-  const { isWeb3Enabled, isAuthenticated, enableWeb3, account, provider } =
-    useMoralis();
-  const { nft, setNft } = useContext(AppContext);
+  const { account, provider } = useMoralis();
 
   // Enable web3 and get the initialized web3 instance from Web3.js
   const web3Js = new Web3(provider);
 
   const brandAccount = "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c";
-  const contract = require("../contractABIs/V_Auth_NFT.json");
-  const contractAddress = "0xdFad5CDC3Bdef5EEf621C87847d61CC738320891";
+  const contract = require("../contractABIs/V_Authenticate.json");
+
+  const contractAddress = "0x3651624F81468bB5864B1ab3158907B070eE3600";
   const nftContract = new web3Js.eth.Contract(contract.abi, contractAddress, {
     from: "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c", // default from address
   });
-
-  console.log("in admin", nft);
-  useEffect(() => {
-    if (!isWeb3Enabled && isAuthenticated) {
-      enableWeb3({ provider: "walletconnect", chainId: 4 });
-      console.log("web3 activated");
-    }
-  }, [isWeb3Enabled, isAuthenticated, enableWeb3]);
 
   const mintNFT = async () => {
     nftContract.methods
