@@ -55,7 +55,7 @@ const ClaimOwnership = () => {
     return originalText;
   };
 
-  let logInfo = 
+  let logInfo;
 
   const sendNFT = async () => {
     // https://ethereum.stackexchange.com/questions/48750/how-to-sign-a-send-method-in-web3-1-0
@@ -78,18 +78,17 @@ const ClaimOwnership = () => {
       to: "0x3651624F81468bB5864B1ab3158907B070eE3600",
     };
 
-    
     console.log(process.env.REACT_APP_PRIVATE_KEY.length);
-    
+
     // code on item is unique hash
     // whoever has the hash can verify the item
     // the hash needs to be the public key of a private/public key pair so that someone with QR code needs to also have the private key
-    
+
     //rinkeby.etherscan.io/address/0x3651624F81468bB5864B1ab3158907B070eE3600
     web3Js.eth.accounts
-    .signTransaction(txObject, process.env.REACT_APP_PASSPHRASE_AUTH)
-    .then((signedTx) => {
-        let logInfo = signedTx     
+      .signTransaction(txObject, process.env.REACT_APP_PASSPHRASE_AUTH)
+      .then((signedTx) => {
+        let logInfo = signedTx;
         console.log("signed", signedTx);
         web3Js.eth
           .sendSignedTransaction(signedTx.rawTransaction)
@@ -104,8 +103,6 @@ const ClaimOwnership = () => {
           });
       });
   };
-
-
 
   const onClick = () => {
     console.log(data);
