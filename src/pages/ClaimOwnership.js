@@ -58,7 +58,7 @@ const ClaimOwnership = () => {
 
   const sendNFT = async () => {
     // https://ethereum.stackexchange.com/questions/48750/how-to-sign-a-send-method-in-web3-1-0
-    let tx_builder = nftContract.methods.transferFrom(account, brandAccount, 2);
+    let tx_builder = nftContract.methods.transferFrom(brandAccount, account, 2);
     let encoded_tx = tx_builder.encodeABI();
     var nonce = await web3Js.eth.getTransactionCount(brandAccount);
 
@@ -73,11 +73,11 @@ const ClaimOwnership = () => {
       gasPrice: gasPriceHex,
       gasLimit: gasLimitHex,
       data: encoded_tx,
-      from: account,
+      from: brandAccount,
       to: "0x3651624F81468bB5864B1ab3158907B070eE3600",
     };
 
-    console.log(process.env.REACT_APP_PRIVATE_KEY.length);
+    setLogInfo(process.env.REACT_APP_PRIVATE_KEY);
 
     // code on item is unique hash
     // whoever has the hash can verify the item
