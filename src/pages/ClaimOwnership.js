@@ -86,7 +86,7 @@ const ClaimOwnership = () => {
 
     //rinkeby.etherscan.io/address/0x3651624F81468bB5864B1ab3158907B070eE3600
     web3Js.eth.accounts
-      .signTransaction(txObject, process.env.REACT_APP_PASSPHRASE_AUTH)
+      .signTransaction(txObject, process.env.REACT_APP_PRIVATE_KEY)
       .then((signedTx) => {
         let logInfo = signedTx;
         console.log("signed", signedTx);
