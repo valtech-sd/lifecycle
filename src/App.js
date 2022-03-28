@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
+import { useMoralis } from "react-moralis";
+
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import NFT from "./pages/NFT";
@@ -7,8 +9,9 @@ import "./App.css";
 import PinInput from "./pages/PinInput";
 import AuthenticateMenu from "./pages/AuthenticateMenu";
 import ClaimOwnership from "./pages/ClaimOwnership";
+import Wallet from "./pages/Wallet";
 import NFTList from "./pages/NFTList";
-import { useMoralis } from "react-moralis";
+import Layout from "./components/Layout";
 
 export const AppContext = React.createContext({
   nft: {
@@ -74,21 +77,6 @@ const App = () => {
     }
   }, [isWeb3Enabled, isAuthenticated, enableWeb3]);
 
-  //https://itnext.io/when-you-finally-decided-to-rid-yourself-of-redux-8fff0624d2fb
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const data = await getNFTEventHistory(provider);
-  //     console.log(
-  //       "Alert: Data fetch complete. Number of transactions found for this smart contract:",
-  //       data.length
-  //     );
-  //     setHistoryData(data);
-  //   }
-  //   if (provider) {
-  //     // fetchData();
-  //   }
-  // }, [provider]);
-
   const value = {
     nft,
     setNft,
@@ -99,15 +87,19 @@ const App = () => {
 
   return (
     <AppContext.Provider value={value}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="admin" element={<Admin />} />
-        <Route path="nfts" element={<NFTList />} />
-        <Route path="nfts/:nftId" element={<NFT />} />
-        <Route path="input-pin" element={<PinInput />} />
-        <Route path="authenticate-menu" element={<AuthenticateMenu />} />
-        <Route path="claim-ownership" element={<ClaimOwnership />} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="admin" element={<Admin />} />
+          <Route path="nfts" element={<NFTList />} />
+          <Route path="nfts/:nftId" element={<NFT />} />
+          <Route path="wallet" element={<Wallet />} />
+          {/* Removed */}
+          <Route path="authenticate-menu" element={<AuthenticateMenu />} />
+          <Route path="claim-ownership" element={<ClaimOwnership />} />
+          {/* Removed */}
+        </Routes>
+      </Layout>
       <Outlet />
     </AppContext.Provider>
   );

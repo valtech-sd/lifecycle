@@ -1,13 +1,37 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Typography, Row, Col, Image, Menu } from "antd";
+import { Typography, Row, Col, Image, Menu, Button } from "antd";
+import styled from "styled-components";
 import { useMoralis, useMoralisQuery } from "react-moralis";
 import { useParams } from "react-router-dom";
+
+import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
 import Header from "../components/Header";
 import { AppContext } from "../App.js";
 import metadata from "./nftmeta";
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ButtonStyled = styled(Button)`
+  cursor: pointer;
+  background: ${({ isActive }) =>
+    isActive ? COLORS.green : COLORS.grey} !important;
+  color: black !important;
+  border: none;
+  display: flex;
+  align-items: center;
+  font-size: ${FONT_SIZES.xs};
+  font-weight: 700;
+  text-transform: uppercase;
+  width: 7rem;
+  border-radius: 16px;
+  justify-content: center;
+`;
+
 const NFT = () => {
-  const { account } = useMoralis();
   // https://github.com/MoralisWeb3/react-moralis#usemoralisquery
   const { data: transferEventData } = useMoralisQuery("TransferEvents");
   const [current, setCurrent] = useState("details");
@@ -18,12 +42,12 @@ const NFT = () => {
   let params = useParams();
 
   useEffect(() => {
+    console.log("ALL NFTs", allVAuthNfts);
     setNft(allVAuthNfts.find((nft) => nft.token_id == params.nftId));
   }, [allVAuthNfts, params.nftId, nft]);
 
   useEffect(() => {
     const filteredNFTTransactions = transferEventData.filter((event) => {
-      console.log(event);
       return (
         event.attributes.tokenId == params.nftId ||
         (event.attributes.tokenId == params.nftId &&
@@ -48,81 +72,80 @@ const NFT = () => {
     setCurrent(e.key);
   };
 
+  console.log(current);
+
   return (
     <>
-      <div className="container">
-        <Header />
-
-        <div className="section">
-          <Menu
-            onClick={handleMenuClick}
-            selectedKeys={[current]}
-            mode="horizontal"
-            style={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <Menu.Item key="details">Details</Menu.Item>
-            <Menu.Item key="journey">Journey</Menu.Item>
-          </Menu>
-          <Row gutter={[24, 24]}>
-            <Col span="24" align="middle">
-              <h1>My NFT</h1>
-              <Typography>{account}</Typography>
-            </Col>
-
-            <Col span="24" align="middle">
-              {nft && current === "details" && (
-                <div className="section">
-                  <Typography>{metadata.name}</Typography>
-                  <Typography>{metadata.description}</Typography>
-                  <Typography>
-                    {metadata.attributes.map((attribute) => {
-                      const value =
-                        attribute.display_type == "date"
-                          ? new Date(attribute.value).toLocaleDateString(
-                              "en-US"
-                            )
-                          : attribute.value;
-                      return (
-                        <div>
-                          {`${attribute.trait_type}: ${value}`}
-                          <br />
-                        </div>
-                      );
-                    })}
-                  </Typography>
-                  <Image width={200} src={metadata.image} />
-                </div>
-              )}
-            </Col>
-            <Col span="24" align="middle">
-              {current === "journey"
-                ? nftTransactionsFiltered
-                  ? nftTransactionsFiltered.map((transfer) => {
-                      return (
-                        <div className="section">
-                          <Typography>
-                            Date:{" "}
-                            {transfer?.attributes.block_timestamp.toString()}
-                          </Typography>
-                          <Typography>
-                            Event:{" "}
-                            {transfer.attributes.from.includes("0x000")
-                              ? "Mint"
-                              : "Transfer"}
-                          </Typography>
-                          <Typography>
-                            From: {transfer.attributes.from}
-                          </Typography>
-                          <Typography>To: {transfer.attributes.to}</Typography>
-                        </div>
-                      );
-                    })
-                  : "LOADING"
-                : null}
-            </Col>
-          </Row>
-        </div>
-      </div>
+      <Header title="Product Name" />
+      <Container>
+        <Image width={200} src={metadata.image} />
+      </Container>
+      <Menu
+        onClick={handleMenuClick}
+        selectedKeys={[current]}
+        mode="horizontal"
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <ButtonStyled
+          onClick={() => setCurrent("details")}
+          isActive={current === "details"}
+        >
+          Details
+        </ButtonStyled>
+        <ButtonStyled
+          onClick={() => setCurrent("journey")}
+          isActive={current === "journey"}
+        >
+          Journey
+        </ButtonStyled>
+      </Menu>
+      <Row gutter={[24, 24]}>
+        <Col span="24" align="middle">
+          {nft && current === "details" && (
+            <div className="section">
+              <Typography>{metadata.name}</Typography>
+              <Typography>{metadata.description}</Typography>
+              <Typography>
+                {metadata.attributes.map((attribute) => {
+                  const value =
+                    attribute.display_type == "date"
+                      ? new Date(attribute.value).toLocaleDateString("en-US")
+                      : attribute.value;
+                  return (
+                    <div>
+                      {`${attribute.trait_type}: ${value}`}
+                      <br />
+                    </div>
+                  );
+                })}
+              </Typography>
+            </div>
+          )}
+        </Col>
+        <Col span="24" align="middle">
+          {current === "journey"
+            ? nftTransactionsFiltered
+              ? nftTransactionsFiltered.map((transfer) => {
+                  return (
+                    <div className="section">
+                      <Typography>
+                        Date: {transfer?.attributes.block_timestamp.toString()}
+                      </Typography>
+                      <Typography>
+                        Event:{" "}
+                        {transfer.attributes.from.includes("0x000")
+                          ? "Mint"
+                          : "Transfer"}
+                      </Typography>
+                      <Typography>From: {transfer.attributes.from}</Typography>
+                      <Typography>To: {transfer.attributes.to}</Typography>
+                    </div>
+                  );
+                })
+              : "LOADING"
+            : null}
+        </Col>
+      </Row>
     </>
   );
 };

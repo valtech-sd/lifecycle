@@ -1,31 +1,56 @@
-import { PageHeader } from "antd";
-import { Link } from "react-router-dom";
-import "./Header.css";
-import Valtech from "../images/original.png";
+import React from "react";
 
-const Header = () => {
+import { Typography } from "antd";
+import styled from "styled-components";
+import { ReactComponent as WalletIcon } from "../assets/wallet.svg";
+import { ReactComponent as BackIcon } from "../assets/backbutton.svg";
+import { FONT_SIZES } from "../utils/global";
+import { useNavigate } from "react-router-dom";
+
+const PrimaryTypography = styled(Typography)`
+  font-size: ${FONT_SIZES.md};
+  text-transform: uppercase;
+  margin: 0 4rem;
+`;
+
+const HeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 2rem 0 1rem;
+`;
+
+const WalletWrapoer = styled.div`
+  color: black;
+`;
+
+const BackCTA = styled.div`
+  color: black;
+`;
+
+const Header = ({ title }) => {
+  let navigate = useNavigate();
+
+  const onBack = () => {
+    navigate("/");
+  };
+
+  const onWalletClick = () => {
+    navigate("/wallet");
+  };
+
   return (
-    <div className="site-page-header-ghost-wrapper">
-      <PageHeader
-        ghost={false}
-        extra={[
-          <>
-            <Link to="/" className="categories">
-              <img src={Valtech} className="logo" alt="logo"></img>
-            </Link>
-            <Link to="/admin" className="categories">
-              Admin
-            </Link>
-            <Link to="/nfts" className="categories">
-              All NFTs
-            </Link>
-            <Link to="#" className="categories">
-              ID #
-            </Link>
-          </>,
-        ]}
-      ></PageHeader>
-    </div>
+    <>
+      <HeaderWrapper>
+        <BackCTA onClick={onBack}>
+          <BackIcon />
+        </BackCTA>
+        <PrimaryTypography>{title}</PrimaryTypography>
+        <WalletWrapoer>
+          <WalletIcon onClick={onWalletClick} />
+        </WalletWrapoer>
+      </HeaderWrapper>
+    </>
   );
 };
 

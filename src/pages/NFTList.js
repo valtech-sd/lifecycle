@@ -1,10 +1,23 @@
 import React, { useContext, useEffect } from "react";
 import { Typography, Row, Col, List, Image } from "antd";
 import { useMoralis, useNFTBalances } from "react-moralis";
-import Header from "../components/Header";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
+
 import { AppContext } from "../App.js";
+import Header from "../components/Header";
 import metadata from "./nftmeta";
+import { SIZES } from "../utils/global";
+
+const ListItem = styled.div`
+  background-color: #f1f4fb;
+  border-radius: 30px;
+  margin: ${SIZES.sm};
+  padding: ${SIZES.sm};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const NFTList = () => {
   const { account } = useMoralis();
@@ -22,40 +35,38 @@ const NFTList = () => {
       });
     setAllVAuthNfts(vAuthNfts);
   }, [NFTBalances, setAllVAuthNfts, contractAddress]);
-  console.log(allVAuthNfts);
+
   return (
     <>
-      <div className="container">
-        <Header />
-
-        <div className="section">
-          <Row gutter={[24, 24]}>
-            <Col span="24" align="middle">
-              <h1>My NFTs</h1>
-              <Typography>{account}</Typography>
-            </Col>
-            <Col span="24" align="middle"></Col>
-            <Col span="24" align="middle">
-              {allVAuthNfts && (
-                <List
-                  bordered
-                  dataSource={allVAuthNfts}
-                  renderItem={(nft) => (
-                    <Link to={nft.token_id}>
-                      <List.Item>
-                        <pre>{JSON.stringify(nft)}</pre>
-                        <Typography>{metadata.name}</Typography>
-                        <Image width={600} src={metadata.image} />
-                        <Typography>{nft.token_id}</Typography>
-                      </List.Item>
-                    </Link>
-                  )}
-                />
+      <Header title="MY PRODUCTS" />
+      <Row gutter={[24, 24]}>
+        <Typography>{account}</Typography>
+        <Col span="24" align="middle">
+          {allVAuthNfts && (
+            <List
+              bordered
+              dataSource={allVAuthNfts}
+              grid={{
+                xs: 2,
+                sm: 2,
+                md: 2,
+                lg: 4,
+              }}
+              renderItem={(nft) => (
+                <Link to={nft.token_id}>
+                  <ListItem>
+                    <List.Item>
+                      <Image width={120} src={metadata.image} />
+                      <Typography>{metadata.name}</Typography>
+                      <Typography>ID# {nft.token_id}</Typography>
+                    </List.Item>
+                  </ListItem>
+                </Link>
               )}
-            </Col>
-          </Row>
-        </div>
-      </div>
+            />
+          )}
+        </Col>
+      </Row>
     </>
   );
 };
