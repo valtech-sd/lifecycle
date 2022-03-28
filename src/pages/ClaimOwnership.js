@@ -9,6 +9,7 @@ const CryptoJS = require("crypto-js");
 
 const ClaimOwnership = () => {
   const [data, setData] = useState("No result");
+  const [logInfo, setLogInfo] = useState("No result");
   const { account, provider } = useMoralis();
   const web3Js = new Web3(provider);
   const brandAccount = "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c";
@@ -55,11 +56,9 @@ const ClaimOwnership = () => {
     return originalText;
   };
 
-  let logInfo;
-
   const sendNFT = async () => {
     // https://ethereum.stackexchange.com/questions/48750/how-to-sign-a-send-method-in-web3-1-0
-    let tx_builder = nftContract.methods.transferFrom(brandAccount, account, 4);
+    let tx_builder = nftContract.methods.transferFrom(account, brandAccount, 2);
     let encoded_tx = tx_builder.encodeABI();
     var nonce = await web3Js.eth.getTransactionCount(brandAccount);
 
@@ -74,7 +73,7 @@ const ClaimOwnership = () => {
       gasPrice: gasPriceHex,
       gasLimit: gasLimitHex,
       data: encoded_tx,
-      from: brandAccount,
+      from: account,
       to: "0x3651624F81468bB5864B1ab3158907B070eE3600",
     };
 
@@ -88,11 +87,12 @@ const ClaimOwnership = () => {
     web3Js.eth.accounts
       .signTransaction(txObject, process.env.REACT_APP_PRIVATE_KEY)
       .then((signedTx) => {
-        let logInfo = signedTx;
         console.log("signed", signedTx);
+        setLogInfo(signedTx);
         web3Js.eth
           .sendSignedTransaction(signedTx.rawTransaction)
           .on("transactionHash", (hash) => {
+            setLogInfo(hash);
             console.log("txHash:", hash);
           })
           .on("receipt", (receipt) => {
