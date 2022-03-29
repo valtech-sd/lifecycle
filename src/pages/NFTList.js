@@ -22,19 +22,18 @@ const ListItem = styled.div`
 const NFTList = () => {
   const { account } = useMoralis();
   const { data: NFTBalances } = useNFTBalances();
-  const { allVAuthNfts, setAllVAuthNfts, contractAddress } =
-    useContext(AppContext);
+  const { allVAuthNfts } = useContext(AppContext);
 
   // Grabs all of this user's V_AUTH NFTs, sets to global state
-  useEffect(() => {
-    console.log(contractAddress);
-    const vAuthNfts =
-      NFTBalances &&
-      NFTBalances.result.filter((nft) => {
-        return nft.token_address == contractAddress.toLowerCase();
-      });
-    setAllVAuthNfts(vAuthNfts);
-  }, [NFTBalances, setAllVAuthNfts, contractAddress]);
+  // useEffect(() => {
+  //   console.log(contractAddress);
+  //   const vAuthNfts =
+  //     NFTBalances &&
+  //     NFTBalances.result.filter((nft) => {
+  //       return nft.token_address == contractAddress.toLowerCase();
+  //     });
+  //   setAllVAuthNfts(vAuthNfts);
+  // }, [NFTBalances, setAllVAuthNfts, contractAddress]);
 
   return (
     <>

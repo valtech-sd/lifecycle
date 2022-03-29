@@ -1,18 +1,41 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Typography, Row, Col, Image, Menu, Button } from "antd";
+import { Typography, Row, Col, Image, Menu, Button, Divider } from "antd";
 import styled from "styled-components";
 import { useMoralis, useMoralisQuery } from "react-moralis";
 import { useParams } from "react-router-dom";
+import moment from "moment";
 
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
 import Header from "../components/Header";
 import { AppContext } from "../App.js";
 import metadata from "./nftmeta";
 
-const Container = styled.div`
+const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 3rem;
+`;
+
+const ListContainer = styled.div`
+  margin: 0 ${SIZES.xl};
+`;
+
+const TypographyHeader = styled(Typography)`
+  font-weight: 900;
+  font-size: ${SIZES.md};
+  margin-bottom: ${SIZES.xs};
+`;
+
+const SectionWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+const ListItem = styled.div`
+  margin: ${SIZES.md} 0;
 `;
 
 const ButtonStyled = styled(Button)`
@@ -34,6 +57,7 @@ const ButtonStyled = styled(Button)`
 const NFT = () => {
   // https://github.com/MoralisWeb3/react-moralis#usemoralisquery
   const { data: transferEventData } = useMoralisQuery("TransferEvents");
+  const { account } = useMoralis();
   const [current, setCurrent] = useState("details");
   const [nft, setNft] = useState(null);
   const [nftTransactionsFiltered, setNftTransactionsFiltered] = useState(null);
@@ -43,7 +67,8 @@ const NFT = () => {
 
   useEffect(() => {
     console.log("ALL NFTs", allVAuthNfts);
-    setNft(allVAuthNfts.find((nft) => nft.token_id == params.nftId));
+    allVAuthNfts &&
+      setNft(allVAuthNfts.find((nft) => nft.token_id == params.nftId));
   }, [allVAuthNfts, params.nftId, nft]);
 
   useEffect(() => {
@@ -68,23 +93,26 @@ const NFT = () => {
   // }, [pastContractEventData, params.nftId]);
 
   const handleMenuClick = (e) => {
-    console.log("click ", e);
     setCurrent(e.key);
   };
 
-  console.log(current);
+  const truncate = (input) =>
+    input.length > 6 ? `${input.substring(0, 6)}...` : input;
 
   return (
     <>
-      <Header title="Product Name" />
-      <Container>
+      <Header title={metadata.name} />
+      <ImageContainer>
         <Image width={200} src={metadata.image} />
-      </Container>
+      </ImageContainer>
       <Menu
         onClick={handleMenuClick}
         selectedKeys={[current]}
-        mode="horizontal"
-        style={{ display: "flex", justifyContent: "space-between" }}
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          marginTop: "3rem",
+        }}
       >
         <ButtonStyled
           onClick={() => setCurrent("details")}
@@ -99,47 +127,95 @@ const NFT = () => {
           Journey
         </ButtonStyled>
       </Menu>
-      <Row gutter={[24, 24]}>
+      <Row style={{ marginTop: "32px" }}>
         <Col span="24" align="middle">
           {nft && current === "details" && (
-            <div className="section">
-              <Typography>{metadata.name}</Typography>
-              <Typography>{metadata.description}</Typography>
-              <Typography>
-                {metadata.attributes.map((attribute) => {
-                  const value =
-                    attribute.display_type == "date"
-                      ? new Date(attribute.value).toLocaleDateString("en-US")
-                      : attribute.value;
-                  return (
-                    <div>
-                      {`${attribute.trait_type}: ${value}`}
-                      <br />
-                    </div>
-                  );
-                })}
-              </Typography>
-            </div>
+            <ListContainer>
+              <ListItem>
+                <Row>
+                  <Col span={24} align="left">
+                    <TypographyHeader>YOUR ITEM</TypographyHeader>
+                    <Typography>{metadata.description}</Typography>
+                    <Typography align="left" style={{ fontWeight: "bold" }}>
+                      ID# {nft.token_id}
+                    </Typography>
+
+                    <Divider />
+
+                    <TypographyHeader>
+                      DIGITAL PROOF OF OWNERSHIP
+                    </TypographyHeader>
+                    <Typography>
+                      {metadata.attributes.map((attribute) => {
+                        const value =
+                          attribute.display_type == "date"
+                            ? new Date(attribute.value).toLocaleDateString(
+                                "en-US"
+                              )
+                            : attribute.value;
+                        return (
+                          <div>
+                            {`${attribute.trait_type}: ${value}`}
+                            <br />
+                          </div>
+                        );
+                      })}
+                    </Typography>
+                  </Col>
+                </Row>
+              </ListItem>
+            </ListContainer>
           )}
         </Col>
         <Col span="24" align="middle">
           {current === "journey"
             ? nftTransactionsFiltered
               ? nftTransactionsFiltered.map((transfer) => {
+                  const dateParts = transfer.attributes.block_timestamp
+                    .toString()
+                    .split(" ");
+                  const date = moment(
+                    `${dateParts[3]} ${dateParts[2]} ${dateParts[1]}`
+                  ).format("MM/DD/YYYY");
+
                   return (
-                    <div className="section">
-                      <Typography>
-                        Date: {transfer?.attributes.block_timestamp.toString()}
-                      </Typography>
-                      <Typography>
-                        Event:{" "}
-                        {transfer.attributes.from.includes("0x000")
-                          ? "Mint"
-                          : "Transfer"}
-                      </Typography>
-                      <Typography>From: {transfer.attributes.from}</Typography>
-                      <Typography>To: {transfer.attributes.to}</Typography>
-                    </div>
+                    <ListContainer>
+                      <ListItem>
+                        <Row>
+                          <Col span={8} align="left">
+                            <TypographyHeader>
+                              {transfer.attributes.from.includes("0x000")
+                                ? "MINT"
+                                : "TRANSFER"}
+                            </TypographyHeader>
+                          </Col>
+                          <Col span={8} offset={8} align="right">
+                            <Typography>{date}</Typography>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={24} align="left">
+                            <Typography>
+                              From:{" "}
+                              {truncate(
+                                transfer.attributes.from == account
+                                  ? "You"
+                                  : transfer.attributes.from
+                              )}
+                            </Typography>
+                            <Typography>
+                              To:{" "}
+                              {truncate(
+                                transfer.attributes.to == account
+                                  ? "You"
+                                  : transfer.attributes.from
+                              )}
+                            </Typography>
+                          </Col>
+                        </Row>
+                      </ListItem>
+                      <Divider />
+                    </ListContainer>
                   );
                 })
               : "LOADING"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
-import { useMoralis } from "react-moralis";
+import { useMoralis, useNFTBalances } from "react-moralis";
 
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
@@ -65,10 +65,22 @@ export const AppContext = React.createContext({
 const App = () => {
   const { isWeb3Enabled, isAuthenticated, enableWeb3 } = useMoralis();
   const [nft, setNft] = useState(null);
-  const [allVAuthNfts, setAllVAuthNfts] = useState([]);
+  const { data: NFTBalances } = useNFTBalances();
   const [contractAddress] = useState(
     "0x3651624F81468bB5864B1ab3158907B070eE3600"
   );
+  const [allVAuthNfts, setAllVAuthNfts] = useState([]);
+
+  // Grabs all of this user's V_AUTH NFTs, sets to global state
+  useEffect(() => {
+    console.log(contractAddress);
+    const vAuthNfts =
+      NFTBalances &&
+      NFTBalances.result.filter((nft) => {
+        return nft.token_address == contractAddress.toLowerCase();
+      });
+    setAllVAuthNfts(vAuthNfts);
+  }, [NFTBalances, setAllVAuthNfts, contractAddress]);
 
   useEffect(() => {
     if (!isWeb3Enabled && !isAuthenticated) {

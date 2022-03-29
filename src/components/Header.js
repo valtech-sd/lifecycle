@@ -10,7 +10,11 @@ import { useNavigate } from "react-router-dom";
 const PrimaryTypography = styled(Typography)`
   font-size: ${FONT_SIZES.md};
   text-transform: uppercase;
-  margin: 0 4rem;
+  /* margin: 0 4rem; */
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const HeaderWrapper = styled.div`
