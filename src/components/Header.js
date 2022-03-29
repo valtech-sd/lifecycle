@@ -5,12 +5,13 @@ import styled from "styled-components";
 import { ReactComponent as WalletIcon } from "../assets/wallet.svg";
 import { ReactComponent as BackIcon } from "../assets/backbutton.svg";
 import { FONT_SIZES } from "../utils/global";
-import { useNavigate } from "react-router-dom";
+
+import { useNavigate, useHistory } from "react-router-dom";
 
 const PrimaryTypography = styled(Typography)`
   font-size: ${FONT_SIZES.md};
   text-transform: uppercase;
-  /* margin: 0 4rem; */
+  text-align: center;
   width: 200px;
   white-space: nowrap;
   overflow: hidden;
@@ -36,7 +37,7 @@ const Header = ({ title }) => {
   let navigate = useNavigate();
 
   const onBack = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   const onWalletClick = () => {

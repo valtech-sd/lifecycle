@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { Typography, Row, Col, Image, Menu, Button, Divider } from "antd";
 import styled from "styled-components";
 import { useMoralis, useMoralisQuery } from "react-moralis";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
 import Header from "../components/Header";
 import { AppContext } from "../App.js";
 import metadata from "./nftmeta";
+import { StyledButtonSecondary, StyledButton } from "./Wallet";
 
 const ImageContainer = styled.div`
   display: flex;
@@ -25,13 +26,6 @@ const TypographyHeader = styled(Typography)`
   font-weight: 900;
   font-size: ${SIZES.md};
   margin-bottom: ${SIZES.xs};
-`;
-
-const SectionWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  align-items: flex-start;
 `;
 
 const ListItem = styled.div`
@@ -54,6 +48,13 @@ const ButtonStyled = styled(Button)`
   justify-content: center;
 `;
 
+const Footer = styled.div`
+  background: ${COLORS.black};
+  width: 100%;
+  padding: 3rem ${SIZES.xl};
+  margin: 0;
+`;
+
 const NFT = () => {
   // https://github.com/MoralisWeb3/react-moralis#usemoralisquery
   const { data: transferEventData } = useMoralisQuery("TransferEvents");
@@ -61,6 +62,7 @@ const NFT = () => {
   const [current, setCurrent] = useState("details");
   const [nft, setNft] = useState(null);
   const [nftTransactionsFiltered, setNftTransactionsFiltered] = useState(null);
+  const navigate = useNavigate();
 
   const { allVAuthNfts } = useContext(AppContext);
   let params = useParams();
@@ -98,6 +100,10 @@ const NFT = () => {
 
   const truncate = (input) =>
     input.length > 6 ? `${input.substring(0, 6)}...` : input;
+
+  const onTransferClick = () => {
+    navigate(`transfer`);
+  };
 
   return (
     <>
@@ -222,32 +228,16 @@ const NFT = () => {
             : null}
         </Col>
       </Row>
+      <Row style={{ marginTop: "32px" }}>
+        <Footer>
+          <StyledButton onClick={onTransferClick}>TRANSFER</StyledButton>
+          <a href="www.valtech.com">
+            <StyledButtonSecondary>COMMUNITY ACCESS</StyledButtonSecondary>
+          </a>
+        </Footer>
+      </Row>
     </>
   );
 };
 
 export default NFT;
-
-// Note: the empty deps array [] means
-// this useEffect will run once
-// similar to componentDidMount()
-// useEffect(() => {
-//   fetch(
-//     `https://api-rinkeby.etherscan.io/api?module=logs&sort=desc&action=getLogs&fromBlock=0&toBlock=latest&address=0xdFad5CDC3Bdef5EEf621C87847d61CC738320891&apikey=S3CPW31X8X8VCPGKBEXNB4ECUF8XJTPCKB`
-//   )
-//     .then((res) => res.json())
-//     .then(
-//       (result) => {
-//         console.log("RESULT", result);
-//         setIsLoaded(true);
-//         setItems(result);
-//       },
-//       // Note: it's important to handle errors here
-//       // instead of a catch() block so that we don't swallow
-//       // exceptions from actual bugs in components.
-//       (error) => {
-//         setIsLoaded(true);
-//         setError(error);
-//       }
-//     );
-// }, []);

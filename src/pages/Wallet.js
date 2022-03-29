@@ -18,7 +18,7 @@ const RowWrapper = styled.div`
   flex-direction: column;
 `;
 
-const StyledButton = styled(Button)`
+export const StyledButton = styled(Button)`
   cursor: pointer;
   background: ${COLORS.green};
   color: black;
@@ -33,9 +33,10 @@ const StyledButton = styled(Button)`
   text-transform: uppercase;
   width: 100%;
   justify-content: center;
+  border-radius: 6px;
 `;
 
-const StyledButtonSecondary = styled(Button)`
+export const StyledButtonSecondary = styled(Button)`
   cursor: pointer;
   background: ${COLORS.black};
   border: 1px solid white;
@@ -49,6 +50,7 @@ const StyledButtonSecondary = styled(Button)`
   text-transform: uppercase;
   width: 100%;
   justify-content: center;
+  border-radius: 6px;
 `;
 
 const Wallet = () => {

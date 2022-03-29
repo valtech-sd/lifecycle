@@ -7,6 +7,7 @@ import Admin from "./pages/Admin";
 import NFT from "./pages/NFT";
 import "./App.css";
 import PinInput from "./pages/PinInput";
+import Transfer from "./pages/Transfer";
 import AuthenticateMenu from "./pages/AuthenticateMenu";
 import ClaimOwnership from "./pages/ClaimOwnership";
 import Wallet from "./pages/Wallet";
@@ -105,6 +106,8 @@ const App = () => {
           <Route path="admin" element={<Admin />} />
           <Route path="nfts" element={<NFTList />} />
           <Route path="nfts/:nftId" element={<NFT />} />
+          <Route path="nfts/:nftId/transfer" element={<Transfer />} />
+
           <Route path="wallet" element={<Wallet />} />
           {/* Removed */}
           <Route path="authenticate-menu" element={<AuthenticateMenu />} />
