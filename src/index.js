@@ -10,8 +10,8 @@ require("dotenv").config({ debug: true });
 ReactDOM.render(
   <React.StrictMode>
     <MoralisProvider
-      appId="B8xzybSFJ8PrvAeSXnjx8GfgwVdVckdpohypp68i"
-      serverUrl="https://f2ntxrggjuef.usemoralis.com:2053/server"
+      appId="tFMrhTbhCjALTwdhpoqVNPiVk1pbvTldHw9rqZar"
+      serverUrl="https://2gr3ntn4ke7p.usemoralis.com:2053/server"
     >
       <BrowserRouter>
         <App />

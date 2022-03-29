@@ -1,8 +1,8 @@
 {
-  "name": "Blue Bag",
+  "name": "Honey Butterfly Handbag",
   "external_url": "https://cranky-bell-1896a6.netlify.app/",
-  "description": "Only the best luxury handbags. This is the first of our handbag collection.",
-  "image": "https://gateway.pinata.cloud/ipfs/QmZ3tZiUEEHSmn7fqy3AmfGtCdn5757T3GaSf1T2rLUHPF",
+  "description": "Honey Butterfly Handbag in collaboration with Future Studio. The first of the luxury handbag collection, paired with a digital NFT certificate of authenticity and ownership. This custom handbag was designed by lead designer, Alyssa Ferrante in Milan, Italy",
+  "image": "https://gateway.pinata.cloud/ipfs/QmVnLSL6seF9d6bcWUwP5XQGS6xzGQUiBedwR6MocjhZnS",
   "attributes": [
     {
       "display_type": "date",
@@ -10,7 +10,7 @@
       "value": 1647570893
     },
     {
-      "trait_type": "Design by",
+      "trait_type": "Designed by",
       "value": "Alyssa Ferrante"
     },
     {
@@ -19,7 +19,7 @@
     },
     {
       "trait_type": "Collection",
-      "value": "Valtech Hangbags First Release"
+      "value": "Future Studio Luxury Collection"
     }
   ]
 }

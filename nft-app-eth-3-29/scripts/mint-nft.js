@@ -6,8 +6,8 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(API_URL);
 
-const contract = require("../artifacts/contracts/NFT-V_Authenticate.sol/V_Authenticate.json");
-const contractAddress = "0x3651624F81468bB5864B1ab3158907B070eE3600";
+const contract = require("../artifacts/contracts/V_Auth_NFT.sol/V_Auth_NFT.json");
+const contractAddress = "0x9Ea4Bb6967936aA865963B43003b5bFa679C1AF3";
 const nftContract = new web3.eth.Contract(contract.abi, contractAddress);
 
 async function mintNFT(tokenURI) {
@@ -50,5 +50,5 @@ async function mintNFT(tokenURI) {
 }
 
 mintNFT(
-  "https://gateway.pinata.cloud/ipfs/QmYbHUVAZch7kRS9bHxntSrXsNxEpFpzV1p8Nc3EVioaT3/hangbag-2.json"
+  "https://gateway.pinata.cloud/ipfs/QmPLQwXuTn6ckEMeqxp42KMbxrEwEt3hgWLA6cXADT3T5G"
 );

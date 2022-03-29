@@ -15,7 +15,7 @@ const Admin = () => {
   const brandAccount = "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c";
   const contract = require("../contractABIs/V_Authenticate.json");
 
-  const contractAddress = "0x3651624F81468bB5864B1ab3158907B070eE3600";
+  const contractAddress = "0x9Ea4Bb6967936aA865963B43003b5bFa679C1AF3";
   const nftContract = new web3Js.eth.Contract(contract.abi, contractAddress, {
     from: "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c", // default from address
   });

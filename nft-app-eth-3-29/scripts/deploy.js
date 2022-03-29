@@ -1,7 +1,7 @@
 const { ethers } = require("hardhat");
 
 async function main() {
-  const V_Authenticate = await ethers.getContractFactory("V_Authenticate");
+  const V_Authenticate = await ethers.getContractFactory("V_Auth_NFT");
 
   // Start deployment, returning a promise that resolves to a contract object
   const myNFT = await V_Authenticate.deploy();

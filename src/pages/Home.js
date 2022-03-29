@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
 import { useNavigate } from "react-router-dom";
+import Web3 from "web3";
 
 const Container = styled.div`
   background-color: ${COLORS.black};
@@ -41,7 +42,10 @@ const StyledButton = styled(Button)`
 
 const Home = () => {
   const navigate = useNavigate();
-  const { logout, authenticate, isAuthenticated } = useMoralis();
+  const { logout, authenticate, isAuthenticated, provider, account } =
+    useMoralis();
+
+  const web3Js = new Web3(provider);
 
   const logOut = async () => {
     await logout();
@@ -61,6 +65,11 @@ const Home = () => {
     });
   }
 
+  async function authWalletDisconnect() {
+    await web3Js.eth.currentProvider.disconnect();
+    console.log("Disconnected user");
+  }
+
   return (
     <>
       <Container className="a">
@@ -75,9 +84,16 @@ const Home = () => {
               style={{ display: "flex", justifyContent: "center" }}
             >
               <Link to="/nfts">
-                <StyledButton type="primary" onClick={authWalletConnect}>
-                  Login
-                </StyledButton>
+                {isAuthenticated && account && (
+                  <StyledButton type="primary" onClick={authWalletDisconnect}>
+                    Disconnect
+                  </StyledButton>
+                )}
+                {(!isAuthenticated || !account) && (
+                  <StyledButton type="primary" onClick={authWalletConnect}>
+                    Login
+                  </StyledButton>
+                )}
               </Link>
               <a href="https://www.valtech.com/" target="_blank">
                 <StyledButton type="primary" onClick={logOut}>

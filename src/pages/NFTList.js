@@ -24,6 +24,8 @@ const NFTList = () => {
   const { data: NFTBalances } = useNFTBalances();
   const { allVAuthNfts } = useContext(AppContext);
 
+  console.log(allVAuthNfts);
+
   // Grabs all of this user's V_AUTH NFTs, sets to global state
   // useEffect(() => {
   //   console.log(contractAddress);
@@ -55,8 +57,8 @@ const NFTList = () => {
                 <Link to={nft.token_id}>
                   <ListItem>
                     <List.Item>
-                      <Image width={120} src={metadata.image} />
-                      <Typography>{metadata.name}</Typography>
+                      <Image width={120} src={nft.metadata.image} />
+                      <Typography>{nft.metadata.name}</Typography>
                       <Typography>ID# {nft.token_id}</Typography>
                     </List.Item>
                   </ListItem>

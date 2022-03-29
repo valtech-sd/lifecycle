@@ -57,7 +57,7 @@ const Footer = styled.div`
 
 const NFT = () => {
   // https://github.com/MoralisWeb3/react-moralis#usemoralisquery
-  const { data: transferEventData } = useMoralisQuery("TransferEvents");
+  const { data: transferEventData } = useMoralisQuery("TransferEventsNFT");
   const { account } = useMoralis();
   const [current, setCurrent] = useState("details");
   const [nft, setNft] = useState(null);
@@ -84,6 +84,8 @@ const NFT = () => {
     setNftTransactionsFiltered(filteredNFTTransactions);
   }, [transferEventData, params.nftId]);
 
+  console.log(transferEventData);
+
   // useEffect(() => {
   //   console.log("pastContractEventData", pastContractEventData);
   //   if (pastContractEventData) {
@@ -107,135 +109,142 @@ const NFT = () => {
 
   return (
     <>
-      <Header title={metadata.name} />
-      <ImageContainer>
-        <Image width={200} src={metadata.image} />
-      </ImageContainer>
-      <Menu
-        onClick={handleMenuClick}
-        selectedKeys={[current]}
-        style={{
-          display: "flex",
-          justifyContent: "space-evenly",
-          marginTop: "3rem",
-        }}
-      >
-        <ButtonStyled
-          onClick={() => setCurrent("details")}
-          isActive={current === "details"}
-        >
-          Details
-        </ButtonStyled>
-        <ButtonStyled
-          onClick={() => setCurrent("journey")}
-          isActive={current === "journey"}
-        >
-          Journey
-        </ButtonStyled>
-      </Menu>
-      <Row style={{ marginTop: "32px" }}>
-        <Col span="24" align="middle">
-          {nft && current === "details" && (
-            <ListContainer>
-              <ListItem>
-                <Row>
-                  <Col span={24} align="left">
-                    <TypographyHeader>YOUR ITEM</TypographyHeader>
-                    <Typography>{metadata.description}</Typography>
-                    <Typography align="left" style={{ fontWeight: "bold" }}>
-                      ID# {nft.token_id}
-                    </Typography>
+      {nft ? (
+        <>
+          <Header title={nft.metadata.name} />
+          <ImageContainer>
+            <Image width={200} src={nft.metadata.image} />
+          </ImageContainer>
+          <Menu
+            onClick={handleMenuClick}
+            selectedKeys={[current]}
+            style={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              marginTop: "3rem",
+            }}
+          >
+            <ButtonStyled
+              onClick={() => setCurrent("details")}
+              isActive={current === "details"}
+            >
+              Details
+            </ButtonStyled>
+            <ButtonStyled
+              onClick={() => setCurrent("journey")}
+              isActive={current === "journey"}
+            >
+              Journey
+            </ButtonStyled>
+          </Menu>
+          <Row style={{ marginTop: "32px" }}>
+            <Col span="24" align="middle">
+              {nft && current === "details" && (
+                <ListContainer>
+                  <ListItem>
+                    <Row>
+                      <Col span={24} align="left">
+                        <TypographyHeader>YOUR ITEM</TypographyHeader>
+                        <Typography>{nft.metadata.description}</Typography>
+                        <Typography align="left" style={{ fontWeight: "bold" }}>
+                          ID# {nft.token_id}
+                        </Typography>
 
-                    <Divider />
+                        <Divider />
 
-                    <TypographyHeader>
-                      DIGITAL PROOF OF OWNERSHIP
-                    </TypographyHeader>
-                    <Typography>
-                      {metadata.attributes.map((attribute) => {
-                        const value =
-                          attribute.display_type == "date"
-                            ? new Date(attribute.value).toLocaleDateString(
-                                "en-US"
-                              )
-                            : attribute.value;
-                        return (
-                          <div>
-                            {`${attribute.trait_type}: ${value}`}
-                            <br />
-                          </div>
-                        );
-                      })}
-                    </Typography>
-                  </Col>
-                </Row>
-              </ListItem>
-            </ListContainer>
-          )}
-        </Col>
-        <Col span="24" align="middle">
-          {current === "journey"
-            ? nftTransactionsFiltered
-              ? nftTransactionsFiltered.map((transfer) => {
-                  const dateParts = transfer.attributes.block_timestamp
-                    .toString()
-                    .split(" ");
-                  const date = moment(
-                    `${dateParts[3]} ${dateParts[2]} ${dateParts[1]}`
-                  ).format("MM/DD/YYYY");
+                        <TypographyHeader>
+                          DIGITAL PROOF OF OWNERSHIP
+                        </TypographyHeader>
+                        <Typography>Token Standard: ERC721</Typography>
+                        <Typography>Chain: ETH</Typography>
+                        <Typography>Contract: 0x9Ea4...</Typography>
+                        <Typography>
+                          {nft.metadata.attributes.map((attribute) => {
+                            const value =
+                              attribute.display_type == "date"
+                                ? new Date(attribute.value).toLocaleDateString(
+                                    "en-US"
+                                  )
+                                : attribute.value;
+                            return (
+                              <div>
+                                {`${attribute.trait_type}: ${value}`}
+                                <br />
+                              </div>
+                            );
+                          })}
+                        </Typography>
+                      </Col>
+                    </Row>
+                  </ListItem>
+                </ListContainer>
+              )}
+            </Col>
+            <Col span="24" align="middle">
+              {current === "journey"
+                ? nftTransactionsFiltered
+                  ? nftTransactionsFiltered.map((transfer) => {
+                      const dateParts = transfer.attributes.block_timestamp
+                        .toString()
+                        .split(" ");
+                      const date = moment(
+                        `${dateParts[3]} ${dateParts[2]} ${dateParts[1]}`
+                      ).format("MM/DD/YYYY");
 
-                  return (
-                    <ListContainer>
-                      <ListItem>
-                        <Row>
-                          <Col span={8} align="left">
-                            <TypographyHeader>
-                              {transfer.attributes.from.includes("0x000")
-                                ? "MINT"
-                                : "TRANSFER"}
-                            </TypographyHeader>
-                          </Col>
-                          <Col span={8} offset={8} align="right">
-                            <Typography>{date}</Typography>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col span={24} align="left">
-                            <Typography>
-                              From:{" "}
-                              {truncate(
-                                transfer.attributes.from == account
-                                  ? "You"
-                                  : transfer.attributes.from
-                              )}
-                            </Typography>
-                            <Typography>
-                              To:{" "}
-                              {truncate(
-                                transfer.attributes.to == account
-                                  ? "You"
-                                  : transfer.attributes.from
-                              )}
-                            </Typography>
-                          </Col>
-                        </Row>
-                      </ListItem>
-                      <Divider />
-                    </ListContainer>
-                  );
-                })
-              : "LOADING"
-            : null}
-        </Col>
-      </Row>
-      <Row style={{ marginTop: "32px" }}>
-        <Footer>
-          <StyledButton onClick={onTransferClick}>TRANSFER</StyledButton>
-          <a href="www.valtech.com">
-            <StyledButtonSecondary>COMMUNITY ACCESS</StyledButtonSecondary>
-          </a>
-        </Footer>
-      </Row>
+                      return (
+                        <ListContainer>
+                          <ListItem>
+                            <Row>
+                              <Col span={8} align="left">
+                                <TypographyHeader>
+                                  {transfer.attributes.from.includes("0x000")
+                                    ? "MINT"
+                                    : "TRANSFER"}
+                                </TypographyHeader>
+                              </Col>
+                              <Col span={8} offset={8} align="right">
+                                <Typography>{date}</Typography>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col span={24} align="left">
+                                <Typography>
+                                  From:{" "}
+                                  {truncate(
+                                    transfer.attributes.from == account
+                                      ? "You"
+                                      : transfer.attributes.from
+                                  )}
+                                </Typography>
+                                <Typography>
+                                  To:{" "}
+                                  {truncate(
+                                    transfer.attributes.to == account
+                                      ? "You"
+                                      : transfer.attributes.from
+                                  )}
+                                </Typography>
+                              </Col>
+                            </Row>
+                          </ListItem>
+                          <Divider />
+                        </ListContainer>
+                      );
+                    })
+                  : "LOADING"
+                : null}
+            </Col>
+          </Row>
+          <Row style={{ marginTop: "32px" }}>
+            <Footer>
+              <StyledButton onClick={onTransferClick}>TRANSFER</StyledButton>
+              <a href="www.valtech.com">
+                <StyledButtonSecondary>COMMUNITY ACCESS</StyledButtonSecondary>
+              </a>
+            </Footer>
+          </Row>
+        </>
+      ) : null}
     </>
   );
 };

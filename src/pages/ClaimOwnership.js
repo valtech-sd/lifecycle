@@ -14,7 +14,7 @@ const ClaimOwnership = () => {
   const web3Js = new Web3(provider);
   const brandAccount = "0xfe679bdf8d36C2d9742B6F5366d13D068E556A4c";
   const contract = require("../contractABIs/V_Authenticate.json");
-  const contractAddress = "0x3651624F81468bB5864B1ab3158907B070eE3600";
+  const contractAddress = "0x9Ea4Bb6967936aA865963B43003b5bFa679C1AF3";
   const nftContract = new web3Js.eth.Contract(contract.abi, contractAddress);
 
   // https://github.com/brix/crypto-js/issues/93
@@ -74,7 +74,7 @@ const ClaimOwnership = () => {
       gasLimit: gasLimitHex,
       data: encoded_tx,
       from: brandAccount,
-      to: "0x3651624F81468bB5864B1ab3158907B070eE3600",
+      to: "0x9Ea4Bb6967936aA865963B43003b5bFa679C1AF3",
     };
 
     setLogInfo(process.env.REACT_APP_PRIVATE_KEY);
@@ -83,7 +83,7 @@ const ClaimOwnership = () => {
     // whoever has the hash can verify the item
     // the hash needs to be the public key of a private/public key pair so that someone with QR code needs to also have the private key
 
-    //rinkeby.etherscan.io/address/0x3651624F81468bB5864B1ab3158907B070eE3600
+    //rinkeby.etherscan.io/address/0x9Ea4Bb6967936aA865963B43003b5bFa679C1AF3
     web3Js.eth.accounts
       .signTransaction(txObject, process.env.REACT_APP_PRIVATE_KEY)
       .then((signedTx) => {
