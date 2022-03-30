@@ -22,7 +22,6 @@ const Container = styled.div`
 
 const Section = styled.div`
   margin: ${SIZES.xl};
-  border: 1px white solid;
   width: 100%;
 `;
 
@@ -62,7 +61,7 @@ const Home = () => {
   async function authWalletConnect() {
     if (!isWeb3Enabled) {
       // await enableWeb3();
-      await enableWeb3({
+      await authenticate({
         provider: "walletconnect",
         chainId: 4,
         mobileLinks: ["defi", "metamask"],
