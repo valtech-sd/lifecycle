@@ -25,8 +25,8 @@
       p2 = randum(100),
       deg = randum(360),
       mode = Math.round(Math.random());
-    c1 = c1 || randex();
-    c2 = c2 || randex();
+    c1 = "#00754C";
+    c2 = "#000";
     return {
       blend:
         mode > 0

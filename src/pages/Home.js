@@ -1,12 +1,15 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button, Row, Col } from "antd";
 import { useMoralis } from "react-moralis";
 import styled from "styled-components";
 import Web3 from "web3";
 
+import "../utils/animate-background";
+
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
+import AuthenticateMenu from "./AuthenticateMenu";
 
 const Container = styled.div`
   background-color: ${COLORS.black};
@@ -27,7 +30,7 @@ const StyledButton = styled(Button)`
   cursor: pointer;
   background: ${COLORS.green};
   color: black;
-  border: none;
+  border: solid 1px ${COLORS.green};
   margin: 0 ${SIZES.xs};
   padding: ${SIZES.lg} ${SIZES.md};
   display: flex;
@@ -41,10 +44,12 @@ const StyledButton = styled(Button)`
 
 const Home = () => {
   const navigate = useNavigate();
-  const { logout, authenticate, isAuthenticated, provider, account } =
+  const location = useLocation();
+
+  const { enableWeb3, deactivateWeb3, isWeb3Enabled, logout, authenticate } =
     useMoralis();
 
-  const web3Js = new Web3(provider);
+  // const web3Js = new Web3(provider);
 
   const logOut = async () => {
     await logout();
@@ -52,27 +57,46 @@ const Home = () => {
   };
 
   // https://community.metamask.io/t/deeplink-opens-appstore-when-app-installed/18199/4
+  // https://github.com/MetaMask/metamask-mobile/issues/3965
+  // https://github.com/MetaMask/metamask-mobile/pull/3971/files
   async function authWalletConnect() {
-    console.log("Authenticating user");
+    if (!isWeb3Enabled) {
+      // await enableWeb3();
+      await enableWeb3({
+        provider: "walletconnect",
+        chainId: 4,
+        mobileLinks: ["defi", "metamask"],
+        signingMessage: "Welcome to V_Auth, please confirm your account.",
+      });
+      navigate("/nfts");
+    }
+    //   console.log("Authenticating user", account, isAuthenticated);
 
-    if (isAuthenticated) return navigate("nfts");
+    //   if (isAuthenticated && account) {
+    //     return navigate("nfts");
+    //   }
 
-    authenticate({
-      provider: "walletconnect",
-      chainId: 4,
-      mobileLinks: ["metamask", "trust", "rainbow"],
-      signingMessage: "Welcome to V_Auth, please confirm your account.",
-    });
+    //   authenticate({
+    //     provider: "walletconnect",
+    //     chainId: 4,
+    //     mobileLinks: ["metamask", "trust", "rainbow"],
+    //     signingMessage: "Welcome to V_Auth, please confirm your account.",
+    //   });
   }
 
   async function authWalletDisconnect() {
-    await web3Js.eth.currentProvider.disconnect();
     console.log("Disconnected user");
+    await deactivateWeb3();
+    await logout();
+    window.localStorage.removeItem("walletconnect");
+    window.localStorage.removeItem("WALLETCONNECT_DEEPLINK_CHOICE");
   }
+
+  console.log(isWeb3Enabled);
 
   return (
     <>
-      <Container className="a">
+      <Container className={location.pathname === "/" ? "a" : ""}>
         <Section>
           <Row gutter={[24, 80]}>
             <Col span="24" align="middle">
@@ -83,27 +107,16 @@ const Home = () => {
               align="middle"
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <Link to="/nfts">
-                {isAuthenticated && account && (
-                  <StyledButton type="primary" onClick={authWalletDisconnect}>
-                    Disconnect
-                  </StyledButton>
-                )}
-                {(!isAuthenticated || !account) && (
-                  <StyledButton type="primary" onClick={authWalletConnect}>
-                    Login
-                  </StyledButton>
-                )}
-              </Link>
-              <a
-                href="https://www.valtech.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <StyledButton type="primary" onClick={logOut}>
-                  Register
+              {isWeb3Enabled && (
+                <StyledButton type="primary" onClick={authWalletDisconnect}>
+                  Disconnect
                 </StyledButton>
-              </a>
+              )}
+              {!isWeb3Enabled && (
+                <StyledButton type="primary" onClick={authWalletConnect}>
+                  Login
+                </StyledButton>
+              )}
             </Col>
           </Row>
         </Section>

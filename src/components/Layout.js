@@ -9,7 +9,7 @@ const Container = styled.div`
 const Layout = ({ children }) => {
   return (
     <>
-      <Container className="a">{children}</Container>
+      <Container>{children}</Container>
     </>
   );
 };

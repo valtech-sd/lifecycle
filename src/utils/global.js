@@ -2,6 +2,7 @@ export const COLORS = {
   black: "#000",
   green: "#00fea6",
   grey: "#F0F0F0",
+  darkGrey: "#a9a9a9",
 };
 export const SIZES = {
   xs: "8px",

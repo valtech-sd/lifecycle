@@ -19,7 +19,7 @@ body,
   height: 100%;
 }
 
-/* @keyframes fade {
+@keyframes fade {
   to {
     opacity: 1;
   }
@@ -33,7 +33,7 @@ html {
   transition: 1s ease-in-out;
 }
 
-.a::after {
+/* .a::after {
   content: "";
   position: absolute;
   top: 0;
@@ -41,5 +41,4 @@ html {
   right: 0;
   bottom: 0;
   opacity: 0;
-  animation: fade 3s alternate infinite;
-} */
+  /* animation: fade 5s alternate infinite; */

@@ -26,10 +26,12 @@ const HeaderWrapper = styled.div`
 
 const WalletWrapoer = styled.div`
   color: black;
+  cursor: pointer;
 `;
 
 const BackCTA = styled.div`
   color: black;
+  cursor: pointer;
 `;
 
 const Header = ({ title }) => {

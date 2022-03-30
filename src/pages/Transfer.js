@@ -37,7 +37,7 @@ const Transfer = () => {
   const sendNFT = async (toAccount) => {
     // https://ethereum.stackexchange.com/questions/48750/how-to-sign-a-send-method-in-web3-1-0
     // TODO - fix transfer promise / handing navigation
-    const transfer = await nftContract.methods
+    await nftContract.methods
       .transferFrom(account, toAccount, params.nftId)
       .send({ from: account });
   };

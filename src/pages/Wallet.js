@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography, Button } from "antd";
 import styled from "styled-components";
+import { useMoralis } from "react-moralis";
 
 import Header from "../components/Header";
 import { FONT_SIZES, SIZES, COLORS } from "../utils/global";
@@ -55,11 +56,14 @@ export const StyledButtonSecondary = styled(Button)`
 
 const Wallet = () => {
   let navigate = useNavigate();
+  const { enableWeb3, deactivateWeb3, isWeb3Enabled, logout } = useMoralis();
 
-  const onDisconnectWallet = () => {
+  const onDisconnectWallet = async () => {
+    // await web3Js.eth.currentProvider.disconnect();
+    console.log("Disconnected user");
+    await deactivateWeb3();
     window.localStorage.removeItem("walletconnect");
     window.localStorage.removeItem("WALLETCONNECT_DEEPLINK_CHOICE");
-
     navigate("/");
   };
 

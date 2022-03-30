@@ -64,7 +64,8 @@ export const AppContext = React.createContext({
 // };
 
 const App = () => {
-  const { isWeb3Enabled, isAuthenticated, enableWeb3 } = useMoralis();
+  const { isWeb3Enabled, isAuthenticated, enableWeb3, authenticate } =
+    useMoralis();
   const [nft, setNft] = useState(null);
   const { data: NFTBalances } = useNFTBalances();
   const [contractAddress] = useState(
@@ -74,21 +75,23 @@ const App = () => {
 
   // Grabs all of this user's V_AUTH NFTs, sets to global state
   useEffect(() => {
-    console.log(contractAddress);
+    console.log("NFT BALANCES", NFTBalances);
     const vAuthNfts =
       NFTBalances &&
       NFTBalances.result.filter((nft) => {
-        return nft.token_address == contractAddress.toLowerCase();
+        return nft.token_address === contractAddress.toLowerCase();
       });
     setAllVAuthNfts(vAuthNfts);
   }, [NFTBalances, setAllVAuthNfts, contractAddress]);
 
   // useEffect(() => {
-  //   if (!isWeb3Enabled && !isAuthenticated) {
-  //     enableWeb3({ provider: "walletconnect", chainId: 4 });
-  //     console.log("web3 activated");
+  //   console.log("isWeb3Enabled", isWeb3Enabled);
+  //   console.log("isAuthenticated", isAuthenticated);
+  //   if (isWeb3Enabled && !isAuthenticated) {
+  //     authenticate();
   //   }
-  // }, [isWeb3Enabled, isAuthenticated, enableWeb3]);
+  // }, [isWeb3Enabled, isAuthenticated, authenticate]);
+  // console.log("IS WEB3", isWeb3Enabled);
 
   const value = {
     nft,
