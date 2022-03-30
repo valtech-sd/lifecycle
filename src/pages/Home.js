@@ -59,11 +59,16 @@ const Home = () => {
   // https://github.com/MetaMask/metamask-mobile/issues/3965
   // https://github.com/MetaMask/metamask-mobile/pull/3971/files
   async function authWalletConnect() {
+    await authenticate({
+      provider: "metamask",
+      chainId: 4,
+      signingMessage: "Welcome to V_Auth, please confirm your account.",
+    });
     navigate("/nfts");
     // if (!isWeb3Enabled) {
     //   // await enableWeb3();
     //   await authenticate({
-    //     provider: "walletconnect",
+    //     provider: "metamask",
     //     chainId: 4,
     //     mobileLinks: ["defi", "metamask", "coinbase"],
     //     signingMessage: "Welcome to V_Auth, please confirm your account.",

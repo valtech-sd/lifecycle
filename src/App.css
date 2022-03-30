@@ -49,7 +49,9 @@
   color: white;
 }
 
-.ant-btn-primary:hover {
+.ant-btn-primary:hover,
+.ant-btn-primary:active,
+.ant-btn-primary:focus {
   background: #008053;
   border-color: #008053;
   color: #fff;
