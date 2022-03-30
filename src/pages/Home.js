@@ -59,6 +59,7 @@ const Home = () => {
   // https://github.com/MetaMask/metamask-mobile/issues/3965
   // https://github.com/MetaMask/metamask-mobile/pull/3971/files
   async function authWalletConnect() {
+    navigate("/nfts");
     // if (!isWeb3Enabled) {
     //   // await enableWeb3();
     //   await authenticate({
