@@ -1,13 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Row, Col } from "antd";
 import { useMoralis } from "react-moralis";
-import "./Home.css";
 import styled from "styled-components";
+import Web3 from "web3";
+
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
-import { useNavigate } from "react-router-dom";
-import Web3 from "web3";
 
 const Container = styled.div`
   background-color: ${COLORS.black};
@@ -95,7 +94,11 @@ const Home = () => {
                   </StyledButton>
                 )}
               </Link>
-              <a href="https://www.valtech.com/" target="_blank">
+              <a
+                href="https://www.valtech.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <StyledButton type="primary" onClick={logOut}>
                   Register
                 </StyledButton>

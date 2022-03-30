@@ -1,12 +1,11 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 import { Typography } from "antd";
 import styled from "styled-components";
+
 import { ReactComponent as WalletIcon } from "../assets/wallet.svg";
 import { ReactComponent as BackIcon } from "../assets/backbutton.svg";
 import { FONT_SIZES } from "../utils/global";
-
-import { useNavigate, useHistory } from "react-router-dom";
 
 const PrimaryTypography = styled(Typography)`
   font-size: ${FONT_SIZES.md};

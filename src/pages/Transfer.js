@@ -1,13 +1,13 @@
 import React from "react";
-import { Typography, Button, Input, Form } from "antd";
+import { Typography, Input, Form } from "antd";
 import styled from "styled-components";
 import { useMoralis } from "react-moralis";
 import { useNavigate, useParams } from "react-router-dom";
 import Web3 from "web3";
-import Header from "../components/Header";
-import { StyledButtonSecondary, StyledButton } from "./Wallet";
 
-import { FONT_SIZES, SIZES, COLORS } from "../utils/global";
+import Header from "../components/Header";
+import { StyledButton } from "./Wallet";
+import { SIZES, COLORS } from "../utils/global";
 
 const WarningTextWrapper = styled(Typography)`
   padding: 4rem 0;
@@ -31,58 +31,15 @@ const Transfer = () => {
   const nftContract = new web3Js.eth.Contract(contract.abi, contractAddress);
 
   const onFinish = (values) => {
-    console.log("Success:", values.account);
     sendNFT(values.account);
-    navigate(-1);
   };
 
   const sendNFT = async (toAccount) => {
     // https://ethereum.stackexchange.com/questions/48750/how-to-sign-a-send-method-in-web3-1-0
+    // TODO - fix transfer promise / handing navigation
     const transfer = await nftContract.methods
       .transferFrom(account, toAccount, params.nftId)
       .send({ from: account });
-
-    // let encoded_tx = tx_builder.encodeABI();
-    // var nonce = await web3Js.eth.getTransactionCount(account);
-
-    // const gasPrice = web3Js.eth.gasPrice;
-    // const gasPriceHex = web3Js.utils.toHex(gasPrice);
-    // const gasLimitHex = web3Js.utils.toHex(3000000);
-    // // Create the contract creation transaction object
-
-    // // https://ethereum.org/en/developers/docs/transactions/#the-data-field
-    // var txObject = {
-    //   nonce: web3Js.utils.toHex(nonce),
-    //   gasPrice: gasPriceHex,
-    //   gasLimit: gasLimitHex,
-    //   data: encoded_tx,
-    //   from: account,
-    //   to: "0x9Ea4Bb6967936aA865963B43003b5bFa679C1AF3",
-    // };
-
-    // // code on item is unique hash
-    // // whoever has the hash can verify the item
-    // // the hash needs to be the public key of a private/public key pair so that someone with QR code needs to also have the private key
-
-    // //rinkeby.etherscan.io/address/0x9Ea4Bb6967936aA865963B43003b5bFa679C1AF3
-    // web3Js.eth.accounts
-    //   .signTransaction(txObject, process.env.REACT_APP_PRIVATE_KEY)
-    //   .then((signedTx) => {
-    //     console.log("signed", signedTx);
-    //     setLogInfo(signedTx);
-    //     web3Js.eth
-    //       .sendSignedTransaction(signedTx.rawTransaction)
-    //       .on("transactionHash", (hash) => {
-    //         setLogInfo(hash);
-    //         console.log("txHash:", hash);
-    //       })
-    //       .on("receipt", (receipt) => {
-    //         console.log("receipt", receipt);
-    //       })
-    //       .on("error", (error) => {
-    //         console.log("error", error);
-    //       });
-    //   });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -122,11 +79,7 @@ const Transfer = () => {
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 24 }}>
-            <StyledButton
-              // onClick={onDisconnectWallet}
-              htmlType="submit"
-              type="submit"
-            >
+            <StyledButton htmlType="submit" type="submit">
               Tranfer NFT
             </StyledButton>
           </Form.Item>

@@ -3,8 +3,9 @@ import { QrReader } from "react-qr-reader";
 import { useMoralis } from "react-moralis";
 import { Row, Col, Button } from "antd";
 import Web3 from "web3";
-import Header from "../components/Header";
 import "dotenv/config";
+import Header from "../components/Header";
+
 const CryptoJS = require("crypto-js");
 
 const ClaimOwnership = () => {
@@ -111,10 +112,6 @@ const ClaimOwnership = () => {
     console.log(dataQR.code);
 
     const decryptedCode = decryptWithAES(dataQR.code);
-    console.log("includes code??", publickeys.includes(decryptedCode));
-    // passphrase
-    // private key
-    // Authenticate here
     if (publickeys.includes(decryptedCode)) {
       sendNFT(dataQR.id);
     }

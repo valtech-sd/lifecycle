@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Typography, Row, Col, List, Image } from "antd";
 import { useMoralis, useNFTBalances } from "react-moralis";
 import styled from "styled-components";
@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 import { AppContext } from "../App.js";
 import Header from "../components/Header";
-import metadata from "./nftmeta";
 import { SIZES } from "../utils/global";
 
 const ListItem = styled.div`
@@ -57,7 +56,7 @@ const NFTList = () => {
                 <Link to={nft.token_id}>
                   <ListItem>
                     <List.Item>
-                      <Image width={120} src={nft.metadata.image} />
+                      <Image width={90} src={nft.metadata.image} />
                       <Typography>{nft.metadata.name}</Typography>
                       <Typography>ID# {nft.token_id}</Typography>
                     </List.Item>

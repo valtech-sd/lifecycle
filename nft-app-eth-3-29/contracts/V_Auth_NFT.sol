@@ -12,7 +12,7 @@ contract V_Auth_NFT is ERC721URIStorage, Ownable {
     
     Counters.Counter private _tokenIds;
 
-    constructor() ERC721("V_Auth_NFT", "V_Auth_NFT") {}
+    constructor() ERC721("V_Auth_NFT", "V_Auth_Token") {}
 
     function mintNFT(address recipient, string memory tokenURI)
         public onlyOwner

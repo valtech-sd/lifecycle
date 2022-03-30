@@ -8,7 +8,6 @@ import moment from "moment";
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
 import Header from "../components/Header";
 import { AppContext } from "../App.js";
-import metadata from "./nftmeta";
 import { StyledButtonSecondary, StyledButton } from "./Wallet";
 
 const ImageContainer = styled.div`
@@ -68,33 +67,20 @@ const NFT = () => {
   let params = useParams();
 
   useEffect(() => {
-    console.log("ALL NFTs", allVAuthNfts);
     allVAuthNfts &&
-      setNft(allVAuthNfts.find((nft) => nft.token_id == params.nftId));
+      setNft(allVAuthNfts.find((nft) => nft.token_id === params.nftId));
   }, [allVAuthNfts, params.nftId, nft]);
 
   useEffect(() => {
     const filteredNFTTransactions = transferEventData.filter((event) => {
       return (
-        event.attributes.tokenId == params.nftId ||
-        (event.attributes.tokenId == params.nftId &&
+        event.attributes.tokenId === params.nftId ||
+        (event.attributes.tokenId === params.nftId &&
           event.attributes.from.includes("0x000"))
       );
     });
     setNftTransactionsFiltered(filteredNFTTransactions);
   }, [transferEventData, params.nftId]);
-
-  console.log(transferEventData);
-
-  // useEffect(() => {
-  //   console.log("pastContractEventData", pastContractEventData);
-  //   if (pastContractEventData) {
-  //     const nftEvents = pastContractEventData.filter((pastEvent) => {
-  //       return pastEvent.returnValues.tokenId == params.nftId;
-  //     });
-  //     setNFTHistory(nftEvents);
-  //   }
-  // }, [pastContractEventData, params.nftId]);
 
   const handleMenuClick = (e) => {
     setCurrent(e.key);
@@ -161,7 +147,7 @@ const NFT = () => {
                         <Typography>
                           {nft.metadata.attributes.map((attribute) => {
                             const value =
-                              attribute.display_type == "date"
+                              attribute.display_type === "date"
                                 ? new Date(attribute.value).toLocaleDateString(
                                     "en-US"
                                   )
@@ -211,7 +197,7 @@ const NFT = () => {
                                 <Typography>
                                   From:{" "}
                                   {truncate(
-                                    transfer.attributes.from == account
+                                    transfer.attributes.from === account
                                       ? "You"
                                       : transfer.attributes.from
                                   )}
@@ -219,7 +205,7 @@ const NFT = () => {
                                 <Typography>
                                   To:{" "}
                                   {truncate(
-                                    transfer.attributes.to == account
+                                    transfer.attributes.to === account
                                       ? "You"
                                       : transfer.attributes.from
                                   )}
