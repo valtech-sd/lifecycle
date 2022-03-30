@@ -5,18 +5,22 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { MoralisProvider } from "react-moralis";
+import { MetaMaskProvider } from "metamask-react";
+
 require("dotenv").config({ debug: true });
 
 ReactDOM.render(
   <React.StrictMode>
-    <MoralisProvider
-      appId="tFMrhTbhCjALTwdhpoqVNPiVk1pbvTldHw9rqZar"
-      serverUrl="https://2gr3ntn4ke7p.usemoralis.com:2053/server"
-    >
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </MoralisProvider>
+    <MetaMaskProvider>
+      <MoralisProvider
+        appId="tFMrhTbhCjALTwdhpoqVNPiVk1pbvTldHw9rqZar"
+        serverUrl="https://2gr3ntn4ke7p.usemoralis.com:2053/server"
+      >
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </MoralisProvider>
+    </MetaMaskProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
