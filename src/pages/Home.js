@@ -64,7 +64,7 @@ const Home = () => {
       await authenticate({
         provider: "walletconnect",
         chainId: 4,
-        mobileLinks: ["defi", "metamask"],
+        mobileLinks: ["defi", "metamask", "rainbow"],
         signingMessage: "Welcome to V_Auth, please confirm your account.",
       });
       navigate("/nfts");
