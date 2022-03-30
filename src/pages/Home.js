@@ -51,6 +51,7 @@ const Home = () => {
     console.log("Logged Out");
   };
 
+  // https://community.metamask.io/t/deeplink-opens-appstore-when-app-installed/18199/4
   async function authWalletConnect() {
     console.log("Authenticating user");
 
