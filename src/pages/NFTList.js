@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Typography, Row, Col, List, Image } from "antd";
 import { useMoralis, useNFTBalances } from "react-moralis";
 import styled from "styled-components";
@@ -19,11 +19,15 @@ const ListItem = styled.div`
 `;
 
 const NFTList = () => {
-  const { account } = useMoralis();
-  const { data: NFTBalances } = useNFTBalances();
+  const { account, isWeb3Enabled, enableWeb3 } = useMoralis();
   const { allVAuthNfts } = useContext(AppContext);
 
-  console.log(allVAuthNfts);
+  useEffect(() => {
+    if (!isWeb3Enabled || !account) {
+      console.log("ENABLING WEB3: NFTList Page");
+      enableWeb3();
+    }
+  }, [isWeb3Enabled, account, enableWeb3]);
 
   // Grabs all of this user's V_AUTH NFTs, sets to global state
   // useEffect(() => {

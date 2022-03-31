@@ -1,5 +1,10 @@
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import {
+  useNavigate,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { Button, Row, Col } from "antd";
 import { useMoralis } from "react-moralis";
 import styled from "styled-components";
@@ -10,6 +15,7 @@ import "../utils/animate-background";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
 import AuthenticateMenu from "./AuthenticateMenu";
+import { useEffect } from "react/cjs/react.production.min";
 
 const Container = styled.div`
   background-color: ${COLORS.black};
@@ -37,23 +43,29 @@ const StyledButton = styled(Button)`
   font-size: ${FONT_SIZES.xs};
   font-weight: 700;
   text-transform: uppercase;
-  width: 8rem;
+  width: 10rem;
   justify-content: center;
 `;
 
 const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  let [searchParams] = useSearchParams();
 
-  const { enableWeb3, deactivateWeb3, isWeb3Enabled, logout, authenticate } =
-    useMoralis();
+  const {
+    enableWeb3,
+    deactivateWeb3,
+    isWeb3Enabled,
+    logout,
+    authenticate,
+    account,
+  } = useMoralis();
 
-  // const web3Js = new Web3(provider);
-
-  const logOut = async () => {
-    await logout();
-    console.log("Logged Out");
-  };
+  // useEffect(() => {
+  //   if (searchParams.get("action") === "disconnect" && isWeb3Enabled) {
+  //     deactivateWeb3();
+  //   }
+  // }, [searchParams, deactivateWeb3, isWeb3Enabled]);
 
   // https://community.metamask.io/t/deeplink-opens-appstore-when-app-installed/18199/4
   // https://github.com/MetaMask/metamask-mobile/issues/3965
@@ -65,26 +77,6 @@ const Home = () => {
       signingMessage: "Welcome to V_Auth, please confirm your account.",
     });
     navigate("/nfts");
-    // if (!isWeb3Enabled) {
-    //   // await enableWeb3();
-    //   await authenticate({
-    //     provider: "metamask",
-    //     chainId: 4,
-    //     mobileLinks: ["defi", "metamask", "coinbase"],
-    //     signingMessage: "Welcome to V_Auth, please confirm your account.",
-    //   });
-    //   navigate("/nfts");
-    // }
-    //   console.log("Authenticating user", account, isAuthenticated);
-    //   if (isAuthenticated && account) {
-    //     return navigate("nfts");
-    //   }
-    //   authenticate({
-    //     provider: "walletconnect",
-    //     chainId: 4,
-    //     mobileLinks: ["metamask", "trust", "rainbow"],
-    //     signingMessage: "Welcome to V_Auth, please confirm your account.",
-    //   });
   }
 
   async function authWalletDisconnect() {
@@ -94,8 +86,6 @@ const Home = () => {
     window.localStorage.removeItem("walletconnect");
     window.localStorage.removeItem("WALLETCONNECT_DEEPLINK_CHOICE");
   }
-
-  console.log(isWeb3Enabled);
 
   return (
     <>
@@ -110,10 +100,20 @@ const Home = () => {
               align="middle"
               style={{ display: "flex", justifyContent: "center" }}
             >
-              {isWeb3Enabled && (
-                <StyledButton type="primary" onClick={authWalletDisconnect}>
-                  Disconnect
-                </StyledButton>
+              {isWeb3Enabled && account && (
+                <>
+                  <StyledButton type="primary" onClick={authWalletDisconnect}>
+                    Disconnect
+                  </StyledButton>
+                  <StyledButton
+                    type="primary"
+                    onClick={() => {
+                      navigate("/nfts");
+                    }}
+                  >
+                    View Your Items
+                  </StyledButton>
+                </>
               )}
               {!isWeb3Enabled && (
                 <StyledButton type="primary" onClick={authWalletConnect}>
@@ -129,3 +129,24 @@ const Home = () => {
 };
 
 export default Home;
+
+// if (!isWeb3Enabled) {
+//   // await enableWeb3();
+//   await authenticate({
+//     provider: "metamask",
+//     chainId: 4,
+//     mobileLinks: ["defi", "metamask", "coinbase"],
+//     signingMessage: "Welcome to V_Auth, please confirm your account.",
+//   });
+//   navigate("/nfts");
+// }
+//   console.log("Authenticating user", account, isAuthenticated);
+//   if (isAuthenticated && account) {
+//     return navigate("nfts");
+//   }
+//   authenticate({
+//     provider: "walletconnect",
+//     chainId: 4,
+//     mobileLinks: ["metamask", "trust", "rainbow"],
+//     signingMessage: "Welcome to V_Auth, please confirm your account.",
+//   });

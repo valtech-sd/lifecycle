@@ -64,7 +64,7 @@ export const AppContext = React.createContext({
 // };
 
 const App = () => {
-  const { isWeb3Enabled, isAuthenticated, enableWeb3, authenticate } =
+  const { isWeb3Enabled, isAuthenticated, enableWeb3, authenticate, account } =
     useMoralis();
   const [nft, setNft] = useState(null);
   const { data: NFTBalances } = useNFTBalances();
@@ -75,7 +75,6 @@ const App = () => {
 
   // Grabs all of this user's V_AUTH NFTs, sets to global state
   useEffect(() => {
-    console.log("NFT BALANCES", NFTBalances);
     const vAuthNfts =
       NFTBalances &&
       NFTBalances.result.filter((nft) => {
@@ -83,15 +82,6 @@ const App = () => {
       });
     setAllVAuthNfts(vAuthNfts);
   }, [NFTBalances, setAllVAuthNfts, contractAddress]);
-
-  // useEffect(() => {
-  //   console.log("isWeb3Enabled", isWeb3Enabled);
-  //   console.log("isAuthenticated", isAuthenticated);
-  //   if (isWeb3Enabled && !isAuthenticated) {
-  //     authenticate();
-  //   }
-  // }, [isWeb3Enabled, isAuthenticated, authenticate]);
-  // console.log("IS WEB3", isWeb3Enabled);
 
   const value = {
     nft,
@@ -105,7 +95,7 @@ const App = () => {
     <AppContext.Provider value={value}>
       <Layout>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route index path="/" element={<Home />} />
           <Route path="admin" element={<Admin />} />
           <Route path="nfts" element={<NFTList />} />
           <Route path="nfts/:nftId" element={<NFT />} />

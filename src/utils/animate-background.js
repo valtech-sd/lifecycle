@@ -6,7 +6,6 @@
     return Math.round(Math.random() * max);
   };
 
-  console.log("HIII");
   var hexify = function (x) {
     return ("0" + parseInt(x).toString(16)).slice(-2);
     // return ("0" + parseInt(x).toString(16)).slice(-2);

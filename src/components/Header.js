@@ -12,7 +12,6 @@ const PrimaryTypography = styled(Typography)`
   text-transform: uppercase;
   text-align: center;
   width: 200px;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;

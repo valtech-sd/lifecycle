@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Typography, Row, Col, Image, Menu, Button, Divider } from "antd";
 import styled from "styled-components";
 import { useMoralis, useMoralisQuery } from "react-moralis";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, createSearchParams } from "react-router-dom";
 import moment from "moment";
 
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
@@ -57,7 +57,8 @@ const Footer = styled.div`
 const NFT = () => {
   // https://github.com/MoralisWeb3/react-moralis#usemoralisquery
   const { data: transferEventData } = useMoralisQuery("TransferEventsNFT");
-  const { account } = useMoralis();
+  const { account, enableWeb3, isWeb3Enabled, deactivateWeb3, logout } =
+    useMoralis();
   const [current, setCurrent] = useState("details");
   const [nft, setNft] = useState(null);
   const [nftTransactionsFiltered, setNftTransactionsFiltered] = useState(null);
@@ -70,6 +71,13 @@ const NFT = () => {
     allVAuthNfts &&
       setNft(allVAuthNfts.find((nft) => nft.token_id === params.nftId));
   }, [allVAuthNfts, params.nftId, nft]);
+
+  useEffect(() => {
+    if (!isWeb3Enabled || !account) {
+      console.log("ENABLING WEB3: NFT Page");
+      enableWeb3();
+    }
+  }, [isWeb3Enabled, account, enableWeb3]);
 
   useEffect(() => {
     const filteredNFTTransactions = transferEventData.filter((event) => {
@@ -91,6 +99,19 @@ const NFT = () => {
 
   const onTransferClick = () => {
     navigate(`transfer`);
+  };
+
+  const onDisconnect = async () => {
+    await deactivateWeb3();
+    await logout();
+    window.localStorage.removeItem("walletconnect");
+    window.localStorage.removeItem("WALLETCONNECT_DEEPLINK_CHOICE");
+    navigate({
+      pathname: "/",
+      search: `?${createSearchParams({
+        action: "disconnect",
+      })}`,
+    });
   };
 
   return (
@@ -224,9 +245,6 @@ const NFT = () => {
           <Row style={{ marginTop: "32px" }}>
             <Footer>
               <StyledButton onClick={onTransferClick}>TRANSFER</StyledButton>
-              <a href="www.valtech.com">
-                <StyledButtonSecondary>COMMUNITY ACCESS</StyledButtonSecondary>
-              </a>
             </Footer>
           </Row>
         </>
