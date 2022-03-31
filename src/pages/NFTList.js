@@ -42,13 +42,11 @@ const NFTList = () => {
 
   return (
     <>
-      <Header title="MY PRODUCTS" />
-      <Row gutter={[24, 24]}>
-        <Typography>{account}</Typography>
+      <Header title="MY PRODUCTS" goBackRoute={"/"} />
+      <Row>
         <Col span="24" align="middle">
           {allVAuthNfts && (
             <List
-              bordered
               dataSource={allVAuthNfts}
               grid={{
                 xs: 2,

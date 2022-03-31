@@ -25,9 +25,6 @@ body,
   }
 }
 
-html {
-  height: 100%;
-}
 .a {
   height: 100%;
   transition: 1s ease-in-out;

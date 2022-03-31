@@ -43,8 +43,16 @@ const ButtonStyled = styled(Button)`
   font-weight: 700;
   text-transform: uppercase;
   width: 7rem;
+  padding: 18px 0;
   border-radius: 16px;
   justify-content: center;
+  margin: 0 1rem;
+  box-shadow: ${({ isActive }) =>
+    isActive
+      ? `rgba(0, 0, 0, 0.03) 0px 1px 1px, rgba(0, 0, 0, 0.03) 0px 2px 2px,
+    rgba(0, 0, 0, 0.03) 0px 4px 4px, rgba(0, 0, 0, 0.03) 0px 8px 8px,
+    rgba(0, 0, 0, 0.03) 0px 16px 16px`
+      : "none"} !important;
 `;
 
 const Footer = styled.div`
@@ -127,7 +135,7 @@ const NFT = () => {
             selectedKeys={[current]}
             style={{
               display: "flex",
-              justifyContent: "space-evenly",
+              justifyContent: "center",
               marginTop: "3rem",
             }}
           >
@@ -234,7 +242,7 @@ const NFT = () => {
                               </Col>
                             </Row>
                           </ListItem>
-                          <Divider />
+                          {nftTransactionsFiltered.length > 1 && <Divider />}
                         </ListContainer>
                       );
                     })
@@ -242,7 +250,11 @@ const NFT = () => {
                 : null}
             </Col>
           </Row>
-          <Row style={{ marginTop: "32px" }}>
+          <Row
+            style={{
+              marginTop: "32px",
+            }}
+          >
             <Footer>
               <StyledButton onClick={onTransferClick}>TRANSFER</StyledButton>
             </Footer>
