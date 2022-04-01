@@ -66,4 +66,27 @@
   border-color: #00fea6 !important;
   color: #000 !important;
   border: solid 1px #00fea6 !important;
+  outline: none !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .ant-btn-primary:hover,
+  .ant-btn:hover {
+    background: #00fea6 !important;
+    border-color: #00fea6 !important;
+    color: #000 !important;
+    border: solid 1px #00fea6 !important;
+    transition: all ease-in-out 0.03s !important;
+  }
+
+  .ant-btn-primary:active,
+  .ant-btn:active,
+  .ant-btn-primary:focus,
+  .ant-btn:focus {
+    background: #00fea6 !important;
+    border-color: #00fea6 !important;
+    color: #000 !important;
+    border: solid 1px #00fea6 !important;
+    outline: none !important;
+  }
 }
