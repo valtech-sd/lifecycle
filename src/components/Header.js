@@ -21,7 +21,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
   justify-content: space-around;
   margin: 2rem 0 1rem;
-  align-items: flex-start;
+  align-items: center;
 `;
 
 const WalletWrapoer = styled.div`
@@ -40,6 +40,7 @@ const WalletWrapoer = styled.div`
 const BackCTA = styled.div`
   color: black;
   cursor: pointer;
+  display: flex;
 `;
 
 const Header = ({ title, goBackRoute }) => {

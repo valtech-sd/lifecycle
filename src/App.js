@@ -30,7 +30,7 @@ export const AppContext = React.createContext({
 //   console.log("Alert: Fetching new historical transactions:", provider);
 //   const web3Js = new Web3(provider);
 //   const contract = require("./contractABIs/V_Authenticate.json");
-//   const contractAddress = "0x9Ea4Bb6967936aA865963B43003b5bFa679C1AF3";
+//   const contractAddress = "0x43b92b42ee33fC01f4d9A3249E478F7bc0cFCC0c";
 //   const nftContract = new web3Js.eth.Contract(contract.abi, contractAddress);
 //   return await nftContract
 //     .getPastEvents("allEvents", {
@@ -69,7 +69,7 @@ const App = () => {
   const [nft, setNft] = useState(null);
   const { data: NFTBalances } = useNFTBalances();
   const [contractAddress] = useState(
-    "0x9Ea4Bb6967936aA865963B43003b5bFa679C1AF3"
+    "0x43b92b42ee33fC01f4d9A3249E478F7bc0cFCC0c"
   );
   const [allVAuthNfts, setAllVAuthNfts] = useState([]);
 

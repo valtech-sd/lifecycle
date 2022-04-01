@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { Typography, Row, Col, Image, Menu, Button, Divider } from "antd";
 import styled from "styled-components";
 import { useMoralis, useMoralisQuery } from "react-moralis";
-import { useNavigate, useParams, createSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
 import Header from "../components/Header";
 import { AppContext } from "../App.js";
-import { StyledButtonSecondary, StyledButton } from "./Wallet";
+import { StyledButton } from "./Wallet";
 
 const ImageContainer = styled.div`
   display: flex;
@@ -65,11 +65,13 @@ const Footer = styled.div`
 const NFT = () => {
   // https://github.com/MoralisWeb3/react-moralis#usemoralisquery
   const { data: transferEventData } = useMoralisQuery("TransferEventsNFT");
-  const { account, enableWeb3, isWeb3Enabled, deactivateWeb3, logout } =
-    useMoralis();
+  const { data: repairEventData } = useMoralisQuery("ProductRepairedLog");
+  const { account, enableWeb3, isWeb3Enabled } = useMoralis();
   const [current, setCurrent] = useState("details");
   const [nft, setNft] = useState(null);
   const [nftTransactionsFiltered, setNftTransactionsFiltered] = useState(null);
+  const [nftRepairsFiltered, setNftRepairsFiltered] = useState(null);
+  const [sortedTransactions, setSortedTransactions] = useState(null);
   const navigate = useNavigate();
 
   const { allVAuthNfts } = useContext(AppContext);
@@ -98,6 +100,13 @@ const NFT = () => {
     setNftTransactionsFiltered(filteredNFTTransactions);
   }, [transferEventData, params.nftId]);
 
+  useEffect(() => {
+    const repairsFiltered = repairEventData.filter((event) => {
+      return event.attributes.token_id === params.nftId;
+    });
+    setNftRepairsFiltered(repairsFiltered);
+  }, [repairEventData, params.nftId]);
+
   const handleMenuClick = (e) => {
     setCurrent(e.key);
   };
@@ -108,19 +117,31 @@ const NFT = () => {
   const onTransferClick = () => {
     navigate(`transfer`);
   };
+  console.log("nftRepairsFiltered", nftRepairsFiltered);
 
-  const onDisconnect = async () => {
-    await deactivateWeb3();
-    await logout();
-    window.localStorage.removeItem("walletconnect");
-    window.localStorage.removeItem("WALLETCONNECT_DEEPLINK_CHOICE");
-    navigate({
-      pathname: "/",
-      search: `?${createSearchParams({
-        action: "disconnect",
-      })}`,
-    });
-  };
+  useEffect(() => {
+    const allTransactions =
+      nftTransactionsFiltered &&
+      nftTransactionsFiltered.concat(nftRepairsFiltered).map((transfer) => {
+        const dateParts = transfer.attributes.block_timestamp
+          .toString()
+          .split(" ");
+        const date = moment(
+          `${dateParts[3]} ${dateParts[2]} ${dateParts[1]} ${dateParts[4]}`
+        ).format("MM/DD/YYYY HH:mm");
+        return { ...transfer.attributes, transfer, date };
+      });
+
+    if (allTransactions) {
+      setSortedTransactions(
+        allTransactions.sort((a, b) =>
+          moment(b.date, "MM/DD/YYYY HH:mm").diff(
+            moment(a.date, "MM/DD/YYYY HH:mm")
+          )
+        )
+      );
+    }
+  }, [nftTransactionsFiltered, nftRepairsFiltered]);
 
   return (
     <>
@@ -197,14 +218,14 @@ const NFT = () => {
             </Col>
             <Col span="24" align="middle">
               {current === "journey"
-                ? nftTransactionsFiltered
-                  ? nftTransactionsFiltered.map((transfer) => {
-                      const dateParts = transfer.attributes.block_timestamp
+                ? sortedTransactions
+                  ? sortedTransactions.map((transfer) => {
+                      const dateParts = transfer.block_timestamp
                         .toString()
                         .split(" ");
                       const date = moment(
-                        `${dateParts[3]} ${dateParts[2]} ${dateParts[1]}`
-                      ).format("MM/DD/YYYY");
+                        `${dateParts[3]} ${dateParts[2]} ${dateParts[1]} ${dateParts[4]}`
+                      ).format("MM/DD/YYYY HH:mm");
 
                       return (
                         <ListContainer>
@@ -212,9 +233,11 @@ const NFT = () => {
                             <Row>
                               <Col span={8} align="left">
                                 <TypographyHeader>
-                                  {transfer.attributes.from.includes("0x000")
-                                    ? "MINT"
-                                    : "TRANSFER"}
+                                  {transfer.from
+                                    ? transfer.from.includes("0x000")
+                                      ? "MINT"
+                                      : "TRANSFER"
+                                    : "REPAIRED"}
                                 </TypographyHeader>
                               </Col>
                               <Col span={8} offset={8} align="right">
@@ -222,24 +245,26 @@ const NFT = () => {
                               </Col>
                             </Row>
                             <Row>
-                              <Col span={24} align="left">
-                                <Typography>
-                                  From:{" "}
-                                  {truncate(
-                                    transfer.attributes.from === account
-                                      ? "You"
-                                      : transfer.attributes.from
-                                  )}
-                                </Typography>
-                                <Typography>
-                                  To:{" "}
-                                  {truncate(
-                                    transfer.attributes.to === account
-                                      ? "You"
-                                      : transfer.attributes.from
-                                  )}
-                                </Typography>
-                              </Col>
+                              {transfer.from && transfer.to && (
+                                <Col span={24} align="left">
+                                  <Typography>
+                                    From:{" "}
+                                    {truncate(
+                                      transfer.from === account
+                                        ? "You"
+                                        : transfer.from
+                                    )}
+                                  </Typography>
+                                  <Typography>
+                                    To:{" "}
+                                    {truncate(
+                                      transfer.to === account
+                                        ? "You"
+                                        : transfer.from
+                                    )}
+                                  </Typography>
+                                </Col>
+                              )}
                             </Row>
                           </ListItem>
                           {nftTransactionsFiltered.length > 1 && <Divider />}

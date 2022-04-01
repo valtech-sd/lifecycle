@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Typography, Row, Col, List, Image } from "antd";
-import { useMoralis, useNFTBalances } from "react-moralis";
+import { useMoralis } from "react-moralis";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -29,17 +29,6 @@ const NFTList = () => {
     }
   }, [isWeb3Enabled, account, enableWeb3]);
 
-  // Grabs all of this user's V_AUTH NFTs, sets to global state
-  // useEffect(() => {
-  //   console.log(contractAddress);
-  //   const vAuthNfts =
-  //     NFTBalances &&
-  //     NFTBalances.result.filter((nft) => {
-  //       return nft.token_address == contractAddress.toLowerCase();
-  //     });
-  //   setAllVAuthNfts(vAuthNfts);
-  // }, [NFTBalances, setAllVAuthNfts, contractAddress]);
-
   return (
     <>
       <Header title="MY PRODUCTS" goBackRoute={"/"} />
@@ -58,8 +47,8 @@ const NFTList = () => {
                 <Link to={nft.token_id}>
                   <ListItem>
                     <List.Item>
-                      <Image width={90} src={nft.metadata.image} />
-                      <Typography>{nft.metadata.name}</Typography>
+                      <Image width={90} src={nft.metadata?.image} />
+                      <Typography>{nft.metadata?.name}</Typography>
                       <Typography>ID# {nft.token_id}</Typography>
                     </List.Item>
                   </ListItem>

@@ -13,8 +13,8 @@ ReactDOM.render(
   <React.StrictMode>
     <MetaMaskProvider>
       <MoralisProvider
-        appId="tFMrhTbhCjALTwdhpoqVNPiVk1pbvTldHw9rqZar"
-        serverUrl="https://2gr3ntn4ke7p.usemoralis.com:2053/server"
+        appId="50crjfrjaWvtkLtyWA5Sw50Dopm00aaeqD4J5p8G"
+        serverUrl="https://02brmz1pkwey.usemoralis.com:2053/server"
       >
         <BrowserRouter>
           <App />

@@ -1,0 +1,25 @@
+{
+  "name": "Perpignan Burgundy Handbag",
+  "external_url": "http://blockchain.valtech.engineering/lifecycle",
+  "description": "Perpignan Burgundy Handbag in collaboration with Future Studio. The first of the luxury handbag collection, paired with a digital NFT certificate of authenticity and ownership. This custom handbag was designed by lead designer, Alyssa Ferrante in Milan, Italy",
+  "image": "https://gateway.pinata.cloud/ipfs/QmZRUD42Z3RrvSuG2BVwXuumy8YZMHMLCdpTx77WG2cq4c",
+  "attributes": [
+    {
+      "display_type": "date",
+      "trait_type": "Original Sale Date",
+      "value": 1647570893
+    },
+    {
+      "trait_type": "Designed by",
+      "value": "Alyssa Ferrante"
+    },
+    {
+      "trait_type": "Manufactured",
+      "value": "Taiwan"
+    },
+    {
+      "trait_type": "Collection",
+      "value": "Future Studio Luxury Collection"
+    }
+  ]
+}
