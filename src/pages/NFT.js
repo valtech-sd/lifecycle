@@ -127,7 +127,7 @@ const NFT = () => {
           .toString()
           .split(" ");
         const dateObj = new Date(transfer.attributes.block_timestamp);
-        const date = moment(dateObj, "YYYY-MM-DD").format("MM/DD/YYYY hh:mm");
+        const date = moment(dateObj, "YYYY-MM-DD").format("MM/DD/YYYY hh:mm a");
         console.log(date);
         return { ...transfer.attributes, transfer, date };
       });
@@ -220,13 +220,6 @@ const NFT = () => {
               {current === "journey"
                 ? sortedTransactions
                   ? sortedTransactions.map((transfer) => {
-                      const dateParts = transfer.block_timestamp
-                        .toString()
-                        .split(" ");
-                      const date = moment(
-                        `${dateParts[3]} ${dateParts[2]} ${dateParts[1]} ${dateParts[4]}`
-                      ).format("MM/DD/YYYY hh:mm A");
-
                       return (
                         <ListContainer>
                           <ListItem>
