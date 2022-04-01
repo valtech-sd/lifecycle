@@ -126,10 +126,9 @@ const NFT = () => {
         const dateParts = transfer.attributes.block_timestamp
           .toString()
           .split(" ");
-        const date = moment(
-          `${dateParts[3]} ${dateParts[2]} ${dateParts[1]} ${dateParts[4]}`,
-          "MM/DD/YYYY HH:mm"
-        );
+        const dateObj = new Date(transfer.attributes.block_timestamp);
+        console.log(dateObj);
+        const date = moment(dateObj).format("MM/DD/YYYY HH:mm");
         return { ...transfer.attributes, transfer, date };
       });
 
