@@ -1,15 +1,42 @@
-# amazon-clone
+## Background
 
-## Useful Links
+Lifecycle is a web3-enabled DApp (Decentralized App) empowering brands to showcase their products on the Ethereum blockchain. Digital twins of physical luxury handbags are minted as Non-Fungible Tokens (NFTs). Lifecycle allows users to manage and transfer their NFTs, brands to keep a ledger of repairs, and other custom events throughout the product's lifecycle. This allows brands to create trust in an industry rife with counterfeit.
 
-https://github.com/IAmJaysWay/amazon-clone-full/blob/main/src/components/Purchase.js
-https://deep-index.moralis.io/api-docs/#/account/getTransactions
-https://moralis.io/how-to-build-a-web3-amazon-marketplace/
-https://docs.moralis.io/moralis-server/sending-assets/transfer-eth
+## Requirements
 
-## Authentication
+To interact with the DApp, one must have acess to a cryptocurrency wallet.
 
-- Secret key is stored in brand DB and provided to user via email to confirm / claim product
-- Every 30 days, key is changed
-- When product is sold again, they have to receive email with updated password from brand admin
-- That way people who previously owned the item cannot reclaim it
+#### Development
+
+1. Install the [Chrome MetaMask Extension](https://metamask.io/download/).
+2. Once installed, select the Rinkeby Testnet in the MetaMask Extension.
+3. Fund the wallet with test ETH. [This faucet](https://faucets.chain.link/rinkeby) allows easy funding of test ETH.
+4. User activities such as authentication, NFT transfer trasactions prompts the MetaMask popup to complete the transaction on the blockchain.
+
+#### Production
+
+1. In production, the DApp must be accessed via the MetaMask native browser.
+2. Make sure to have test ETH in the MetaMask wallet, and the Rinkeby Testnet selected.
+
+Originally, WalletConnect [enabled deeplinks](https://docs.walletconnect.com/mobile-linking), allowing users to use the DApp in native browsers such as Chrome, Firefox, Safari. Right now, there is an active issue with MetaMask's Mobile App that is being monitored. Once MetaMask resolves [the issue](https://github.com/MetaMask/metamask-mobile/pull/3971) , our DApp should be accessible in native browsers, but for now the MetaMask browser must be used.
+
+## Setup
+
+#### Install Dependencies
+
+```
+npm i
+```
+
+#### Start Development Server
+
+```
+npm run start
+```
+
+## Useful Resources
+
+- [Our NFT Smart Contract on Etherscan](https://rinkeby.etherscan.io/address/0x43b92b42ee33fC01f4d9A3249E478F7bc0cFCC0c)
+- [Moralis SDK](https://docs.moralis.io/introduction/readme#user) (used for much of the interaction with the blockchain)
+- [Creating an NFT tutorial](https://docs.alchemy.com/alchemy/tutorials/how-to-create-an-nft) (used for this project)
+- [Create React App Rewired](https://github.com/timarney/react-app-rewired)
