@@ -56,7 +56,7 @@ export const StyledButtonSecondary = styled(Button)`
 
 const Wallet = () => {
   let navigate = useNavigate();
-  const { enableWeb3, deactivateWeb3, isWeb3Enabled, logout } = useMoralis();
+  const { deactivateWeb3 } = useMoralis();
 
   const onDisconnectWallet = async () => {
     // await web3Js.eth.currentProvider.disconnect();

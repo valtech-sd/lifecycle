@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
-import { useMoralis, useNFTBalances } from "react-moralis";
+import { useNFTBalances } from "react-moralis";
 
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import NFT from "./pages/NFT";
 import "./App.css";
-import PinInput from "./pages/PinInput";
 import Transfer from "./pages/Transfer";
 import AuthenticateMenu from "./pages/AuthenticateMenu";
 import ClaimOwnership from "./pages/ClaimOwnership";
@@ -26,46 +25,7 @@ export const AppContext = React.createContext({
   contractAddress: "",
 });
 
-// const getNFTEventHistory = async (provider) => {
-//   console.log("Alert: Fetching new historical transactions:", provider);
-//   const web3Js = new Web3(provider);
-//   const contract = require("./contractABIs/V_Authenticate.json");
-//   const contractAddress = "0x43b92b42ee33fC01f4d9A3249E478F7bc0cFCC0c";
-//   const nftContract = new web3Js.eth.Contract(contract.abi, contractAddress);
-//   return await nftContract
-//     .getPastEvents("allEvents", {
-//       fromBlock: 0,
-//       toBlock: "latest",
-//     })
-//     .then(function (events) {
-//       const response = new Promise((resolve, reject) => {
-//         events.forEach(async (event, index, array) => {
-//           // if event is from "0x0", it was a mint event
-//           if (
-//             event.returnValues.from &&
-//             event.returnValues.from.includes("0x0")
-//           ) {
-//             event.isMintEvent = true;
-//           }
-//           // Add timestamp to events
-//           web3Js.eth.getBlock(event.blockNumber).then((block) => {
-//             console.log("Adding timestamp to historical data");
-//             event.timestamp = new Date(block.timestamp * 1000).toLocaleString();
-//           });
-//           if (index === array.length - 1) resolve();
-//         });
-//       });
-//       return response.then(() => {
-//         return events.filter((item) => {
-//           return item.event === "Transfer";
-//         });
-//       });
-//     });
-// };
-
 const App = () => {
-  const { isWeb3Enabled, isAuthenticated, enableWeb3, authenticate, account } =
-    useMoralis();
   const [nft, setNft] = useState(null);
   const { data: NFTBalances } = useNFTBalances();
   const [contractAddress] = useState(

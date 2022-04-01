@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useMoralis, useMoralisQuery } from "react-moralis";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
+import Web3 from "web3";
 
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
 import Header from "../components/Header";
@@ -117,15 +118,11 @@ const NFT = () => {
   const onTransferClick = () => {
     navigate(`transfer`);
   };
-  console.log("nftRepairsFiltered", nftRepairsFiltered);
 
   useEffect(() => {
     const allTransactions =
       nftTransactionsFiltered &&
       nftTransactionsFiltered.concat(nftRepairsFiltered).map((transfer) => {
-        const dateParts = transfer.attributes.block_timestamp
-          .toString()
-          .split(" ");
         const dateObj = new Date(transfer.attributes.block_timestamp);
         const date = moment(dateObj, "YYYY-MM-DD").format("MM/DD/YYYY hh:mm a");
         console.log(date);
@@ -142,6 +139,32 @@ const NFT = () => {
       );
     }
   }, [nftTransactionsFiltered, nftRepairsFiltered]);
+
+  const repairData = [
+    {
+      type: "Replace Broken Part",
+      location: "Los Angeles, USA",
+      partnerId: "13253",
+      notes: "Handbag strap was damaged. Broken part was replaced.",
+      costOfRepair: "$399.00 USD",
+    },
+
+    {
+      type: "Upgrade Specialty Part",
+      location: "Atlanta, USA",
+      partnerId: "23452",
+      notes: "Handbag was upgraded with new leather addition",
+      costOfRepair: "$899.00 USD",
+    },
+
+    {
+      type: "Restore Damaged Zipper",
+      location: "New York, USA",
+      partnerId: "11224",
+      notes: "Handbag zipper needed to be replaced.",
+      costOfRepair: "$499.00 USD",
+    },
+  ];
 
   return (
     <>
@@ -220,6 +243,10 @@ const NFT = () => {
               {current === "journey"
                 ? sortedTransactions
                   ? sortedTransactions.map((transfer) => {
+                      const repairDataObj =
+                        repairData[
+                          Math.floor(Math.random() * repairData.length)
+                        ];
                       return (
                         <ListContainer>
                           <ListItem>
@@ -255,6 +282,38 @@ const NFT = () => {
                                         ? "You"
                                         : transfer.from
                                     )}
+                                  </Typography>
+                                </Col>
+                              )}
+                            </Row>
+                            <Row>
+                              {transfer.repairURI && (
+                                <Col span={24} align="left">
+                                  <Typography>
+                                    {Object.keys(repairDataObj).map(function (
+                                      key,
+                                      index
+                                    ) {
+                                      console.log(key);
+                                      // key: the name of the object key
+                                      // index: the ordinal position of the key within the object
+                                      const result = key.replace(
+                                        /([A-Z])/g,
+                                        " $1"
+                                      );
+                                      const capitalizedKey =
+                                        result.charAt(0).toUpperCase() +
+                                        result.slice(1);
+                                      return (
+                                        <div>
+                                          <span style={{ fontWeight: "bold" }}>
+                                            {capitalizedKey}
+                                          </span>
+                                          : {repairDataObj[key]}
+                                          <br />
+                                        </div>
+                                      );
+                                    })}
                                   </Typography>
                                 </Col>
                               )}
