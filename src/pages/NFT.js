@@ -56,11 +56,20 @@ const ButtonStyled = styled(Button)`
       : "none"} !important;
 `;
 
+const RowContainer = styled(Row)`
+  @media (min-width: 768px) {
+    width: 768px;
+    margin: 4rem auto 0;
+  }
+`;
+
 const Footer = styled.div`
   background: ${COLORS.black};
   width: 100%;
   padding: 3rem ${SIZES.xl};
   margin: 0;
+  display: flex;
+  justify-content: center;
 `;
 
 const NFT = () => {
@@ -125,7 +134,6 @@ const NFT = () => {
       nftTransactionsFiltered.concat(nftRepairsFiltered).map((transfer) => {
         const dateObj = new Date(transfer.attributes.block_timestamp);
         const date = moment(dateObj, "YYYY-MM-DD").format("MM/DD/YYYY hh:mm a");
-        console.log(date);
         return { ...transfer.attributes, transfer, date };
       });
 
@@ -196,7 +204,7 @@ const NFT = () => {
               Journey
             </ButtonStyled>
           </Menu>
-          <Row style={{ marginTop: "32px" }}>
+          <RowContainer style={{ marginTop: "32px" }}>
             <Col span="24" align="middle">
               {nft && current === "details" && (
                 <ListContainer>
@@ -326,7 +334,7 @@ const NFT = () => {
                   : "LOADING"
                 : null}
             </Col>
-          </Row>
+          </RowContainer>
           <Row
             style={{
               marginTop: "32px",

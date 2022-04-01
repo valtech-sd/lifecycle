@@ -74,7 +74,8 @@ const Home = () => {
     await authenticate({
       provider: "metamask",
       chainId: 4,
-      signingMessage: "Welcome to V_Auth, please confirm your account.",
+      signingMessage:
+        "Welcome to Future Studio Lifecycle, please confirm your wallet.",
     });
     navigate("/nfts");
   }

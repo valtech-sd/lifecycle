@@ -17,6 +17,11 @@ const RowWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    padding: 0 10rem;
+  }
 `;
 
 export const StyledButton = styled(Button)`
@@ -35,6 +40,7 @@ export const StyledButton = styled(Button)`
   width: 100%;
   justify-content: center;
   border-radius: 6px;
+  max-width: 200px;
 `;
 
 export const StyledButtonSecondary = styled(Button)`
@@ -52,6 +58,7 @@ export const StyledButtonSecondary = styled(Button)`
   width: 100%;
   justify-content: center;
   border-radius: 6px;
+  max-width: 200px;
 `;
 
 const Wallet = () => {

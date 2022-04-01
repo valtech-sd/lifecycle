@@ -51,10 +51,13 @@
 
 .ant-btn-primary:hover,
 .ant-btn-primary:active,
-.ant-btn-primary:focus {
-  background: #008053;
-  border-color: #008053;
-  color: #fff;
-  border: solid 1px #fff;
-  transition: all ease-in-out 0.03s;
+.ant-btn-primary:focus,
+.ant-btn:focus,
+.ant-btn:active,
+.ant-btn:hover {
+  background: #008053 !important;
+  border-color: #008053 !important;
+  color: #fff !important;
+  border: solid 1px #fff !important;
+  transition: all ease-in-out 0.03s !important;
 }

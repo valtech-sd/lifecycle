@@ -12,6 +12,10 @@ import { SIZES, COLORS } from "../utils/global";
 
 const WarningTextWrapper = styled(Typography)`
   padding: 4rem 0;
+
+  @media (min-width: 768px) {
+    width: 768px;
+  }
 `;
 
 const RowWrapper = styled.div`
@@ -20,6 +24,7 @@ const RowWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const LoaderWrapper = styled.div`
@@ -29,18 +34,35 @@ const LoaderWrapper = styled.div`
   flex-direction: column;
 `;
 
+const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ButtonOverride = styled(StyledButton)`
+  max-width: none;
+`;
+
 const Transfer = () => {
   let navigate = useNavigate();
   let params = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [loadingText, setLoadingText] = useState(
-    "Confirming your transaction on the blockchain..."
+    "Confirming your transaction on the blockchain... this should take 10-20 seconds after wallet signature"
   );
-  const { account, provider } = useMoralis();
+  const { account, provider, isWeb3Enabled, enableWeb3 } = useMoralis();
   const web3Js = new Web3(provider);
   const contract = require("../contractABIs/V_Authenticate.json");
   const contractAddress = "0x43b92b42ee33fC01f4d9A3249E478F7bc0cFCC0c";
   const nftContract = new web3Js.eth.Contract(contract.abi, contractAddress);
+
+  useEffect(() => {
+    if (!isWeb3Enabled || !account) {
+      console.log("ENABLING WEB3: NFTList Page");
+      enableWeb3();
+    }
+  }, [isWeb3Enabled, account, enableWeb3]);
 
   const onFinish = (values) => {
     sendNFT(values.account);
@@ -94,7 +116,7 @@ const Transfer = () => {
             />
           </LoaderWrapper>
         ) : (
-          <>
+          <FormWrapper>
             <WarningTextWrapper>
               <Typography style={{ color: "white", fontSize: "20px" }}>
                 Please enter the address you would like to the transfer your NFT
@@ -123,12 +145,12 @@ const Transfer = () => {
               </Form.Item>
 
               <Form.Item wrapperCol={{ span: 24 }}>
-                <StyledButton htmlType="submit" type="submit">
-                  Tranfer NFT
-                </StyledButton>
+                <ButtonOverride htmlType="submit" type="submit">
+                  Transfer NFT
+                </ButtonOverride>
               </Form.Item>
             </Form>
-          </>
+          </FormWrapper>
         )}
       </RowWrapper>
     </>
