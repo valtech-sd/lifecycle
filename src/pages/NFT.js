@@ -127,8 +127,9 @@ const NFT = () => {
           .toString()
           .split(" ");
         const date = moment(
-          `${dateParts[3]} ${dateParts[2]} ${dateParts[1]} ${dateParts[4]}`
-        ).format("MM/DD/YYYY HH:mm");
+          `${dateParts[3]} ${dateParts[2]} ${dateParts[1]} ${dateParts[4]}`,
+          "MM/DD/YYYY HH:mm"
+        );
         return { ...transfer.attributes, transfer, date };
       });
 
