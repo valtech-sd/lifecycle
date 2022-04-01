@@ -61,12 +61,6 @@ const Home = () => {
     account,
   } = useMoralis();
 
-  // useEffect(() => {
-  //   if (searchParams.get("action") === "disconnect" && isWeb3Enabled) {
-  //     deactivateWeb3();
-  //   }
-  // }, [searchParams, deactivateWeb3, isWeb3Enabled]);
-
   // https://community.metamask.io/t/deeplink-opens-appstore-when-app-installed/18199/4
   // https://github.com/MetaMask/metamask-mobile/issues/3965
   // https://github.com/MetaMask/metamask-mobile/pull/3971/files
