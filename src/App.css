@@ -50,10 +50,6 @@
 }
 
 .ant-btn-primary:hover,
-.ant-btn-primary:active,
-.ant-btn-primary:focus,
-.ant-btn:focus,
-.ant-btn:active,
 .ant-btn:hover {
   background: #008053 !important;
   border-color: #008053 !important;
