@@ -241,7 +241,7 @@ const NFT = () => {
                                 </TypographyHeader>
                               </Col>
                               <Col span={8} offset={8} align="right">
-                                <Typography>{date}</Typography>
+                                <Typography>{transfer.date}</Typography>
                               </Col>
                             </Row>
                             <Row>
