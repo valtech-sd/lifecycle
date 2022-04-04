@@ -6,7 +6,7 @@ import {
   useSearchParams,
   Link,
 } from "react-router-dom";
-import { Button, Row, Col, Typography, Image } from "antd";
+import { Button, Row, Col, Typography, Image, Timeline } from "antd";
 import { useMoralis } from "react-moralis";
 import styled from "styled-components";
 import ValtechLogo from "../assets/valtechLogo.png";
@@ -34,6 +34,10 @@ const Section = styled.div`
   height: 100%;
 `;
 
+const VideoContainer = styled.video`
+  max-width: 400px;
+`;
+
 const StyledButton = styled(Button)`
   cursor: pointer;
   background: ${COLORS.green};
@@ -59,6 +63,10 @@ const HeaderTypography = styled.h2`
   font-weight: 700;
 `;
 
+const ParagraphTypography = styled.div`
+  color: white;
+`;
+
 const LandingPage = () => {
   const navigate = useNavigate();
 
@@ -69,40 +77,102 @@ const LandingPage = () => {
           <Row gutter={[24, 80]}>
             <Col span="24" align="middle">
               <Image src={ValtechLogo} width="200px" />
+              <HeaderTypography>
+                Lifecycle: The Future of Digital Ownership
+              </HeaderTypography>
+            </Col>
+
+            <Col span="24">
+              <HeaderTypography>Check it out</HeaderTypography>
+              <Timeline>
+                <Timeline.Item
+                  style={{ color: "white" }}
+                  position="left"
+                  color="white"
+                >
+                  <HeaderTypography>Request an NFT</HeaderTypography>
+                  <ParagraphTypography>
+                    Email (max.mcgee@valtech.com) with your Ethereum account
+                    address, full name, and company name.
+                  </ParagraphTypography>
+                </Timeline.Item>
+                <Timeline.Item
+                  style={{ color: "white" }}
+                  position="left"
+                  color="white"
+                >
+                  <HeaderTypography>
+                    Install MetaMask app on iOS or Android
+                  </HeaderTypography>
+                  <Col span="24">
+                    <a
+                      href="https://metamask.io/download/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <StyledButton type="primary">
+                        Download MetaMask
+                      </StyledButton>
+                    </a>
+                  </Col>
+                </Timeline.Item>
+                <Timeline.Item
+                  style={{ color: "white" }}
+                  position="left"
+                  color="white"
+                >
+                  <HeaderTypography>
+                    Open the App from the MetaMask Browser
+                  </HeaderTypography>
+                  <Col span="24">
+                    <Link to="app">
+                      <StyledButton type="primary">Link to App</StyledButton>
+                    </Link>
+                  </Col>
+                </Timeline.Item>
+                <Timeline.Item
+                  style={{ color: "white" }}
+                  position="left"
+                  color="white"
+                >
+                  <HeaderTypography>
+                    View, Transfer and Share your NFT
+                  </HeaderTypography>
+                </Timeline.Item>
+              </Timeline>
+              ,
             </Col>
 
             <Col span="24">
               <HeaderTypography>Demo: Transfer the Product</HeaderTypography>
               <VideoWrapper>
-                <video controls>
+                <VideoContainer controls>
                   <source src={TransferDemoVideo} type="video/mp4"></source>
-                </video>
+                </VideoContainer>
               </VideoWrapper>
-            </Col>
-
-            <HeaderTypography>Demo: View the NFT</HeaderTypography>
-            <Col span="24">
-              <Link to="app">
-                <StyledButton type="primary">Link to App</StyledButton>
-              </Link>
             </Col>
 
             <HeaderTypography>Demo: Transfer the Product</HeaderTypography>
             <Col span="24">
               <VideoWrapper>
-                <video controls>
+                <VideoContainer controls>
                   <source src={ViewDemoVideo} type="video/mp4"></source>
-                </video>
+                </VideoContainer>
               </VideoWrapper>
             </Col>
 
             <HeaderTypography>Demo: View on Etherscan</HeaderTypography>
             <Col span="24">
               <VideoWrapper>
-                <video controls>
+                <VideoContainer controls>
                   <source src={EtherscanDemoVideo} type="video/mp4"></source>
-                </video>
+                </VideoContainer>
               </VideoWrapper>
+            </Col>
+
+            <Col span="24" align="middle">
+              <Image src={ValtechLogo} width="200px" />
+              <HeaderTypography>Thank you for your interest!</HeaderTypography>
             </Col>
           </Row>
         </Section>
