@@ -1,32 +1,32 @@
 {
   "files": {
-    "main.css": "/lifecycle/static/css/main.70404edb.chunk.css",
-    "main.js": "/lifecycle/static/js/main.bfe09d92.chunk.js",
-    "main.js.map": "/lifecycle/static/js/main.bfe09d92.chunk.js.map",
+    "main.css": "/lifecycle/static/css/main.1b712d7f.chunk.css",
+    "main.js": "/lifecycle/static/js/main.a9fba45c.chunk.js",
+    "main.js.map": "/lifecycle/static/js/main.a9fba45c.chunk.js.map",
     "runtime-main.js": "/lifecycle/static/js/runtime-main.5724022f.js",
     "runtime-main.js.map": "/lifecycle/static/js/runtime-main.5724022f.js.map",
     "static/css/2.e87b3c48.chunk.css": "/lifecycle/static/css/2.e87b3c48.chunk.css",
-    "static/js/2.8d6fb981.chunk.js": "/lifecycle/static/js/2.8d6fb981.chunk.js",
-    "static/js/2.8d6fb981.chunk.js.map": "/lifecycle/static/js/2.8d6fb981.chunk.js.map",
+    "static/js/2.5c62e359.chunk.js": "/lifecycle/static/js/2.5c62e359.chunk.js",
+    "static/js/2.5c62e359.chunk.js.map": "/lifecycle/static/js/2.5c62e359.chunk.js.map",
     "static/js/3.7c03958a.chunk.js": "/lifecycle/static/js/3.7c03958a.chunk.js",
     "static/js/3.7c03958a.chunk.js.map": "/lifecycle/static/js/3.7c03958a.chunk.js.map",
     "index.html": "/lifecycle/index.html",
     "static/css/2.e87b3c48.chunk.css.map": "/lifecycle/static/css/2.e87b3c48.chunk.css.map",
-    "static/css/main.70404edb.chunk.css.map": "/lifecycle/static/css/main.70404edb.chunk.css.map",
-    "static/js/2.8d6fb981.chunk.js.LICENSE.txt": "/lifecycle/static/js/2.8d6fb981.chunk.js.LICENSE.txt",
+    "static/css/main.1b712d7f.chunk.css.map": "/lifecycle/static/css/main.1b712d7f.chunk.css.map",
+    "static/js/2.5c62e359.chunk.js.LICENSE.txt": "/lifecycle/static/js/2.5c62e359.chunk.js.LICENSE.txt",
     "static/media/backbutton.4330e436.svg": "/lifecycle/static/media/backbutton.4330e436.svg",
     "static/media/demo-app-overview.ca2f074e.mp4": "/lifecycle/static/media/demo-app-overview.ca2f074e.mp4",
     "static/media/demo-app-transfer.176b8f1c.mp4": "/lifecycle/static/media/demo-app-transfer.176b8f1c.mp4",
     "static/media/demo-view-etherscan.56a4f9ab.mp4": "/lifecycle/static/media/demo-view-etherscan.56a4f9ab.mp4",
     "static/media/logo.080b4ffa.svg": "/lifecycle/static/media/logo.080b4ffa.svg",
-    "static/media/valtechLogo.48e4c472.png": "/lifecycle/static/media/valtechLogo.48e4c472.png",
+    "static/media/valtechLogo.aa27b655.png": "/lifecycle/static/media/valtechLogo.aa27b655.png",
     "static/media/wallet.05bac015.svg": "/lifecycle/static/media/wallet.05bac015.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.5724022f.js",
     "static/css/2.e87b3c48.chunk.css",
-    "static/js/2.8d6fb981.chunk.js",
-    "static/css/main.70404edb.chunk.css",
-    "static/js/main.bfe09d92.chunk.js"
+    "static/js/2.5c62e359.chunk.js",
+    "static/css/main.1b712d7f.chunk.css",
+    "static/js/main.a9fba45c.chunk.js"
   ]
 }
