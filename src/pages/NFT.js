@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useMoralis, useMoralisQuery } from "react-moralis";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
-import Web3 from "web3";
 
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
 import Header from "../components/Header";
@@ -302,9 +301,7 @@ const NFT = () => {
                                       key,
                                       index
                                     ) {
-                                      console.log(key);
-                                      // key: the name of the object key
-                                      // index: the ordinal position of the key within the object
+                                      // Capitalize camel-case fields in object
                                       const result = key.replace(
                                         /([A-Z])/g,
                                         " $1"
