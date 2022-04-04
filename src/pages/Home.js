@@ -84,7 +84,7 @@ const Home = () => {
 
   return (
     <>
-      <Container className={location.pathname === "/" ? "a" : ""}>
+      <Container className={location.pathname === "/app" ? "a" : ""}>
         <Section>
           <Row gutter={[24, 80]}>
             <Col span="24" align="middle">

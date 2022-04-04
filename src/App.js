@@ -3,6 +3,7 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import { useNFTBalances } from "react-moralis";
 
 import Home from "./pages/Home";
+import LandingPage from "./pages/LandingPage";
 import Admin from "./pages/Admin";
 import NFT from "./pages/NFT";
 import "./App.css";
@@ -55,13 +56,14 @@ const App = () => {
     <AppContext.Provider value={value}>
       <Layout>
         <Routes>
-          <Route index path="/" element={<Home />} />
-          <Route path="admin" element={<Admin />} />
-          <Route path="nfts" element={<NFTList />} />
-          <Route path="nfts/:nftId" element={<NFT />} />
-          <Route path="nfts/:nftId/transfer" element={<Transfer />} />
+          <Route index path="/" element={<LandingPage />} />
+          <Route index path="/app" element={<Home />} />
+          <Route path="app/admin" element={<Admin />} />
+          <Route path="app/nfts" element={<NFTList />} />
+          <Route path="app/nfts/:nftId" element={<NFT />} />
+          <Route path="app/nfts/:nftId/transfer" element={<Transfer />} />
 
-          <Route path="wallet" element={<Wallet />} />
+          <Route path="app/wallet" element={<Wallet />} />
           {/* Removed */}
           <Route path="authenticate-menu" element={<AuthenticateMenu />} />
           <Route path="claim-ownership" element={<ClaimOwnership />} />
