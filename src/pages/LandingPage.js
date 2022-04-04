@@ -1,25 +1,14 @@
 import React from "react";
-import {
-  useNavigate,
-  useLocation,
-  useParams,
-  useSearchParams,
-  Link,
-} from "react-router-dom";
-import { Button, Row, Col, Typography, Image, Timeline } from "antd";
-import { useMoralis } from "react-moralis";
+import { useLocation, Link } from "react-router-dom";
+import { Button, Row, Col, Image, Timeline } from "antd";
 import styled from "styled-components";
+
 import ValtechLogo from "../assets/valtechLogo.png";
 import TransferDemoVideo from "../assets/demo-app-transfer.mp4";
 import ViewDemoVideo from "../assets/demo-app-overview.mp4";
 import EtherscanDemoVideo from "../assets/demo-view-etherscan.mp4";
-import Web3 from "web3";
-
 import "../utils/animate-background";
-
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
-import AuthenticateMenu from "./AuthenticateMenu";
-import { useEffect } from "react/cjs/react.production.min";
 
 const Container = styled.div`
   background-color: black;
@@ -68,21 +57,27 @@ const ParagraphTypography = styled.div`
 `;
 
 const LandingPage = () => {
-  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <>
-      <Container>
+      <Container className={location.pathname === "/" ? "a" : ""}>
         <Section>
-          <Row gutter={[24, 80]}>
+          <Row>
             <Col span="24" align="middle">
               <Image src={ValtechLogo} width="200px" />
               <HeaderTypography>
                 Lifecycle: The Future of Digital Ownership
               </HeaderTypography>
             </Col>
-
-            <Col span="24">
+          </Row>
+          <Row>
+            <Col span="12">
+              <HeaderTypography>Check it out</HeaderTypography>
+              <HeaderTypography>Check it out</HeaderTypography>
+              <HeaderTypography>Check it out</HeaderTypography>
+            </Col>
+            <Col span="12">
               <HeaderTypography>Check it out</HeaderTypography>
               <Timeline>
                 <Timeline.Item
@@ -140,10 +135,10 @@ const LandingPage = () => {
                   </HeaderTypography>
                 </Timeline.Item>
               </Timeline>
-              ,
             </Col>
-
-            <Col span="24">
+          </Row>
+          <Row>
+            <Col span="12" align="middle">
               <HeaderTypography>Demo: Transfer the Product</HeaderTypography>
               <VideoWrapper>
                 <VideoContainer controls>
@@ -151,25 +146,26 @@ const LandingPage = () => {
                 </VideoContainer>
               </VideoWrapper>
             </Col>
-
-            <HeaderTypography>Demo: Transfer the Product</HeaderTypography>
-            <Col span="24">
+            <Col span="12" align="middle">
+              <HeaderTypography>Demo: View the Product</HeaderTypography>
               <VideoWrapper>
                 <VideoContainer controls>
                   <source src={ViewDemoVideo} type="video/mp4"></source>
                 </VideoContainer>
               </VideoWrapper>
             </Col>
-
-            <HeaderTypography>Demo: View on Etherscan</HeaderTypography>
-            <Col span="24">
+          </Row>
+          <Row>
+            <Col span="24" align="middle">
+              <HeaderTypography>Demo: View on Etherscan</HeaderTypography>
               <VideoWrapper>
                 <VideoContainer controls>
                   <source src={EtherscanDemoVideo} type="video/mp4"></source>
                 </VideoContainer>
               </VideoWrapper>
             </Col>
-
+          </Row>
+          <Row>
             <Col span="24" align="middle">
               <Image src={ValtechLogo} width="200px" />
               <HeaderTypography>Thank you for your interest!</HeaderTypography>
