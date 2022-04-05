@@ -75,7 +75,7 @@ const Wallet = () => {
   };
 
   const onCancel = () => {
-    navigate("/nfts");
+    navigate("/app/nfts");
   };
 
   return (

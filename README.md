@@ -34,6 +34,14 @@ npm i
 npm run start
 ```
 
+## Deployment
+
+1. Run `npm run build`
+2. Copy contents on `/build` and paste into `/docs`, replacing the previous contents of `/docs` with the new build files.
+3. Manually remove all references to `/lifecycle/` in `/docs/index.html`. Because of how the app is deployed via Github Pages, we need to remove the `/lifecycle/` part of all relative paths in this file.
+4. Commit and push to `main` branch.
+5. Github Pages will automatically initiate a new deploy to https://lifecycle.valtech.engineering/
+
 ## Useful Resources
 
 - [Our NFT Smart Contract on Etherscan](https://rinkeby.etherscan.io/address/0x43b92b42ee33fC01f4d9A3249E478F7bc0cFCC0c)

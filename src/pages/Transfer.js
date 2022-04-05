@@ -81,7 +81,7 @@ const Transfer = () => {
         setLoadingText("Your transaction was successful !");
         setTimeout(() => {
           setIsLoading(false);
-          navigate("/nfts");
+          navigate("/app/nfts");
         }, 3000);
         console.log("RECEIPTS!!!", receipt);
       });

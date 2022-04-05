@@ -168,7 +168,6 @@ const LandingPage = () => {
           <Row>
             <Col span="24" align="middle">
               <Image src={ValtechLogo} width="200px" />
-              <HeaderTypography>Thank you for your interest!</HeaderTypography>
             </Col>
           </Row>
         </Section>
