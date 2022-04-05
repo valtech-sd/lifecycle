@@ -97,7 +97,7 @@ const Transfer = () => {
 
   return (
     <>
-      <Header title="Transfer" goBackRoute={isLoading ? "/nfts" : null} />
+      <Header title="Transfer" goBackRoute={isLoading ? "/app/nfts" : null} />
       <RowWrapper gutter={[24, 24]}>
         {isLoading ? (
           <LoaderWrapper>

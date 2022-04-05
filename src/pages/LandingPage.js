@@ -66,16 +66,18 @@ const LandingPage = () => {
           <Row>
             <Col span="24" align="middle">
               <Image src={ValtechLogo} width="200px" />
-              <HeaderTypography>
-                Lifecycle: The Future of Digital Ownership
-              </HeaderTypography>
+              <HeaderTypography>Lifecycle</HeaderTypography>
             </Col>
           </Row>
           <Row>
             <Col span="12">
-              <HeaderTypography>Check it out</HeaderTypography>
-              <HeaderTypography>Check it out</HeaderTypography>
-              <HeaderTypography>Check it out</HeaderTypography>
+              <HeaderTypography>
+                This Proof-of-Concept allows brands to publish Non-Fungible
+                Token (NFTs) representing a digital twin of physical products.
+                In this app, the NFTs are associated with luxury handbags. The
+                app allows users to view and exchange their handbag NFT in
+                web3-enabled browsers.
+              </HeaderTypography>
             </Col>
             <Col span="12">
               <HeaderTypography>Check it out</HeaderTypography>

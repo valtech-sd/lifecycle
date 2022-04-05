@@ -71,7 +71,7 @@ const Home = () => {
       signingMessage:
         "Welcome to Future Studio Lifecycle, please confirm your wallet.",
     });
-    navigate("/nfts");
+    navigate("/app/nfts");
   }
 
   async function authWalletDisconnect() {
@@ -103,7 +103,7 @@ const Home = () => {
                   <StyledButton
                     type="primary"
                     onClick={() => {
-                      navigate("/nfts");
+                      navigate("/app/nfts");
                     }}
                   >
                     View Your Items
