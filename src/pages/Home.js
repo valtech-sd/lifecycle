@@ -44,8 +44,14 @@ const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { deactivateWeb3, isWeb3Enabled, logout, authenticate, account } =
-    useMoralis();
+  const {
+    deactivateWeb3,
+    isWeb3Enabled,
+    logout,
+    authenticate,
+    account,
+    isAuthenticated,
+  } = useMoralis();
 
   // https://community.metamask.io/t/deeplink-opens-appstore-when-app-installed/18199/4
   // https://github.com/MetaMask/metamask-mobile/issues/3965
@@ -56,8 +62,14 @@ const Home = () => {
       chainId: 4,
       signingMessage:
         "Welcome to Future Studio Lifecycle, please confirm your wallet.",
-    });
-    navigate("/app/nfts");
+    })
+      .then(function (user) {
+        console.log("logged in user:", user);
+        navigate("/app/nfts");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   async function authWalletDisconnect() {
