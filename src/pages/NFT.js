@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
+import { ecommerceData, repairData } from "../utils/mockData";
 import Header from "../components/Header";
 import { AppContext } from "../App.js";
 import { StyledButton } from "./Wallet";
@@ -40,13 +41,14 @@ const ButtonStyled = styled(Button)`
   display: flex;
   align-items: center;
   font-size: ${FONT_SIZES.xs};
-  font-weight: 700;
   text-transform: uppercase;
   width: 7rem;
   padding: 18px 0;
   border-radius: 16px;
   justify-content: center;
   margin: 0 1rem;
+  font-family: Lato;
+  font-weight: 900;
   box-shadow: ${({ isActive }) =>
     isActive
       ? `rgba(0, 0, 0, 0.03) 0px 1px 1px, rgba(0, 0, 0, 0.03) 0px 2px 2px,
@@ -69,6 +71,11 @@ const Footer = styled.div`
   margin: 0;
   display: flex;
   justify-content: center;
+`;
+
+const BoldTypography = styled.span`
+  font-weight: bold;
+  font-family: "Lato";
 `;
 
 const NFT = () => {
@@ -127,8 +134,20 @@ const NFT = () => {
     navigate(`transfer`);
   };
 
+  const getEventTitle = (transfer) => {
+    if (transfer.eventTitle) return transfer.eventTitle;
+    if (transfer?.from) {
+      if (transfer.from.includes("0x000")) {
+        return "DIGITAL CERTIFICATE OF AUTHENTICITY MINTED";
+      } else {
+        return "OWNERSHIP TRANSFER";
+      }
+    }
+    return "CERTIFIED REPRAIR";
+  };
+
   useEffect(() => {
-    const allTransactions =
+    let allTransactions =
       nftTransactionsFiltered &&
       nftTransactionsFiltered.concat(nftRepairsFiltered).map((transfer) => {
         const dateObj = new Date(transfer.attributes.block_timestamp);
@@ -137,8 +156,9 @@ const NFT = () => {
       });
 
     if (allTransactions) {
+      const finalizedTransactions = allTransactions.concat(ecommerceData);
       setSortedTransactions(
-        allTransactions.sort((a, b) =>
+        finalizedTransactions.sort((a, b) =>
           moment(b.date, "MM/DD/YYYY HH:mm").diff(
             moment(a.date, "MM/DD/YYYY HH:mm")
           )
@@ -147,39 +167,13 @@ const NFT = () => {
     }
   }, [nftTransactionsFiltered, nftRepairsFiltered]);
 
-  const repairData = [
-    {
-      type: "Replace Broken Part",
-      location: "Los Angeles, USA",
-      partnerId: "13253",
-      notes: "Handbag strap was damaged. Broken part was replaced.",
-      costOfRepair: "$399.00 USD",
-    },
-
-    {
-      type: "Upgrade Specialty Part",
-      location: "Atlanta, USA",
-      partnerId: "23452",
-      notes: "Handbag was upgraded with new leather addition",
-      costOfRepair: "$899.00 USD",
-    },
-
-    {
-      type: "Restore Damaged Zipper",
-      location: "New York, USA",
-      partnerId: "11224",
-      notes: "Handbag zipper needed to be replaced.",
-      costOfRepair: "$499.00 USD",
-    },
-  ];
-
   return (
     <>
       {nft ? (
         <>
-          <Header title={nft.metadata.name} />
+          <Header title="Your Item" />
           <ImageContainer>
-            <Image width={200} src={nft.metadata.image} />
+            <Image width={200} src={nft.metadata.image} preview={false} />
           </ImageContainer>
           <Menu
             onClick={handleMenuClick}
@@ -210,35 +204,67 @@ const NFT = () => {
                   <ListItem>
                     <Row>
                       <Col span={24} align="left">
-                        <TypographyHeader>YOUR ITEM</TypographyHeader>
-                        <Typography>{nft.metadata.description}</Typography>
-                        <Typography align="left" style={{ fontWeight: "bold" }}>
-                          ID# {nft.token_id}
+                        <TypographyHeader
+                          style={{
+                            textTransform: "uppercase",
+                            fontFamily: "Lato",
+                          }}
+                        >
+                          {nft.metadata.name}
+                        </TypographyHeader>
+                        <Typography style={{ fontFamily: "Lato" }}>
+                          <BoldTypography>Ref:</BoldTypography> AS3260 B08037
+                          NH627
+                        </Typography>
+                        <Typography style={{ fontFamily: "Lato" }}>
+                          <BoldTypography>Price:</BoldTypography> $5,100
+                        </Typography>
+                        <Typography style={{ fontFamily: "Lato" }}>
+                          <BoldTypography>Description:</BoldTypography>
+                          {` A member
+                          of the House's Beloved lines, the ${nft.metadata.name} is
+                          characterized by the brand's emblematic monogram
+                          hardware and matelassé leather. For The Gucci Aria
+                          collection, the style is reimagined with a new
+                          geometric approach to the signature material while its
+                          Double G hardware is presented with an antique
+                          silver-toned finish. The design appears here in the
+                          shape of a mini bag in black.`}
+                        </Typography>
+                        <Typography style={{ fontFamily: "Lato" }}>
+                          <BoldTypography>Color:</BoldTypography> Mahogany
+                        </Typography>
+                        <Typography style={{ fontFamily: "Lato" }}>
+                          <BoldTypography>Collection:</BoldTypography> Summer
+                          Handbag Edition
+                        </Typography>
+                        <Typography style={{ fontFamily: "Lato" }}>
+                          <BoldTypography>Designed by:</BoldTypography> Lindsey
+                          Eckhart
+                        </Typography>
+                        <Typography style={{ fontFamily: "Lato" }}>
+                          <BoldTypography>Manufactured:</BoldTypography> France
                         </Typography>
 
                         <Divider />
 
                         <TypographyHeader>
-                          DIGITAL PROOF OF OWNERSHIP
+                          DIGITAL CERTIFICATE OF AUTHENTICITY
                         </TypographyHeader>
-                        <Typography>Token Standard: ERC721</Typography>
-                        <Typography>Chain: ETH</Typography>
-                        <Typography>Contract: 0x9Ea4...</Typography>
-                        <Typography>
-                          {nft.metadata.attributes.map((attribute) => {
-                            const value =
-                              attribute.display_type === "date"
-                                ? new Date(attribute.value).toLocaleDateString(
-                                    "en-US"
-                                  )
-                                : attribute.value;
-                            return (
-                              <div>
-                                {`${attribute.trait_type}: ${value}`}
-                                <br />
-                              </div>
-                            );
-                          })}
+                        <Typography style={{ fontFamily: "Lato" }}>
+                          <BoldTypography>Token Standard:</BoldTypography>{" "}
+                          ERC721
+                        </Typography>
+                        <Typography style={{ fontFamily: "Lato" }}>
+                          <BoldTypography>Chain:</BoldTypography> ETH
+                        </Typography>
+                        <Typography style={{ fontFamily: "Lato" }}>
+                          <BoldTypography>Contract:</BoldTypography>{" "}
+                          0x43b92b42ee33fC01f4d9A3249E478F7bc0cFCC0c
+                        </Typography>
+                        <Typography align="left">
+                          <BoldTypography>Token ID:</BoldTypography>{" "}
+                          {nft.token_id}
                         </Typography>
                       </Col>
                     </Row>
@@ -258,23 +284,21 @@ const NFT = () => {
                         <ListContainer>
                           <ListItem>
                             <Row>
-                              <Col span={8} align="left">
+                              <Col span={16} align="left">
                                 <TypographyHeader>
-                                  {transfer.from
-                                    ? transfer.from.includes("0x000")
-                                      ? "MINT"
-                                      : "TRANSFER"
-                                    : "REPAIRED"}
+                                  {getEventTitle(transfer)}
                                 </TypographyHeader>
                               </Col>
-                              <Col span={8} offset={8} align="right">
-                                <Typography>{transfer.date}</Typography>
+                              <Col span={8} align="right">
+                                <Typography style={{ fontFamily: "Lato" }}>
+                                  {transfer.date}
+                                </Typography>
                               </Col>
                             </Row>
                             <Row>
                               {transfer.from && transfer.to && (
                                 <Col span={24} align="left">
-                                  <Typography>
+                                  <Typography style={{ fontFamily: "Lato" }}>
                                     From:{" "}
                                     {truncate(
                                       transfer.from === account
@@ -282,7 +306,7 @@ const NFT = () => {
                                         : transfer.from
                                     )}
                                   </Typography>
-                                  <Typography>
+                                  <Typography style={{ fontFamily: "Lato" }}>
                                     To:{" "}
                                     {truncate(
                                       transfer.to === account
@@ -296,10 +320,9 @@ const NFT = () => {
                             <Row>
                               {transfer.repairURI && (
                                 <Col span={24} align="left">
-                                  <Typography>
+                                  <Typography style={{ fontFamily: "Lato" }}>
                                     {Object.keys(repairDataObj).map(function (
-                                      key,
-                                      index
+                                      key
                                     ) {
                                       // Capitalize camel-case fields in object
                                       const result = key.replace(

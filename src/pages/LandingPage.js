@@ -9,22 +9,38 @@ import ViewDemoVideo from "../assets/demo-app-overview.mp4";
 import EtherscanDemoVideo from "../assets/demo-view-etherscan.mp4";
 import "../utils/animate-background";
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
+import { ReactComponent as Logo } from "../assets/logo.svg";
 
 const Container = styled.div`
   background-color: black;
   display: flex;
-  align-items: center;
   justify-content: center;
+  flex-direction: column;
 `;
 
 const Section = styled.div`
-  margin: ${SIZES.xl};
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 2rem;
+
+  @media (min-width: 768px) {
+    margin: 0;
+  }
 `;
 
 const VideoContainer = styled.video`
-  max-width: 400px;
+  max-width: 320px;
+
+  @media (min-width: 768px) {
+    max-width: 600px;
+  }
+`;
+
+const VideoWrapper = styled.div`
+  margin: 4rem 0 0;
 `;
 
 const StyledButton = styled(Button)`
@@ -37,23 +53,58 @@ const StyledButton = styled(Button)`
   display: flex;
   align-items: center;
   font-size: ${FONT_SIZES.xs};
-  font-weight: 700;
+  font-weight: 900;
   text-transform: uppercase;
   width: 10rem;
   justify-content: center;
+  font-family: Lato;
 `;
 
-const VideoWrapper = styled.div`
-  max-width: 320px;
+const BoldTypography = styled.h2`
+  color: white;
+  font-weight: 700;
+  font-size: ${FONT_SIZES.md};
+  font-family: Lato;
 `;
 
 const HeaderTypography = styled.h2`
   color: white;
-  font-weight: 700;
+  font-weight: 900;
+  margin: 0;
+  font-family: Lato;
+  margin: 2rem 0;
 `;
 
 const ParagraphTypography = styled.div`
   color: white;
+  font-size: ${FONT_SIZES.md};
+  font-family: Lato;
+`;
+
+const TitleTypography = styled.div`
+  color: white;
+  font-size: 32px;
+  font-family: Lato;
+  font-weight: 900;
+  margin-bottom: 2rem;
+
+  @media (min-width: 768px) {
+    font-size: 40px;
+  }
+`;
+
+const RowContainer = styled(Row)`
+  margin: 0 3rem 3rem 3rem;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    width: 600px;
+  }
+`;
+
+const ImageWrapper = styled.div`
+  margin: 2rem;
+  width: 200px;
 `;
 
 const LandingPage = () => {
@@ -62,32 +113,44 @@ const LandingPage = () => {
   return (
     <>
       <Container className={location.pathname === "/" ? "a" : ""}>
+        <ImageWrapper>
+          <Image src={ValtechLogo} preview={false} />
+        </ImageWrapper>
+
         <Section>
-          <Row>
-            <Col span="24" align="middle">
-              <Image src={ValtechLogo} width="200px" />
-              <HeaderTypography>Lifecycle</HeaderTypography>
-            </Col>
-          </Row>
-          <Row>
-            <Col span="12">
-              <HeaderTypography>
+          <Logo width="150px" />
+          <TitleTypography>Lifecycle: Ownership Reimagined</TitleTypography>
+          <RowContainer>
+            <Col span="24">
+              <HeaderTypography>BACKGROUND</HeaderTypography>
+              <ParagraphTypography>
                 This Proof-of-Concept allows brands to publish Non-Fungible
                 Token (NFTs) representing a digital twin of physical products.
                 In this app, the NFTs are associated with luxury handbags. The
                 app allows users to view and exchange their handbag NFT in
                 web3-enabled browsers.
-              </HeaderTypography>
+              </ParagraphTypography>
+              <br />
+              <ParagraphTypography>
+                This Proof-of-Concept allows brands to publish Non-Fungible
+                Token (NFTs) representing a digital twin of physical products.
+                In this app, the NFTs are associated with luxury handbags. The
+                app allows users to view and exchange their handbag NFT in
+                web3-enabled browsers.
+              </ParagraphTypography>
             </Col>
-            <Col span="12">
-              <HeaderTypography>Check it out</HeaderTypography>
+          </RowContainer>
+
+          <RowContainer>
+            <Col span="24">
+              <HeaderTypography>TRY OUT THE APP</HeaderTypography>
               <Timeline>
                 <Timeline.Item
                   style={{ color: "white" }}
                   position="left"
                   color="white"
                 >
-                  <HeaderTypography>Request an NFT</HeaderTypography>
+                  <BoldTypography>Request an NFT</BoldTypography>
                   <ParagraphTypography>
                     Email (max.mcgee@valtech.com) with your Ethereum account
                     address, full name, and company name.
@@ -98,9 +161,9 @@ const LandingPage = () => {
                   position="left"
                   color="white"
                 >
-                  <HeaderTypography>
+                  <BoldTypography>
                     Install MetaMask app on iOS or Android
-                  </HeaderTypography>
+                  </BoldTypography>
                   <Col span="24">
                     <a
                       href="https://metamask.io/download/"
@@ -118,9 +181,9 @@ const LandingPage = () => {
                   position="left"
                   color="white"
                 >
-                  <HeaderTypography>
+                  <BoldTypography>
                     Open the App from the MetaMask Browser
-                  </HeaderTypography>
+                  </BoldTypography>
                   <Col span="24">
                     <Link to="app">
                       <StyledButton type="primary">Link to App</StyledButton>
@@ -132,46 +195,76 @@ const LandingPage = () => {
                   position="left"
                   color="white"
                 >
-                  <HeaderTypography>
+                  <BoldTypography>
                     View, Transfer and Share your NFT
-                  </HeaderTypography>
+                  </BoldTypography>
+                  <ParagraphTypography>
+                    Interact with the NFT for your item's digital twin.
+                  </ParagraphTypography>
                 </Timeline.Item>
               </Timeline>
             </Col>
-          </Row>
-          <Row>
-            <Col span="12" align="middle">
-              <HeaderTypography>Demo: Transfer the Product</HeaderTypography>
-              <VideoWrapper>
-                <VideoContainer controls>
-                  <source src={TransferDemoVideo} type="video/mp4"></source>
-                </VideoContainer>
-              </VideoWrapper>
-            </Col>
-            <Col span="12" align="middle">
-              <HeaderTypography>Demo: View the Product</HeaderTypography>
+          </RowContainer>
+          <Logo width="150px" />
+          <RowContainer>
+            <HeaderTypography>
+              VIEW PRODUCT INFO AND TRANSACTION HISTORY
+            </HeaderTypography>
+            <ParagraphTypography>
+              This Proof-of-Concept allows brands to publish Non-Fungible Token
+              (NFTs) representing a digital twin of physical products. In this
+              app, the NFTs are associated with luxury handbags. The app allows
+              users to view and exchange their handbag NFT in web3-enabled
+              browsers.
+            </ParagraphTypography>
+            <Col span="24" align="middle">
               <VideoWrapper>
                 <VideoContainer controls>
                   <source src={ViewDemoVideo} type="video/mp4"></source>
                 </VideoContainer>
               </VideoWrapper>
             </Col>
-          </Row>
-          <Row>
+          </RowContainer>
+          <RowContainer>
+            <HeaderTypography>TRANSFER YOUR NFT</HeaderTypography>
+            <ParagraphTypography>
+              This Proof-of-Concept allows brands to publish Non-Fungible Token
+              (NFTs) representing a digital twin of physical products. In this
+              app, the NFTs are associated with luxury handbags. The app allows
+              users to view and exchange their handbag NFT in web3-enabled
+              browsers.
+            </ParagraphTypography>
             <Col span="24" align="middle">
-              <HeaderTypography>Demo: View on Etherscan</HeaderTypography>
+              <VideoWrapper>
+                <VideoContainer controls>
+                  <source src={TransferDemoVideo} type="video/mp4"></source>
+                </VideoContainer>
+              </VideoWrapper>
+            </Col>
+          </RowContainer>
+          <RowContainer>
+            <HeaderTypography>EXPLORE THE BLOCKCHAIN</HeaderTypography>
+            <ParagraphTypography>
+              This Proof-of-Concept allows brands to publish Non-Fungible Token
+              (NFTs) representing a digital twin of physical products. In this
+              app, the NFTs are associated with luxury handbags. The app allows
+              users to view and exchange their handbag NFT in web3-enabled
+              browsers.
+            </ParagraphTypography>
+            <Col span="24" align="middle">
               <VideoWrapper>
                 <VideoContainer controls>
                   <source src={EtherscanDemoVideo} type="video/mp4"></source>
                 </VideoContainer>
               </VideoWrapper>
             </Col>
-          </Row>
-          <Row>
+          </RowContainer>
+          <Logo width="150px" />
+          <RowContainer>
             <Col span="24" align="middle">
-              <Image src={ValtechLogo} width="200px" />
+              <Image src={ValtechLogo} width="200px" preview={false} />
             </Col>
-          </Row>
+          </RowContainer>
         </Section>
       </Container>
     </>

@@ -148,7 +148,12 @@ const ClaimOwnership = () => {
             </Col>
 
             <Col span="24" align="middle">
-              <Button type="primary" className="button" onClick={onClick}>
+              <Button
+                type="primary"
+                className="button"
+                onClick={onClick}
+                style={{ fontFamily: "bold" }}
+              >
                 Claim Ownership
               </Button>
               <p>{logInfo}</p>

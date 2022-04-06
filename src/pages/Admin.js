@@ -46,7 +46,7 @@ const Admin = () => {
           <Row gutter={[24, 24]}>
             <Col span="24" align="middle">
               <h1>Admin</h1>
-              <Typography>{account}</Typography>
+              <Typography style={{ fontFamily: "Lato" }}>{account}</Typography>
             </Col>
           </Row>
           <Row gutter={[24, 24]}>

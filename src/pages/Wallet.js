@@ -35,12 +35,13 @@ export const StyledButton = styled(Button)`
   display: flex;
   align-items: center;
   font-size: ${FONT_SIZES.xs};
-  font-weight: 700;
+  font-weight: 900;
   text-transform: uppercase;
   width: 100%;
   justify-content: center;
   border-radius: 6px;
   max-width: 200px;
+  font-family: Lato;
 `;
 
 export const StyledButtonSecondary = styled(Button)`

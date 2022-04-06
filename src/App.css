@@ -51,10 +51,9 @@
 
 .ant-btn-primary:hover,
 .ant-btn:hover {
-  background: #008053 !important;
-  border-color: #008053 !important;
+  background: #262626 !important;
+  border-color: #262626 !important;
   color: #fff !important;
-  border: solid 1px #fff !important;
   transition: all ease-in-out 0.03s !important;
 }
 
@@ -65,7 +64,6 @@
   background: #00fea6 !important;
   border-color: #00fea6 !important;
   color: #000 !important;
-  border: solid 1px #00fea6 !important;
   outline: none !important;
 }
 
@@ -89,4 +87,8 @@
     border: solid 1px #00fea6 !important;
     outline: none !important;
   }
+}
+
+article {
+  font-family: "Lato";
 }

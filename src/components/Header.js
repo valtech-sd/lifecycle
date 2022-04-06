@@ -52,7 +52,7 @@ const Header = ({ title, goBackRoute }) => {
   };
 
   const onWalletClick = () => {
-    navigate("/wallet");
+    navigate("/app/wallet");
   };
 
   return (
@@ -62,9 +62,11 @@ const Header = ({ title, goBackRoute }) => {
           <BackIcon />
         </BackCTA>
         <PrimaryTypography>{title}</PrimaryTypography>
-        <WalletWrapoer isActive={location.pathname === "/wallet"}>
+        <WalletWrapoer isActive={location.pathname === "/app/wallet"}>
           <WalletIcon
-            onClick={location.pathname === "/wallet" ? onBack : onWalletClick}
+            onClick={
+              location.pathname === "/app/wallet" ? onBack : onWalletClick
+            }
           />
         </WalletWrapoer>
       </HeaderWrapper>

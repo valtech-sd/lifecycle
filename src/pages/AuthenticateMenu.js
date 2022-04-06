@@ -38,7 +38,11 @@ const AuthenticateMenu = () => {
           <Row gutter={[24, 24]}>
             <Col span="24" align="middle">
               <h1>Welcome to V_AUTH !!</h1>
-              {account && <Typography>You are logged in, {account}</Typography>}
+              {account && (
+                <Typography style={{ fontFamily: "Lato" }}>
+                  You are logged in, {account}
+                </Typography>
+              )}
             </Col>
           </Row>
 

@@ -44,7 +44,7 @@ const NFTList = () => {
 
   return (
     <>
-      <Header title="MY PRODUCTS" goBackRoute={"/"} />
+      <Header title="YOUR PRODUCTS" goBackRoute={"/"} />
       <RowContainer>
         <Col span="24" align="middle">
           {allVAuthNfts ? (
@@ -62,9 +62,17 @@ const NFTList = () => {
                 <Link to={nft.token_id}>
                   <ListItem>
                     <List.Item>
-                      <Image width={90} src={nft.metadata?.image} />
-                      <Typography>{nft.metadata?.name}</Typography>
-                      <Typography>ID# {nft.token_id}</Typography>
+                      <Image
+                        width={90}
+                        src={nft.metadata?.image}
+                        preview={false}
+                      />
+                      <Typography style={{ fontFamily: "Lato" }}>
+                        {nft.metadata?.name}
+                      </Typography>
+                      <Typography style={{ fontFamily: "Lato" }}>
+                        ID# {nft.token_id}
+                      </Typography>
                     </List.Item>
                   </ListItem>
                 </Link>

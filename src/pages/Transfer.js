@@ -74,17 +74,28 @@ const Transfer = () => {
     console.log("account", account);
     console.log("sending to", toAccount);
     setIsLoading(true);
-    await nftContract.methods
-      .transferFrom(account, toAccount, params.nftId)
-      .send({ from: account })
-      .then((receipt) => {
-        setLoadingText("Your transaction was successful !");
-        setTimeout(() => {
-          setIsLoading(false);
-          navigate("/app/nfts");
-        }, 3000);
-        console.log("RECEIPTS!!!", receipt);
-      });
+    try {
+      await nftContract.methods
+        .transferFrom(account, toAccount, params.nftId)
+        .send({ from: account })
+        .then((receipt, error) => {
+          console.log(error, receipt);
+          setLoadingText("Your transaction was successful !");
+          setTimeout(() => {
+            setIsLoading(false);
+            navigate("/app/nfts");
+          }, 3000);
+          console.log("RECEIPTS:", receipt);
+        });
+    } catch (error) {
+      setLoadingText(
+        "Your transaction failed. Please enter a valid ETH address"
+      );
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
+      console.log(error);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -134,6 +145,12 @@ const Transfer = () => {
               style={{ color: "white" }}
             >
               <Form.Item
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter a valid ETH Address",
+                  },
+                ]}
                 name="account"
                 label={
                   <label style={{ color: "white" }}>

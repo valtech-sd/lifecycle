@@ -1,21 +1,13 @@
 import React from "react";
-import {
-  useNavigate,
-  useLocation,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { Button, Row, Col } from "antd";
 import { useMoralis } from "react-moralis";
 import styled from "styled-components";
-import Web3 from "web3";
 
 import "../utils/animate-background";
 
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
-import AuthenticateMenu from "./AuthenticateMenu";
-import { useEffect } from "react/cjs/react.production.min";
 
 const Container = styled.div`
   background-color: ${COLORS.black};
@@ -45,6 +37,7 @@ const StyledButton = styled(Button)`
   text-transform: uppercase;
   width: 10rem;
   justify-content: center;
+  font-family: Lato;
 `;
 
 const Home = () => {
