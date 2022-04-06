@@ -43,16 +43,9 @@ const StyledButton = styled(Button)`
 const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  let [searchParams] = useSearchParams();
 
-  const {
-    enableWeb3,
-    deactivateWeb3,
-    isWeb3Enabled,
-    logout,
-    authenticate,
-    account,
-  } = useMoralis();
+  const { deactivateWeb3, isWeb3Enabled, logout, authenticate, account } =
+    useMoralis();
 
   // https://community.metamask.io/t/deeplink-opens-appstore-when-app-installed/18199/4
   // https://github.com/MetaMask/metamask-mobile/issues/3965

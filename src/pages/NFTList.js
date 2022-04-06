@@ -44,7 +44,7 @@ const NFTList = () => {
 
   return (
     <>
-      <Header title="YOUR PRODUCTS" goBackRoute={"/"} />
+      <Header title="YOUR PRODUCTS" goBackRoute={"/app"} />
       <RowContainer>
         <Col span="24" align="middle">
           {allVAuthNfts ? (
