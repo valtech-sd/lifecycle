@@ -1,15 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { QrReader } from "react-qr-reader";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { useMoralis } from "react-moralis";
-import { Row, Col, Button } from "antd";
+import { Row, Col, Typography } from "antd";
 import Web3 from "web3";
 import "dotenv/config";
 import Header from "../components/Header";
 
 const CryptoJS = require("crypto-js");
 
+const QRWrapper = styled.div`
+  border: ${({ isValid }) =>
+    isValid ? "6px #00fea6 solid" : "6px red solid"} !important;
+  margin: auto;
+  width: 320px;
+
+  @media (min-width: 768px) {
+    width: 600px;
+    height: 492px;
+  }
+`;
+
 const ClaimOwnership = () => {
-  const [data, setData] = useState("No result");
+  const navigate = useNavigate();
+  const [message, setMessage] = useState(
+    "Ready for Scan. Place QR Code within Camera View."
+  );
+  const [isValid, setIsValid] = useState(false);
   const [logInfo, setLogInfo] = useState("No result");
   const { account, provider } = useMoralis();
   const web3Js = new Web3(provider);
@@ -17,6 +35,21 @@ const ClaimOwnership = () => {
   const contract = require("../contractABIs/V_Authenticate.json");
   const contractAddress = "0x43b92b42ee33fC01f4d9A3249E478F7bc0cFCC0c";
   const nftContract = new web3Js.eth.Contract(contract.abi, contractAddress);
+
+  const [width, setWidth] = useState(window.innerWidth);
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
+
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
+
+  let isDesktop = width > 768;
 
   // https://github.com/brix/crypto-js/issues/93
   const encryptWithAES = (text) => {
@@ -105,58 +138,55 @@ const ClaimOwnership = () => {
       });
   };
 
-  const onClick = () => {
-    console.log(data);
-    const dataQR = JSON.parse(data);
-    console.log(dataQR.id);
-    console.log(dataQR.code);
-
-    const decryptedCode = decryptWithAES(dataQR.code);
-    if (publickeys.includes(decryptedCode)) {
-      sendNFT(dataQR.id);
-    }
-  };
-
   return (
     <>
       <div className="container">
-        <Header />
+        <Header title="Scan Product" showWalletIcon={false} />
 
         <div className="section">
           <Row gutter={[24, 24]}>
             <Col span="24" align="middle">
-              <h1>Claim Ownership</h1>
-            </Col>
-          </Row>
-
-          <Row gutter={[24, 24]}>
-            <Col span="24" align="middle">
-              <QrReader
-                // constraints={{ facingMode: { exact: "environment" } }}
-                onResult={(result, error) => {
-                  if (!!result) {
-                    setData(result?.text);
+              <QRWrapper isValid={isValid}>
+                <QrReader
+                  constraints={
+                    isDesktop
+                      ? undefined
+                      : { facingMode: { exact: "environment" } }
                   }
+                  videoStyle={{
+                    height: "auto",
+                    width: "auto",
+                  }}
+                  onResult={(result, error) => {
+                    if (!!result) {
+                      const dataQR = JSON.parse(result?.text);
+                      setMessage("Successfully Scanned Item. Verifying now...");
+                      const decryptedCode = decryptWithAES(dataQR.code);
+                      if (publickeys.includes(decryptedCode)) {
+                        setIsValid(true);
+                        setTimeout(() => {
+                          navigate(`/app/nfts/${dataQR.id}?source=scan`);
+                        }, 3000);
+                      } else {
+                        setMessage("Not a valid QR Code. Please scan again.");
+                      }
+                    }
 
-                  if (!!error) {
-                    console.info(error);
-                  }
-                }}
-                style={{ width: "100%" }}
-              />
-              <p>{data}</p>
+                    if (!!error) {
+                      console.info(error);
+                    }
+                  }}
+                  style={{ width: "100%" }}
+                />
+              </QRWrapper>
             </Col>
 
             <Col span="24" align="middle">
-              <Button
-                type="primary"
-                className="button"
-                onClick={onClick}
-                style={{ fontFamily: "bold" }}
+              <Typography
+                style={{ fontSize: "1rem", fontWeight: 700, margin: "0 1rem" }}
               >
-                Claim Ownership
-              </Button>
-              <p>{logInfo}</p>
+                {message}
+              </Typography>
             </Col>
           </Row>
         </div>

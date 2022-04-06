@@ -33,7 +33,7 @@ const LoaderContainer = styled.div`
 
 const NFTList = () => {
   const { account, isWeb3Enabled, enableWeb3 } = useMoralis();
-  const { allVAuthNfts } = useContext(AppContext);
+  const { allUsersNFTs } = useContext(AppContext);
 
   useEffect(() => {
     if (!isWeb3Enabled || !account) {
@@ -47,9 +47,9 @@ const NFTList = () => {
       <Header title="YOUR PRODUCTS" goBackRoute={"/app"} />
       <RowContainer>
         <Col span="24" align="middle">
-          {allVAuthNfts ? (
+          {allUsersNFTs ? (
             <List
-              dataSource={allVAuthNfts}
+              dataSource={allUsersNFTs}
               grid={{
                 xs: 2,
                 sm: 2,

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Typography, Row, Col, Image, Menu, Button, Divider } from "antd";
 import styled from "styled-components";
 import { useMoralis, useMoralisQuery } from "react-moralis";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import moment from "moment";
 
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
@@ -84,19 +84,44 @@ const NFT = () => {
   const { data: repairEventData } = useMoralisQuery("ProductRepairedLog");
   const { account, enableWeb3, isWeb3Enabled } = useMoralis();
   const [current, setCurrent] = useState("details");
+  const [isFromScan, setIsFromScan] = useState(false);
   const [nft, setNft] = useState(null);
   const [nftTransactionsFiltered, setNftTransactionsFiltered] = useState(null);
   const [nftRepairsFiltered, setNftRepairsFiltered] = useState(null);
   const [sortedTransactions, setSortedTransactions] = useState(null);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const { allVAuthNfts } = useContext(AppContext);
+  const { allUsersNFTs, allNFTsByContract } = useContext(AppContext);
   let params = useParams();
 
   useEffect(() => {
-    allVAuthNfts &&
-      setNft(allVAuthNfts.find((nft) => nft.token_id === params.nftId));
-  }, [allVAuthNfts, params.nftId, nft]);
+    const userOwnedNft =
+      allUsersNFTs && allUsersNFTs.find((nft) => nft.token_id === params.nftId);
+    if (userOwnedNft) {
+      console.log("USER OWNED");
+      return setNft(userOwnedNft);
+    } else if (allNFTsByContract) {
+      console.log(
+        "User does not own this NFT, looking up all NFTS by contract",
+        allNFTsByContract
+      );
+      let anonymousNFT = allNFTsByContract.find((nft) => {
+        return nft.token_id === params.nftId;
+      });
+      if (anonymousNFT && typeof anonymousNFT.metadata === "string") {
+        anonymousNFT.metadata = JSON.parse(anonymousNFT.metadata);
+      }
+      return setNft(anonymousNFT);
+    }
+  }, [allUsersNFTs, params.nftId, allNFTsByContract]);
+
+  useEffect(() => {
+    if (searchParams.get("source") === "scan") {
+      setIsFromScan(true);
+      console.log("FROM SCAN ");
+    }
+  }, [setIsFromScan, searchParams]);
 
   useEffect(() => {
     if (!isWeb3Enabled || !account) {
@@ -171,7 +196,11 @@ const NFT = () => {
     <>
       {nft ? (
         <>
-          <Header title="Your Item" />
+          <Header
+            title={isFromScan ? "Scanned Item" : "Your Item"}
+            goBackRoute={isFromScan ? "/app" : "/app/nfts"}
+            showWalletIcon={isFromScan ? false : true}
+          />
           <ImageContainer>
             <Image width={200} src={nft.metadata.image} preview={false} />
           </ImageContainer>
@@ -361,7 +390,9 @@ const NFT = () => {
             }}
           >
             <Footer>
-              <StyledButton onClick={onTransferClick}>TRANSFER</StyledButton>
+              {!isFromScan && (
+                <StyledButton onClick={onTransferClick}>TRANSFER</StyledButton>
+              )}
             </Footer>
           </Row>
         </>

@@ -43,7 +43,7 @@ const BackCTA = styled.div`
   display: flex;
 `;
 
-const Header = ({ title, goBackRoute }) => {
+const Header = ({ title, goBackRoute, showWalletIcon = true }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -63,11 +63,13 @@ const Header = ({ title, goBackRoute }) => {
         </BackCTA>
         <PrimaryTypography>{title}</PrimaryTypography>
         <WalletWrapoer isActive={location.pathname === "/app/wallet"}>
-          <WalletIcon
-            onClick={
-              location.pathname === "/app/wallet" ? onBack : onWalletClick
-            }
-          />
+          {showWalletIcon && (
+            <WalletIcon
+              onClick={
+                location.pathname === "/app/wallet" ? onBack : onWalletClick
+              }
+            />
+          )}
         </WalletWrapoer>
       </HeaderWrapper>
     </>

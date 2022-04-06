@@ -1,6 +1,6 @@
-import React from "react";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
-import { Button, Row, Col } from "antd";
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Button, Row, Col, Typography } from "antd";
 import { useMoralis } from "react-moralis";
 import styled from "styled-components";
 
@@ -43,20 +43,16 @@ const StyledButton = styled(Button)`
 const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [browserErrorMessage, setBrowserErrorMessage] = useState("");
 
-  const {
-    deactivateWeb3,
-    isWeb3Enabled,
-    logout,
-    authenticate,
-    account,
-    isAuthenticated,
-  } = useMoralis();
+  const { deactivateWeb3, isWeb3Enabled, logout, authenticate, account } =
+    useMoralis();
 
   // https://community.metamask.io/t/deeplink-opens-appstore-when-app-installed/18199/4
   // https://github.com/MetaMask/metamask-mobile/issues/3965
   // https://github.com/MetaMask/metamask-mobile/pull/3971/files
   async function authWalletConnect() {
+    setBrowserErrorMessage("");
     await authenticate({
       provider: "metamask",
       chainId: 4,
@@ -65,7 +61,13 @@ const Home = () => {
     })
       .then(function (user) {
         console.log("logged in user:", user);
-        navigate("/app/nfts");
+        if (user) {
+          navigate("/app/nfts");
+        } else {
+          setBrowserErrorMessage(
+            "Please try again, using the MetaMask in-app browser."
+          );
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -84,18 +86,28 @@ const Home = () => {
     <>
       <Container className={location.pathname === "/app" ? "a" : ""}>
         <Section>
-          <Row gutter={[24, 80]}>
+          <Row>
             <Col span="24" align="middle">
               <Logo />
             </Col>
             <Col
               span="24"
               align="middle"
-              style={{ display: "flex", justifyContent: "center" }}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                paddingTop: "4rem",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
               {isWeb3Enabled && account && (
                 <>
-                  <StyledButton type="primary" onClick={authWalletDisconnect}>
+                  <StyledButton
+                    type="primary"
+                    onClick={authWalletDisconnect}
+                    style={{ marginBottom: "1.5rem" }}
+                  >
                     Disconnect
                   </StyledButton>
                   <StyledButton
@@ -113,7 +125,31 @@ const Home = () => {
                   Login
                 </StyledButton>
               )}
+              <StyledButton
+                type="primary"
+                onClick={() => {
+                  navigate("/app/scan");
+                }}
+                style={{ marginTop: "1.5rem" }}
+              >
+                SCAN PRODUCT
+              </StyledButton>
             </Col>
+            {browserErrorMessage && (
+              <Col span="24" align="middle">
+                <Typography
+                  style={{
+                    color: "white",
+                    paddingTop: "2rem",
+                    fontSize: "1rem",
+                    width: "260px",
+                    textAlign: "left",
+                  }}
+                >
+                  {browserErrorMessage}
+                </Typography>
+              </Col>
+            )}
           </Row>
         </Section>
       </Container>
