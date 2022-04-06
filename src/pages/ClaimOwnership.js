@@ -12,9 +12,10 @@ const CryptoJS = require("crypto-js");
 
 const QRWrapper = styled.div`
   border: ${({ isValid }) =>
-    isValid ? "6px #00fea6 solid" : "6px red solid"} !important;
+    isValid ? "6px #00fea6 solid" : "6px #CC1455 solid"} !important;
   margin: auto;
   width: 320px;
+  border-radius: 4px;
 
   @media (min-width: 768px) {
     width: 600px;
@@ -173,7 +174,7 @@ const ClaimOwnership = () => {
                     }
 
                     if (!!error) {
-                      console.info(error);
+                      // console.info(error);
                     }
                   }}
                   style={{ width: "100%" }}

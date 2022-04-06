@@ -176,8 +176,9 @@ const NFT = () => {
       nftTransactionsFiltered &&
       nftTransactionsFiltered.concat(nftRepairsFiltered).map((transfer) => {
         const dateObj = new Date(transfer.attributes.block_timestamp);
-        const date = moment(dateObj, "YYYY-MM-DD").format("MM/DD/YYYY hh:mm a");
-        return { ...transfer.attributes, transfer, date };
+        const date = moment(dateObj, "YYYY-MM-DD").format("MM/DD/YYYY");
+        const time = moment(dateObj, "YYYY-MM-DD").format("hh:mm a");
+        return { ...transfer.attributes, transfer, date, time };
       });
 
     if (allTransactions) {
@@ -321,6 +322,9 @@ const NFT = () => {
                               <Col span={8} align="right">
                                 <Typography style={{ fontFamily: "Lato" }}>
                                   {transfer.date}
+                                </Typography>
+                                <Typography style={{ fontFamily: "Lato" }}>
+                                  {transfer.time}
                                 </Typography>
                               </Col>
                             </Row>
