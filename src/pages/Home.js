@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button, Row, Col, Typography } from "antd";
 import { useMoralis } from "react-moralis";
@@ -82,6 +82,32 @@ const Home = () => {
     window.localStorage.removeItem("WALLETCONNECT_DEEPLINK_CHOICE");
   }
 
+  const onClaimOwnership = async () => {
+    if (!account || !isWeb3Enabled) {
+      await authenticate({
+        provider: "metamask",
+        chainId: 4,
+        signingMessage:
+          "Welcome to Future Studio Lifecycle, please confirm your wallet.",
+      })
+        .then(function (user) {
+          console.log("logged in user:", user);
+          if (user) {
+            navigate("/app/claim-ownership");
+          } else {
+            setBrowserErrorMessage(
+              "Please try again, using the MetaMask in-app browser."
+            );
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      navigate("/app/claim-ownership");
+    }
+  };
+
   return (
     <>
       <Container className={location.pathname === "/app" ? "a" : ""}>
@@ -116,7 +142,7 @@ const Home = () => {
                       navigate("/app/nfts");
                     }}
                   >
-                    View Your Items
+                    View Your Products
                   </StyledButton>
                 </>
               )}
@@ -133,6 +159,13 @@ const Home = () => {
                 style={{ marginTop: "1.5rem" }}
               >
                 SCAN PRODUCT
+              </StyledButton>
+              <StyledButton
+                type="primary"
+                onClick={onClaimOwnership}
+                style={{ marginTop: "1.5rem" }}
+              >
+                CLAIM OWNERSHIP
               </StyledButton>
             </Col>
             {browserErrorMessage && (

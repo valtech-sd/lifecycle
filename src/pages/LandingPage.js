@@ -124,19 +124,18 @@ const LandingPage = () => {
             <Col span="24">
               <HeaderTypography>BACKGROUND</HeaderTypography>
               <ParagraphTypography>
-                This Proof-of-Concept allows brands to publish Non-Fungible
-                Token (NFTs) representing a digital twin of physical products.
-                In this app, the NFTs are associated with luxury handbags. The
-                app allows users to view and exchange their handbag NFT in
-                web3-enabled browsers.
+                Lifecycle connects the digital and physical ownership through
+                blockchain technology. Physical luxury items are minted as NFTs
+                on the Ethereum blockchain. The NFT serves as a digital
+                certificate of ownership of the physical product.
               </ParagraphTypography>
               <br />
               <ParagraphTypography>
-                This Proof-of-Concept allows brands to publish Non-Fungible
-                Token (NFTs) representing a digital twin of physical products.
-                In this app, the NFTs are associated with luxury handbags. The
-                app allows users to view and exchange their handbag NFT in
-                web3-enabled browsers.
+                Blockchain technology helps brands build trust, ensure high
+                standards for authenticity and ownership traceability of luxury
+                goods. Once a Digital Certificate of Ownership is recorded on
+                the blockchain, it is available for any third-party to verify as
+                the product changes ownership throughout its life.
               </ParagraphTypography>
             </Col>
           </RowContainer>
@@ -211,11 +210,10 @@ const LandingPage = () => {
               VIEW PRODUCT INFO AND TRANSACTION HISTORY
             </HeaderTypography>
             <ParagraphTypography>
-              This Proof-of-Concept allows brands to publish Non-Fungible Token
-              (NFTs) representing a digital twin of physical products. In this
-              app, the NFTs are associated with luxury handbags. The app allows
-              users to view and exchange their handbag NFT in web3-enabled
-              browsers.
+              This demo shows how to use the Lifecycle app to view a product's
+              transaction history. This includes various steps in a product's
+              journey, such as a transfer of ownership, certified repair, or any
+              custom event.
             </ParagraphTypography>
             <Col span="24" align="middle">
               <VideoWrapper>
@@ -228,11 +226,9 @@ const LandingPage = () => {
           <RowContainer>
             <HeaderTypography>TRANSFER YOUR NFT</HeaderTypography>
             <ParagraphTypography>
-              This Proof-of-Concept allows brands to publish Non-Fungible Token
-              (NFTs) representing a digital twin of physical products. In this
-              app, the NFTs are associated with luxury handbags. The app allows
-              users to view and exchange their handbag NFT in web3-enabled
-              browsers.
+              This demo shows the process of transferring a Digital Certificate
+              of Ownership (NFT) to a different Ethereum account. Any valid ETH
+              address can receive the NFT from your account.
             </ParagraphTypography>
             <Col span="24" align="middle">
               <VideoWrapper>
@@ -245,11 +241,10 @@ const LandingPage = () => {
           <RowContainer>
             <HeaderTypography>EXPLORE THE BLOCKCHAIN</HeaderTypography>
             <ParagraphTypography>
-              This Proof-of-Concept allows brands to publish Non-Fungible Token
-              (NFTs) representing a digital twin of physical products. In this
-              app, the NFTs are associated with luxury handbags. The app allows
-              users to view and exchange their handbag NFT in web3-enabled
-              browsers.
+              Etherscan is the largest blockchain exploration tool available for
+              free to the public. This demo shows how the website can be used to
+              view important information about the NFT, such as current token
+              holders, the smart contract, and event logs.
             </ParagraphTypography>
             <Col span="24" align="middle">
               <VideoWrapper>

@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Typography, Row, Col } from "antd";
 import Header from "../components/Header";
-import "./Admin.css";
 import { useMoralis } from "react-moralis";
 
 import Web3 from "web3";
