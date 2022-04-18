@@ -110,7 +110,6 @@ const NFT = () => {
     const userOwnedNft =
       allUsersNFTs && allUsersNFTs.find((nft) => nft.token_id === params.nftId);
     if (userOwnedNft) {
-      console.log("USER OWNED");
       return setNft(userOwnedNft);
     } else if (allNFTsByContract) {
       console.log(

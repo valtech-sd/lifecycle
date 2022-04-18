@@ -11,16 +11,14 @@ require("dotenv").config({ debug: true });
 
 ReactDOM.render(
   <React.StrictMode>
-    <MetaMaskProvider>
-      <MoralisProvider
-        appId="50crjfrjaWvtkLtyWA5Sw50Dopm00aaeqD4J5p8G"
-        serverUrl="https://02brmz1pkwey.usemoralis.com:2053/server"
-      >
-        <HashRouter>
-          <App />
-        </HashRouter>
-      </MoralisProvider>
-    </MetaMaskProvider>
+    <MoralisProvider
+      appId="50crjfrjaWvtkLtyWA5Sw50Dopm00aaeqD4J5p8G"
+      serverUrl="https://02brmz1pkwey.usemoralis.com:2053/server"
+    >
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </MoralisProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

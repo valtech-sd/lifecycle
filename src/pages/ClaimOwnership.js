@@ -4,11 +4,9 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useMoralis } from "react-moralis";
 import { Row, Col, Typography } from "antd";
-import Web3 from "web3";
-import "dotenv/config";
 import Header from "../components/Header";
-import { StyledButton } from "./Wallet";
 import { AppContext } from "../App.js";
+import "dotenv/config";
 
 const CryptoJS = require("crypto-js");
 
@@ -54,6 +52,7 @@ const ClaimOwnership = () => {
 
   let isDesktop = width > 768;
 
+  // BEGIN QR Code Generation
   // https://github.com/brix/crypto-js/issues/93
   const encryptWithAES = (text) => {
     return CryptoJS.AES.encrypt(
@@ -92,6 +91,7 @@ const ClaimOwnership = () => {
     const originalText = bytes.toString(CryptoJS.enc.Utf8);
     return originalText;
   };
+  // END QR Code Generation
 
   const isOwnedByCurrentUser = (id) => {
     return allUsersNFTs.some((nft) => {

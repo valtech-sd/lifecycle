@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useMoralis } from "react-moralis";
 import { Row, Col, Typography } from "antd";
 import Web3 from "web3";
-import "dotenv/config";
 import Header from "../components/Header";
+import "dotenv/config";
 
 const CryptoJS = require("crypto-js");
 
