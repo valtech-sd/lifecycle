@@ -6,7 +6,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import moment from "moment";
 
 import { COLORS, SIZES, FONT_SIZES } from "../utils/global";
-import { ecommerceData, repairData } from "../utils/mockData";
+import { offChainEvents, productData, repairData } from "../utils/mockData";
 import Header from "../components/Header";
 import { AppContext } from "../App.js";
 import { StyledButton } from "./Wallet";
@@ -86,14 +86,25 @@ const NFT = () => {
   const [current, setCurrent] = useState("details");
   const [isFromScan, setIsFromScan] = useState(false);
   const [nft, setNft] = useState(null);
+  const [offChainProductData, setOffChainProductData] = useState(null);
   const [nftTransactionsFiltered, setNftTransactionsFiltered] = useState(null);
   const [nftRepairsFiltered, setNftRepairsFiltered] = useState(null);
+
   const [sortedTransactions, setSortedTransactions] = useState(null);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   const { allUsersNFTs, allNFTsByContract } = useContext(AppContext);
   let params = useParams();
+
+  useEffect(() => {
+    if (nft) {
+      const product = productData.find(
+        (obj) => obj.id === Number(nft.token_id)
+      );
+      setOffChainProductData(product);
+    }
+  }, [nft]);
 
   useEffect(() => {
     const userOwnedNft =
@@ -168,7 +179,7 @@ const NFT = () => {
         return "OWNERSHIP TRANSFER";
       }
     }
-    return "CERTIFIED REPRAIR";
+    return "CERTIFIED REPAIR";
   };
 
   useEffect(() => {
@@ -176,17 +187,17 @@ const NFT = () => {
       nftTransactionsFiltered &&
       nftTransactionsFiltered.concat(nftRepairsFiltered).map((transfer) => {
         const dateObj = new Date(transfer.attributes.block_timestamp);
-        const date = moment(dateObj, "YYYY-MM-DD").format("MM/DD/YYYY");
+        const date = moment(dateObj, "YYYY-MM-DD").format("MM/DD/YYYY hh:mm a");
         const time = moment(dateObj, "YYYY-MM-DD").format("hh:mm a");
         return { ...transfer.attributes, transfer, date, time };
       });
 
     if (allTransactions) {
-      const finalizedTransactions = allTransactions.concat(ecommerceData);
+      const finalizedTransactions = allTransactions.concat(offChainEvents);
       setSortedTransactions(
         finalizedTransactions.sort((a, b) =>
-          moment(b.date, "MM/DD/YYYY HH:mm").diff(
-            moment(a.date, "MM/DD/YYYY HH:mm")
+          moment(b.date, "MM/DD/YYYY hh:mm a").diff(
+            moment(a.date, "MM/DD/YYYY hh:mm a")
           )
         )
       );
@@ -229,7 +240,7 @@ const NFT = () => {
           </Menu>
           <RowContainer style={{ marginTop: "32px" }}>
             <Col span="24" align="middle">
-              {nft && current === "details" && (
+              {offChainProductData && current === "details" && (
                 <ListContainer>
                   <ListItem>
                     <Row>
@@ -243,37 +254,32 @@ const NFT = () => {
                           {nft.metadata.name}
                         </TypographyHeader>
                         <Typography style={{ fontFamily: "Lato" }}>
-                          <BoldTypography>Ref:</BoldTypography> AS3260 B08037
-                          NH627
+                          <BoldTypography>Ref:</BoldTypography>{" "}
+                          {offChainProductData.ref}
                         </Typography>
                         <Typography style={{ fontFamily: "Lato" }}>
-                          <BoldTypography>Price:</BoldTypography> $5,100
+                          <BoldTypography>Price:</BoldTypography>{" "}
+                          {offChainProductData.price}
                         </Typography>
                         <Typography style={{ fontFamily: "Lato" }}>
-                          <BoldTypography>Description:</BoldTypography>
-                          {` A member
-                          of the House's Beloved lines, the ${nft.metadata.name} is
-                          characterized by the brand's emblematic monogram
-                          hardware and matelassé leather. For The Gucci Aria
-                          collection, the style is reimagined with a new
-                          geometric approach to the signature material while its
-                          Double G hardware is presented with an antique
-                          silver-toned finish. The design appears here in the
-                          shape of a mini bag in black.`}
+                          <BoldTypography>Description:</BoldTypography>{" "}
+                          {offChainProductData.description}
                         </Typography>
                         <Typography style={{ fontFamily: "Lato" }}>
-                          <BoldTypography>Color:</BoldTypography> Mahogany
+                          <BoldTypography>Color:</BoldTypography>{" "}
+                          {offChainProductData.color}
                         </Typography>
                         <Typography style={{ fontFamily: "Lato" }}>
-                          <BoldTypography>Collection:</BoldTypography> Summer
-                          Handbag Edition
+                          <BoldTypography>Collection:</BoldTypography>{" "}
+                          {offChainProductData.collection}
                         </Typography>
                         <Typography style={{ fontFamily: "Lato" }}>
-                          <BoldTypography>Designed by:</BoldTypography> Lindsey
-                          Eckhart
+                          <BoldTypography>Designed by:</BoldTypography>{" "}
+                          {offChainProductData.designedBy}
                         </Typography>
                         <Typography style={{ fontFamily: "Lato" }}>
-                          <BoldTypography>Manufactured:</BoldTypography> France
+                          <BoldTypography>Manufactured:</BoldTypography>{" "}
+                          {offChainProductData.manufactured}
                         </Typography>
 
                         <Divider />
@@ -286,7 +292,7 @@ const NFT = () => {
                           ERC721
                         </Typography>
                         <Typography style={{ fontFamily: "Lato" }}>
-                          <BoldTypography>Chain:</BoldTypography> ETH
+                          <BoldTypography>Chain:</BoldTypography> ETHEREUM
                         </Typography>
                         <Typography style={{ fontFamily: "Lato" }}>
                           <BoldTypography>Contract:</BoldTypography>{" "}
@@ -321,7 +327,7 @@ const NFT = () => {
                               </Col>
                               <Col span={8} align="right">
                                 <Typography style={{ fontFamily: "Lato" }}>
-                                  {transfer.date}
+                                  {moment(transfer.date).format("MM/DD/YYYY")}
                                 </Typography>
                                 <Typography style={{ fontFamily: "Lato" }}>
                                   {transfer.time}

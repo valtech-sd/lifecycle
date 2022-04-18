@@ -91,6 +91,7 @@ const Scan = () => {
     return originalText;
   };
 
+  // Not in active use - left for future reference
   const sendNFT = async () => {
     // https://ethereum.stackexchange.com/questions/48750/how-to-sign-a-send-method-in-web3-1-0
     let tx_builder = nftContract.methods.transferFrom(brandAccount, account, 2);
@@ -174,7 +175,7 @@ const Scan = () => {
                     }
 
                     if (!!error) {
-                      // console.info(error);
+                      console.info(error);
                     }
                   }}
                   style={{ width: "100%" }}
