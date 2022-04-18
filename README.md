@@ -2,6 +2,10 @@
 
 Lifecycle is a web3-enabled DApp (Decentralized App) empowering brands to showcase their products on the Ethereum blockchain. Digital twins of physical luxury handbags are minted as Non-Fungible Tokens (NFTs). Lifecycle allows users to manage and transfer their NFTs, brands to keep a ledger of repairs, and other custom events throughout the product's lifecycle. This allows brands to create trust in an industry rife with counterfeit.
 
+## Repository Organization
+
+This repository consists of a [Create React App Rewired](https://github.com/timarney/react-app-rewired) front end, and a subdirectory, `nft-app-eth-3-31`, containing the NFT smart contract and associated functionality. Within `nft-app-eth-3-31/scripts`, one may deploy a new version of the smart contracts, mint and NFT, or repair and NFT. Currently, the only way to run these smart contract methods are on the CLI, or within Etherscan's [write/read interface](https://rinkeby.etherscan.io/token/0x43b92b42ee33fc01f4d9a3249e478f7bc0cfcc0c#readContract).
+
 ## Requirements
 
 To interact with the DApp, one must have acess to a cryptocurrency wallet.
@@ -37,8 +41,8 @@ npm run start
 ## Deployment
 
 1. Run `npm run build`
-2. Copy contents on `/build` and paste into `/docs`, replacing the previous contents of `/docs` with the new build files.
-3. Manually remove all references to `/lifecycle/` in `/docs/index.html`. Because of how the app is deployed via Github Pages, we need to remove the `/lifecycle/` part of all relative paths in this file.
+2. Copy all files and subdirectories of `/build` and paste into `/docs`, replacing the previous contents of `/docs` with the new build files.
+3. In `/docs/index.html`, manually remove all references to `/lifecycle` (there should be 8 occurences in a file find/replace). Because of how the app is deployed via Github Pages, we need to remove the `/lifecycle` part of all relative paths in this file.
 4. Commit and push to `main` branch.
 5. Github Pages will automatically initiate a new deploy to https://lifecycle.valtech.engineering/
 
