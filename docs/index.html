@@ -5,10 +5,7 @@
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="/logo192.png" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,9 +14,9 @@
       href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <title>React App</title>
+    <title>Valtech Lifecycle</title>
     <link href="/static/css/2.e87b3c48.chunk.css" rel="stylesheet" />
-    <link href="/static/css/main.45ee2bea.chunk.css" rel="stylesheet" />
+    <link href="/static/css/main.ba8982c1.chunk.css" rel="stylesheet" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -27,18 +24,11 @@
     <script>
       !(function (e) {
         function r(r) {
-          for (
-            var n, a, i = r[0], c = r[1], l = r[2], s = 0, p = [];
-            s < i.length;
-            s++
-          )
+          for (var n, a, i = r[0], c = r[1], l = r[2], s = 0, p = []; s < i.length; s++)
             (a = i[s]),
-              Object.prototype.hasOwnProperty.call(o, a) &&
-                o[a] &&
-                p.push(o[a][0]),
+              Object.prototype.hasOwnProperty.call(o, a) && o[a] && p.push(o[a][0]),
               (o[a] = 0);
-          for (n in c)
-            Object.prototype.hasOwnProperty.call(c, n) && (e[n] = c[n]);
+          for (n in c) Object.prototype.hasOwnProperty.call(c, n) && (e[n] = c[n]);
           for (f && f(r); p.length; ) p.shift()();
           return u.push.apply(u, l || []), t();
         }
@@ -71,18 +61,13 @@
               });
               r.push((t[2] = n));
               var u,
-                i = document.createElement("script");
-              (i.charset = "utf-8"),
+                i = document.createElement('script');
+              (i.charset = 'utf-8'),
                 (i.timeout = 120),
-                a.nc && i.setAttribute("nonce", a.nc),
+                a.nc && i.setAttribute('nonce', a.nc),
                 (i.src = (function (e) {
                   return (
-                    a.p +
-                    "static/js/" +
-                    ({}[e] || e) +
-                    "." +
-                    { 3: "3f972e7a" }[e] +
-                    ".chunk.js"
+                    a.p + 'static/js/' + ({}[e] || e) + '.' + { 3: 'cbc0dd53' }[e] + '.chunk.js'
                   );
                 })(e));
               var c = new Error();
@@ -91,17 +76,10 @@
                 var t = o[e];
                 if (0 !== t) {
                   if (t) {
-                    var n = r && ("load" === r.type ? "missing" : r.type),
+                    var n = r && ('load' === r.type ? 'missing' : r.type),
                       u = r && r.target && r.target.src;
-                    (c.message =
-                      "Loading chunk " +
-                      e +
-                      " failed.\n(" +
-                      n +
-                      ": " +
-                      u +
-                      ")"),
-                      (c.name = "ChunkLoadError"),
+                    (c.message = 'Loading chunk ' + e + ' failed.\n(' + n + ': ' + u + ')'),
+                      (c.name = 'ChunkLoadError'),
                       (c.type = n),
                       (c.request = u),
                       t[1](c);
@@ -110,7 +88,7 @@
                 }
               };
               var l = setTimeout(function () {
-                u({ type: "timeout", target: i });
+                u({ type: 'timeout', target: i });
               }, 12e4);
               (i.onerror = i.onload = u), document.head.appendChild(i);
             }
@@ -119,23 +97,22 @@
           (a.m = e),
           (a.c = n),
           (a.d = function (e, r, t) {
-            a.o(e, r) ||
-              Object.defineProperty(e, r, { enumerable: !0, get: t });
+            a.o(e, r) || Object.defineProperty(e, r, { enumerable: !0, get: t });
           }),
           (a.r = function (e) {
-            "undefined" != typeof Symbol &&
+            'undefined' != typeof Symbol &&
               Symbol.toStringTag &&
-              Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }),
-              Object.defineProperty(e, "__esModule", { value: !0 });
+              Object.defineProperty(e, Symbol.toStringTag, { value: 'Module' }),
+              Object.defineProperty(e, '__esModule', { value: !0 });
           }),
           (a.t = function (e, r) {
             if ((1 & r && (e = a(e)), 8 & r)) return e;
-            if (4 & r && "object" == typeof e && e && e.__esModule) return e;
+            if (4 & r && 'object' == typeof e && e && e.__esModule) return e;
             var t = Object.create(null);
             if (
               (a.r(t),
-              Object.defineProperty(t, "default", { enumerable: !0, value: e }),
-              2 & r && "string" != typeof e)
+              Object.defineProperty(t, 'default', { enumerable: !0, value: e }),
+              2 & r && 'string' != typeof e)
             )
               for (var n in e)
                 a.d(
@@ -156,17 +133,16 @@
                 : function () {
                     return e;
                   };
-            return a.d(r, "a", r), r;
+            return a.d(r, 'a', r), r;
           }),
           (a.o = function (e, r) {
             return Object.prototype.hasOwnProperty.call(e, r);
           }),
-          (a.p = "/"),
+          (a.p = '/'),
           (a.oe = function (e) {
             throw (console.error(e), e);
           });
-        var i = (this["webpackJsonpamazon-clone"] =
-            this["webpackJsonpamazon-clone"] || []),
+        var i = (this['webpackJsonpamazon-clone'] = this['webpackJsonpamazon-clone'] || []),
           c = i.push.bind(i);
         (i.push = r), (i = i.slice());
         for (var l = 0; l < i.length; l++) r(i[l]);
@@ -174,7 +150,7 @@
         t();
       })([]);
     </script>
-    <script src="/static/js/2.296261ad.chunk.js"></script>
-    <script src="/static/js/main.fcd7eeff.chunk.js"></script>
+    <script src="/static/js/2.2c9ceb26.chunk.js"></script>
+    <script src="/static/js/main.abe4b39a.chunk.js"></script>
   </body>
 </html>
