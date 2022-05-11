@@ -281,7 +281,7 @@ const LandingPage = () => {
             </Text>
           </Column>
         </Section>
-        <Section setActive={setActive} id={items[1].section}>
+        <Section setActive={setActive} id={items[1].section} color="#F5F5F5">
           <Column lg={12}>
             <div>
               <Header>Try out</Header>
@@ -329,7 +329,7 @@ const LandingPage = () => {
             </Video>
           </Column>
         </Section>
-        <Section setActive={setActive} id={items[3].section}>
+        <Section setActive={setActive} id={items[3].section} color="#F5F5F5">
           <Column lg={12}>
             <div>
               <Header>Transfer</Header>
