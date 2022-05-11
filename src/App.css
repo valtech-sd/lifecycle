@@ -92,3 +92,11 @@
 article {
   font-family: "Lato";
 }
+
+.ant-steps-icon-dot {
+  background-color: #D3D2D1 !important;
+}
+
+.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-tail::after {
+  background-color: #D3D2D1 !important;
+}
