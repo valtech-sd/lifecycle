@@ -41,6 +41,7 @@ const Sidebar = styled.div`
   height: 100vh;
   position: sticky;
   top: 0;
+  border-right: 1px solid #cfcfcf;
 
   @media (max-width: 768px) {
     display: none;
@@ -283,7 +284,7 @@ const LandingPage = () => {
         </Section>
         <Section setActive={setActive} id={items[1].section} color="#F5F5F5">
           <Column lg={12}>
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Header>Try out</Header>
               <Header>
                 the <strong>App</strong>
@@ -309,7 +310,7 @@ const LandingPage = () => {
         </Section>
         <Section setActive={setActive} id={items[2].section}>
           <Column lg={12}>
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Header>View Product</Header>
               <Header bold>
                 Info <span style={{ fontWeight: 'normal' }}> and</span>
@@ -331,7 +332,7 @@ const LandingPage = () => {
         </Section>
         <Section setActive={setActive} id={items[3].section} color="#F5F5F5">
           <Column lg={12}>
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Header>Transfer</Header>
               <Header marginTop>
                 your <strong>NFT</strong>
@@ -352,7 +353,7 @@ const LandingPage = () => {
         </Section>
         <Section setActive={setActive} id={items[4].section} color="#000" image={VectorFS}>
           <Column lg={12}>
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Header color="#fff">Explore the</Header>
               <Header bold color="#fff">
                 Blockchain
