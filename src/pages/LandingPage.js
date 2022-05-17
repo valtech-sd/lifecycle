@@ -127,8 +127,8 @@ const Image = styled.img`
 
 const Video = styled.video`
   width: ${({ width }) => (width ? width : '')};
-  margin-top: 50px;
   padding: 0 20px;
+  height: ${({ width }) => (width ? '' : '90%')};
 
   @media (max-width: 576px) {
     width: 90%;
