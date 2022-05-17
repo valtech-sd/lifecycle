@@ -84,12 +84,12 @@ const Header = styled.h1`
   font-size: 50px;
   margin-bottom: 0;
   font-weight: ${({ bold }) => (bold ? 'bold' : 'normal')};
-  font-family: ${({ cursive }) => (cursive ? 'Betterworks' : 'Futura Std')};
   transform: ${({ cursive }) => (cursive ? 'rotate(-11.33deg);' : 'none')};
   color: ${({ color }) => (color ? color : '#000000')};
   margin-top: ${({ cursive, bold, marginTop }) => (cursive || bold || marginTop ? '-20px' : '0')};
   position: ${({ position }) => (position ? position : 'static')};
   z-index: ${({ zIndex }) => (zIndex ? zIndex : 'auto')};
+  font-family: ${({ cursive }) => (cursive ? 'Betterworks' : 'Futura Std')};
 
   @media (max-width: 768px) {
     font-size: 45px;

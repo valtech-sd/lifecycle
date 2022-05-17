@@ -1,5 +1,15 @@
 @import "~antd/dist/antd.css";
 
+@font-face {
+  font-family: 'Futura Std';
+  src: url('./assets/fonts/FuturaStdBook.otf');
+}
+
+@font-face {
+  font-family: 'Betterworks';
+  src: url('./assets/fonts/Betterworks.otf');
+}
+
 .ant-page-header {
   background-color: #131921;
 }
