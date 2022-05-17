@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/lifecycle/static/css/main.ba8982c1.chunk.css",
-    "main.js": "/lifecycle/static/js/main.193110e0.chunk.js",
-    "main.js.map": "/lifecycle/static/js/main.193110e0.chunk.js.map",
+    "main.css": "/lifecycle/static/css/main.a3ae5749.chunk.css",
+    "main.js": "/lifecycle/static/js/main.9348f716.chunk.js",
+    "main.js.map": "/lifecycle/static/js/main.9348f716.chunk.js.map",
     "runtime-main.js": "/lifecycle/static/js/runtime-main.456727bb.js",
     "runtime-main.js.map": "/lifecycle/static/js/runtime-main.456727bb.js.map",
     "static/css/2.e87b3c48.chunk.css": "/lifecycle/static/css/2.e87b3c48.chunk.css",
@@ -12,8 +12,9 @@
     "static/js/3.cbc0dd53.chunk.js.map": "/lifecycle/static/js/3.cbc0dd53.chunk.js.map",
     "index.html": "/lifecycle/index.html",
     "static/css/2.e87b3c48.chunk.css.map": "/lifecycle/static/css/2.e87b3c48.chunk.css.map",
-    "static/css/main.ba8982c1.chunk.css.map": "/lifecycle/static/css/main.ba8982c1.chunk.css.map",
+    "static/css/main.a3ae5749.chunk.css.map": "/lifecycle/static/css/main.a3ae5749.chunk.css.map",
     "static/js/2.2c9ceb26.chunk.js.LICENSE.txt": "/lifecycle/static/js/2.2c9ceb26.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/lifecycle/static/media/FuturaStdBook.5f83b004.otf",
     "static/media/Vector.825ce625.png": "/lifecycle/static/media/Vector.825ce625.png",
     "static/media/Vector.e8c6b195.svg": "/lifecycle/static/media/Vector.e8c6b195.svg",
     "static/media/backbutton.4330e436.svg": "/lifecycle/static/media/backbutton.4330e436.svg",
@@ -33,7 +34,7 @@
     "static/js/runtime-main.456727bb.js",
     "static/css/2.e87b3c48.chunk.css",
     "static/js/2.2c9ceb26.chunk.js",
-    "static/css/main.ba8982c1.chunk.css",
-    "static/js/main.193110e0.chunk.js"
+    "static/css/main.a3ae5749.chunk.css",
+    "static/js/main.9348f716.chunk.js"
   ]
 }
