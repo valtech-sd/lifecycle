@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react';
 export default function useIntersection(element) {
   const [isVisible, setState] = useState(false);
 
-  console.log({ element });
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {

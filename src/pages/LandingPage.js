@@ -13,6 +13,8 @@ import DemoAppOverview from '../assets/demo-app-overview.mp4';
 import DemoAppTransfer from '../assets/demo-app-transfer.mp4';
 import DemoViewEtherscan from '../assets/demo-view-etherscan.mp4';
 import VectorFS from '../assets/Vector.png';
+import Screenshot from '../assets/screenshot.png';
+import Screenshot2 from '../assets/screenshot-2.png';
 
 const { Step } = Steps;
 
@@ -133,6 +135,14 @@ const Video = styled.video`
   }
 `;
 
+const StepWrapper = styled.div`
+  margin-top: 50px;
+
+  @media (min-width: 576px) {
+    width: 450px;
+  }
+`;
+
 const items = [
   {
     title: 'Background',
@@ -191,7 +201,7 @@ const Item = ({ item, active }) => {
     display: flex;
     place-items: center;
     background-color: ${active ? '#F2F2F2' : 'white'};
-    padding-left: 20px;
+    padding: 0 20px;
     text-transform: uppercase;
 
     &:hover {
@@ -243,7 +253,6 @@ const steps = [
 
 const LandingPage = () => {
   const [active, setActive] = useState('');
-  // console.log({ active });
 
   return (
     <Container>
@@ -293,7 +302,7 @@ const LandingPage = () => {
             <Image src={tryAppImg} alt="Try the App" width="350px" />
           </Column>
           <Column lg={12}>
-            <div style={{ marginTop: 50 }}>
+            <StepWrapper>
               <Steps progressDot current={4} direction="vertical">
                 {steps.map((step, index) => (
                   <Step
@@ -305,7 +314,7 @@ const LandingPage = () => {
                   />
                 ))}
               </Steps>
-            </div>
+            </StepWrapper>
           </Column>
         </Section>
         <Section setActive={setActive} id={items[2].section}>
@@ -325,7 +334,7 @@ const LandingPage = () => {
             </Text>
           </Column>
           <Column lg={12}>
-            <Video controls>
+            <Video controls poster={Screenshot}>
               <source src={DemoAppOverview} type="video/mp4" />
             </Video>
           </Column>
@@ -346,7 +355,7 @@ const LandingPage = () => {
             <Image src={Phones} alt="VFS Phones" width="500px" />
           </Column>
           <Column lg={12}>
-            <Video controls>
+            <Video controls poster={Screenshot}>
               <source src={DemoAppTransfer} type="video/mp4" />
             </Video>
           </Column>
@@ -367,7 +376,7 @@ const LandingPage = () => {
             <img src={ValtechLogo} alt="Valtech Logo" width="225px" />
           </Column>
           <Column lg={12}>
-            <Video controls width="100%">
+            <Video controls width="100%" poster={Screenshot2}>
               <source src={DemoViewEtherscan} type="video/mp4" />
             </Video>
           </Column>
